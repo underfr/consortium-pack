@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "minLauncherVersion": "0.2.0",
+  "server": {
+    "name": "The Consortium",
+    "address": ""
+  },
+  "motd": "Season 1 is in preparation. This is a test pack for the launcher.",
+  "news": [
+    { "date": "2026-09-14", "title": "Launcher milestone 1", "text": "The launcher can now install the game and sync the pack." }
+  ]
+}

@@ -1,0 +1,16 @@
+hash-format = "sha256"
+
+[[files]]
+file = "mods/jade.pw.toml"
+hash = "4de3e4a1a49e332c1ad313283e0403c4273b628d634c17a9ff0c9da3d6b67f9a"
+metafile = true
+
+[[files]]
+file = "mods/jei.pw.toml"
+hash = "03b65096e93159e57b2c61147dd8ffea0a8be65f1bd066f23233db3485b3c460"
+metafile = true
+
+[[files]]
+file = "mods/mezzconfig.pw.toml"
+hash = "99c8d6a154ee913117dffb02f8ea277be422c6fd97c6defca4c6b874c366607c"
+metafile = true
