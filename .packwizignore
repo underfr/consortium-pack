@@ -2,3 +2,9 @@ README.md
 .gitattributes
 .nojekyll
 launcher.json
+kubejs/README.md
+kubejs/README.txt
+kubejs/config/web_server.json
+kubejs/exported/
+config/resourceful-config-web.json
+config/sodium-fingerprint.json

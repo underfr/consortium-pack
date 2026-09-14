@@ -1,6 +1,66 @@
 hash-format = "sha256"
 
 [[files]]
+file = "config/Mekanism/general.toml"
+hash = "fcf41f3d2e4d5e0352018188c2d7960efb09e35fde86c9cefffea73d43874a61"
+
+[[files]]
+file = "config/chunkloaders-common.toml"
+hash = "801ce965083775f13b78fa36c5d77dcd2311838b4009b622ea25e6a71c24d626"
+
+[[files]]
+file = "config/create-server.toml"
+hash = "36216a05f3ed63106ba587c8c24ed6315385829e7f3dae695dcf545aba41a270"
+
+[[files]]
+file = "config/ftbchunks-world.snbt"
+hash = "45bc75ee64b7ee401ba50790954a34b5e6ab887799434fa4a69a88cdce350e73"
+
+[[files]]
+file = "config/ftbteams-server.snbt"
+hash = "61b37c30c24d841f4d993e933df0d60f198fbcf06671a87a73b9a23f8434858d"
+
+[[files]]
+file = "config/ftbxmodcompat.snbt"
+hash = "28f2d08dd8ba9ab18a18e44d439d39a0b4072bb3640947bdda06ccb5973bd61e"
+
+[[files]]
+file = "config/jei-server.toml"
+hash = "702acd04d99445bce659d04fcc488e1a98c8a803983c31ae262b0f3a47fdc8d3"
+
+[[files]]
+file = "config/sophisticatedbackpacks-server.toml"
+hash = "c300e9f40f9a545068da97d455a940f7225fe4798e5219e1a62628b31025ce7d"
+
+[[files]]
+file = "config/tombstone-common.toml"
+hash = "56f96a6ba88527a214bb38331eceabeb208d405f93a0c447a35823f708a55752"
+
+[[files]]
+file = "config/tombstone-server.toml"
+hash = "234ba5dd9486e54869da5f46ea2782c3182f1272ee37b32ac08e69adf1a4ad43"
+
+[[files]]
+file = "config/waystones-common.toml"
+hash = "31df56b3a3cbb30ade53228eba1dae4b621b41ccafd1d4f55b83d3b41363544e"
+
+[[files]]
+file = "kubejs/client_scripts/00_placeholder.js"
+hash = "3e7de141738702b8eebd3afef24403ccfb3a7a991ec20a4134c238cd02164e40"
+
+[[files]]
+file = "kubejs/server_scripts/00_placeholder.js"
+hash = "0629692b9bd78377d36f221b12a6a8bb3dc717f3dae80fb3a13d71932c1892b8"
+
+[[files]]
+file = "kubejs/server_scripts/economy_locks.js"
+hash = "4f3dde1ed6fda3eda95bcb894ac63c1b4226ba8d214dd2225b3871766c123d56"
+
+[[files]]
+file = "kubejs/startup_scripts/00_placeholder.js"
+hash = "c4ae752192d479db38da1b68d62a47aa8ffcef330046fabbe24c449504ceea62"
+
+[[files]]
 file = "mods/ad-astra.pw.toml"
 hash = "5386763a89493ea2c4ab581e66ace9317641e4c6c5f094769b13e83b1f6be7aa"
 metafile = true
@@ -33,11 +93,6 @@ metafile = true
 [[files]]
 file = "mods/apothic-enchanting.pw.toml"
 hash = "953d08e4e58de5ce0e6ea9a5593747f5303206a5534a6acc87fad27b0dc673f8"
-metafile = true
-
-[[files]]
-file = "mods/apothic-spawners.pw.toml"
-hash = "e3cf8a1207e85580723e384bf59688be26b80373b49c1d64972528cdc0dcac6d"
 metafile = true
 
 [[files]]
