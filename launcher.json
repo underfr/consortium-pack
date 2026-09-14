@@ -5,8 +5,17 @@
     "name": "The Consortium",
     "address": ""
   },
-  "motd": "Season 1 is in preparation. This is a test pack for the launcher.",
+  "motd": "Season 1 is in preparation. The full 70-mod pack is now live for testing.",
   "news": [
-    { "date": "2026-09-14", "title": "Launcher milestone 1", "text": "The launcher can now install the game and sync the pack." }
+    {
+      "date": "2026-09-14",
+      "title": "Full modpack published",
+      "text": "Create, Mekanism, Applied Energistics 2, Immersive Engineering, Powah, Ad Astra, Apotheosis, the FTB suite, KubeJS and the performance mods are in. First launch downloads about 400 MB of mods."
+    },
+    {
+      "date": "2026-09-14",
+      "title": "Launcher milestone 1",
+      "text": "The launcher can now install the game and sync the pack."
+    }
   ]
 }

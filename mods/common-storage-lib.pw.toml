@@ -1,0 +1,13 @@
+name = "Common Storage Lib"
+filename = "common-storage-lib-neoforge-1.21.1-0.0.10.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/RgLrNK7l/versions/SCkdlli6/common-storage-lib-neoforge-1.21.1-0.0.10.jar"
+hash-format = "sha512"
+hash = "e4e2a7bc066c9032c0172428b1012fdd3b0dfcb75ee11bf044db61318906b61d3dbd0ff84a4f4b50403da5fdad4b349d65e02d4be48c55551f0da7ed993e27ff"
+
+[update]
+[update.modrinth]
+mod-id = "RgLrNK7l"
+version = "SCkdlli6"

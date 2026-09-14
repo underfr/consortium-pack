@@ -1,0 +1,13 @@
+name = "Ad Astra"
+filename = "adastra-1.21.1-1.16.26-neoforge.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/3ufwT9JF/versions/9pnKHdCG/adastra-1.21.1-1.16.26-neoforge.jar"
+hash-format = "sha512"
+hash = "be346a4fa3dc9e26528b6eef597cff90d52e86c9fa46ab2069c41967e2a57338e6d5f780ff8e80a8823e3199049f1e4e8ca13ddfa5292b65df75e4ee16f71ddf"
+
+[update]
+[update.modrinth]
+mod-id = "3ufwT9JF"
+version = "9pnKHdCG"
