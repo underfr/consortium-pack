@@ -211,7 +211,7 @@ function consortiumPlayerHasStage(player, stageId) {
 function consortiumResolvePlayer(server, text) {
   let wanted = String(text)
   for (let p of server.players) {
-    if (String(p.username).toLowerCase() === wanted.toLowerCase()) return { id: String(p.getUUID()).toLowerCase(), name: String(p.username) }
+    if (String(p.username).toLowerCase() === wanted.toLowerCase()) return { id: String(p.uuid).toLowerCase(), name: String(p.username) }
   }
   let mgr = consortiumTeamManager()
   if (mgr !== null) {

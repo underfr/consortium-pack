@@ -273,7 +273,7 @@ function consortiumSetStaff(server, uuid, name, add) {
 // Self-service choice (once per player). Returns the Text to show the player.
 function consortiumChooseCharter(player, charter) {
   let server = player.server
-  let uuid = String(player.getUUID()).toLowerCase()
+  let uuid = String(player.uuid).toLowerCase()
   let current = consortiumCharterOf(server, uuid)
   if (current !== null) {
     let day = Math.max(1, consortiumSeasonDayAt(server, consortiumCharterRecords(server).getCompound(uuid).getLong('chosenAt')))
@@ -293,7 +293,7 @@ function consortiumChooseCharter(player, charter) {
 
 // Short status line for the login message and /consortium charter.
 function consortiumCharterStatus(server, player) {
-  let uuid = String(player.getUUID()).toLowerCase()
+  let uuid = String(player.uuid).toLowerCase()
   let own = consortiumCharterOf(server, uuid)
   let team = consortiumTeamOf(player)
   let active = team !== null ? consortiumCharterOf(server, consortiumTeamOwner(team)) : own
