@@ -290,16 +290,6 @@ hash = "03084ff4f74cedc1b8ac6c85a98842f75956fb4fa811d285d8ca7caa8d54da5d"
 metafile = true
 
 [[files]]
-file = "mods/bosses-of-mass-destruction-forge.pw.toml"
-hash = "bcaa3b7cc850499e20fdb39444e0d138c372c1efb1e36c88999803049b7afa70"
-metafile = true
-
-[[files]]
-file = "mods/cerbons-api.pw.toml"
-hash = "479dab388743fb59d3399d2d87a0a7dc0819a4184b74f734fa9cc1eecdd6f6f6"
-metafile = true
-
-[[files]]
 file = "mods/chapters.pw.toml"
 hash = "a1e5ae102e6c6fb030dadb0c7d0b6d1c23521473c8844128833e88898db1edb3"
 metafile = true
@@ -392,11 +382,6 @@ metafile = true
 [[files]]
 file = "mods/ftb-xmod-compat.pw.toml"
 hash = "4eab5a5683f7d7f3ddb5dc7f347b94aa8f52f474cbf8ef6573632e2680a82f9f"
-metafile = true
-
-[[files]]
-file = "mods/geckolib.pw.toml"
-hash = "5a26489b734991c0511abfe43bf9143c935b8483d854a78fecd2e84993fb09cc"
 metafile = true
 
 [[files]]

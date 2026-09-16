@@ -64,7 +64,10 @@ How it works:
   `charters.<uuid>` (`charter`, `chosenAt`, `switchedAt`, `switches`, `name`), `staff.<uuid>` (name), and per phase `startedAt`,
   `completedAt`, `lastProgressAt`, `stalled`, `stalledAt`, `milestone`, `history.<season day>` (`C x 1000`
   at that day's snapshot) and `progress.<line>`. Dump it with `/kubejs persistent-data server get consortium`.
-- **Deliveries**: the terminal script calls `Consortium.contribute(player, itemId, count)` (or
+- **Deliveries**: the Consortium Core mod runs `/consortium contribute <item> <count>` as the console once per
+  delivered item id right after each terminal delivery is committed (its `contribute_command` server config; the
+  mod's own KubeJS binding is `ConsortiumCore`, so this script-level `Consortium` object is untouched). Scripts can
+  also call `Consortium.contribute(player, itemId, count)` directly (or
   `Consortium.record(server, name, itemId, count)` without a player). Only items of the current phase
   quota count (family lines such as `#c:ingots/steel` list every accepted id in `items`); the return
   value is the number of units accepted, 0 when the item is not in the quota. At 25, 50, 75 and 90 % of
