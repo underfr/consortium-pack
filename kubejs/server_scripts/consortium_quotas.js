@@ -6,7 +6,8 @@
 // Fields: number, name, stage (Chapters stage id, kubejs/data/consortium/chapters/stages/<id>.json),
 // quest (FTB Quests chapter hex id opened by the [open quests] link), headline (what the phase opens,
 // read out at the unlock), moment (the collective moment of section 1), quota: [{ id, label, amount,
-// items? }] where `id` is a registry id or a family key and `items` lists every id counted by a family line.
+// items?, icon? }] where `id` is a registry id or a family key, `items` lists every id counted by a
+// family line and `icon` is the item the quota board shows for the line (default: items[0], else id).
 
 // Cooking-pot meals accepted by the phase 1 "cooked meals" line (final list: economy price table).
 const CONSORTIUM_MEALS = ['apple_cider', 'baked_cod_stew', 'beef_stew', 'bone_broth', 'cabbage_rolls', 'chicken_soup', 'dumplings',
@@ -29,7 +30,7 @@ const CONSORTIUM_PHASES = [
       { id: 'minecraft:coal', label: 'coal', amount: 3500 },
       { id: 'create:andesite_alloy', label: 'andesite alloy', amount: 1000 },
       { id: 'create:andesite_funnel', label: 'andesite funnels', amount: 500 },
-      { id: 'consortium:cooked_meals', label: 'cooked meals', amount: 1000, items: CONSORTIUM_MEALS },
+      { id: 'consortium:cooked_meals', label: 'cooked meals', amount: 1000, items: CONSORTIUM_MEALS, icon: 'farmersdelight:beef_stew' },
     ],
   },
   {

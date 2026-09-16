@@ -20,7 +20,9 @@
 // (leaving a party gives a stageless team; the sweep is the mechanism, no script listener can run
 // before Chapters' own audit) and staff leaks (a non-staff player joining a staff party), and the
 // 5 minute check reconciles every team, updates the boss bar, posts the daily summary and evaluates
-// the stall rule.
+// the stall rule. Consortium Core (when present) displays the quota board this engine publishes
+// through ConsortiumCore.publishBoard(json) on every Delivery Station screen: the mod keeps no
+// phase state of its own (docs/CONSORTIUM_CORE_V02.md section 2).
 // Inspect the raw state with: /kubejs persistent-data server get consortium
 
 const CONSORTIUM_SEASON_DAYS = 84
@@ -169,6 +171,74 @@ function consortiumUpdateBar(server, force) {
   run('set ' + CONSORTIUM_BAR + ' players @a')
 }
 
+// ---- quota board (Consortium Core, CONSORTIUM_CORE_V02.md 2.4) --------------------------------------
+// The mod displays what the engine pushes: ConsortiumCore.publishBoard(json) with the payload below.
+// The binding only exists when the mod is loaded, hence the typeof guard; the mod accepts a publish
+// before its runtime exists (ServerEvents.loaded fires before its ServerStartedEvent) and folds it in.
+
+let consortiumBoardCache = ''  // last JSON handed to the mod; identical payloads are not re-sent
+let consortiumBoardSentAt = 0  // Date.now() of the last publish
+let consortiumBoardPending = false
+const CONSORTIUM_BOARD_MIN_MS = 1000
+
+// Display item of a quota line: an explicit `icon`, else the first listed member, else the id itself
+// (a tag id without `items` would show a barrier, so tag lines must carry `items` or `icon`).
+function consortiumLineIcon(line) {
+  if (line.icon) return line.icon
+  if (line.items && line.items.length) return line.items[0]
+  return line.id
+}
+
+// "cobblestone" -> "Cobblestone" (labels are lower case in the quota table for chat sentences).
+function consortiumLabelCase(label) {
+  let s = String(label)
+  return s.length ? s.charAt(0).toUpperCase() + s.slice(1) : s
+}
+
+function consortiumBoardPayload(server) {
+  let n = consortiumState(server).getInt('currentPhase')
+  let def = consortiumDef(n)
+  let tag = consortiumPhaseTag(server, n)
+  let prog = consortiumProgress(server, n)
+  let lines = []
+  for (let i = 0; i < prog.lines.length; i++) {
+    let l = prog.lines[i]
+    lines.push({ key: l.line.id, label: consortiumLabelCase(l.line.label), icon: consortiumLineIcon(l.line),
+      current: Number(l.delivered), target: l.line.amount })
+  }
+  return {
+    phase: n, name: def.name,
+    day: consortiumSeasonDay(server), days: CONSORTIUM_SEASON_DAYS,
+    completion: Math.round(prog.c * 1000) / 1000,
+    complete: tag.getLong('completedAt') > 0,
+    lines: lines,
+  }
+}
+
+// At most one publish per second: the first change goes out at once, later ones inside the same second
+// collapse into one trailing publish that recomputes the payload (one delivery of three item ids is
+// three record() calls in the same tick). `force` bypasses the unchanged check, not the window.
+function consortiumPublishBoard(server, force) {
+  if (typeof ConsortiumCore === 'undefined') return
+  let json = JSON.stringify(consortiumBoardPayload(server))
+  if (!force && json === consortiumBoardCache) return
+  let now = Date.now()
+  if (now - consortiumBoardSentAt < CONSORTIUM_BOARD_MIN_MS) {
+    if (consortiumBoardPending) return
+    consortiumBoardPending = true
+    server.scheduleInTicks(20, () => {
+      consortiumBoardPending = false
+      try { consortiumPublishBoard(server, true) } catch (err) { console.error('[Consortium] board publish failed: ' + err) }
+    })
+    return
+  }
+  consortiumBoardCache = json
+  consortiumBoardSentAt = now
+  try {
+    if (!ConsortiumCore.publishBoard(json)) console.warn('[Consortium] board publish refused by Consortium Core (see its log)')
+  } catch (err) { console.error('[Consortium] board publish failed: ' + err) }
+}
+
 // ---- daily snapshot, summary and stall rule (section 11) -------------------------------------------
 
 // The newest snapshot taken at least `days` season days before `day`, as C (0..1), or -1 when none.
@@ -272,6 +342,7 @@ const Consortium = {
       consortiumSay(server, 'Phase ' + n + ' quota at ' + reached + ' %. Still needed: ' + consortiumMissingList(after) + '. Open the terminal at HQ to contribute.')
     }
     consortiumUpdateBar(server, false)
+    consortiumPublishBoard(server, false)
     if (after.complete) Consortium.completePhase(server)
     return count
   },
@@ -287,6 +358,7 @@ const Consortium = {
       consortiumSay(server, 'The Phase 5 quota is complete. The Board convenes on ' + consortiumNextSlot() + ' at 20:00 server time at HQ for ' + done.moment + '.')
       consortiumDiscord(server, 'Phase 5 quota complete: ' + done.moment + ' is next.')
       consortiumUpdateBar(server, true)
+      consortiumPublishBoard(server, true)
       return
     }
     let next = consortiumDef(n + 1)
@@ -303,6 +375,7 @@ const Consortium = {
     server.runCommandSilent('playsound minecraft:ui.toast.challenge_complete master @a')
     consortiumDiscord(server, 'Phase ' + (n + 1) + ' unlocked: ' + next.name)
     consortiumUpdateBar(server, true)
+    consortiumPublishBoard(server, true)
     // TODO (event step, section 13): fireworks at HQ, the moment reminders (minus 60 and minus 5 min) and
     // the moment title once the HQ position and the event calendar are known.
   },
@@ -315,14 +388,21 @@ const Consortium = {
   applyPlayer: (server, player) => consortiumApplyPlayer(server, player),
 
   // Runs the daily step now, whatever the time (staff and tests).
-  daily: (server) => consortiumDaily(server, true),
+  daily: (server) => {
+    let ran = consortiumDaily(server, true)
+    consortiumPublishBoard(server, false)
+    return ran
+  },
 
-  // 5 minute maintenance: team stages, boss bar, daily snapshot and summary, stall rule.
+  // 5 minute maintenance: team stages, boss bar, daily snapshot and summary, stall rule, quota board
+  // (the season day rolls over within 5 minutes; the first check 100 ticks after load and every
+  // /reload, which resets the script-level cache, republish the board).
   check: (server) => {
     let changes = Consortium.resync(server)
     if (changes > 0) console.info('[Consortium] check: ' + changes + ' team stage change(s)')
     consortiumUpdateBar(server, false)
     consortiumDaily(server, false)
+    consortiumPublishBoard(server, false)
   },
 
   // Staff lever: jump to phase n. Every team is reconciled (stages above n stripped from non-staff
@@ -340,6 +420,7 @@ const Consortium = {
     tag.putLong('startedAt', Date.now())
     let changes = Consortium.resync(server)
     consortiumUpdateBar(server, true)
+    consortiumPublishBoard(server, true)
     consortiumSay(server, 'Staff set the server to Phase ' + n + ': ' + consortiumDef(n).name + '.')
     return changes
   },
@@ -356,6 +437,7 @@ const Consortium = {
     tag.putBoolean('stalled', false)
     tag.putInt('milestone', 0)
     consortiumUpdateBar(server, true)
+    consortiumPublishBoard(server, true)
   },
 
   // Wipes phase and charter state and the boss bar; the staff list is kept (it is configuration,
@@ -366,9 +448,11 @@ const Consortium = {
     server.persistentData.remove('consortium')
     server.runCommandSilent('bossbar remove ' + CONSORTIUM_BAR)
     consortiumBarCache = ''
+    consortiumBoardCache = ''
     consortiumState(server).put('staff', staff)
     Consortium.resync(server)
     consortiumUpdateBar(server, true)
+    consortiumPublishBoard(server, true)
   },
 
   onCatchUp: null, // set by the Gap Contract script later: (server, phaseNumber) => void
@@ -380,7 +464,8 @@ ServerEvents.loaded((event) => {
   let server = event.server
   consortiumState(server)
   consortiumUpdateBar(server, true)
-  // The team manager is loaded by now but give FTB Teams a moment before the first sweep.
+  // The team manager is loaded by now but give FTB Teams a moment before the first sweep. The first
+  // quota board publish happens in that check too (Consortium Core's runtime does not exist yet here).
   server.scheduleInTicks(100, () => {
     try { Consortium.check(server) } catch (err) { console.error('[Consortium] first check failed: ' + err) }
   })

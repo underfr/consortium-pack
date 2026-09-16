@@ -12,7 +12,7 @@ generates on first run:
 | `startup_scripts/` | once at game start, both sides | registrations (items, blocks, fluids), things that need `StartupEvents` |
 | `server_scripts/` | on every server resource reload (`/reload`), dedicated server and the client's integrated server | recipes, tags, loot, `ServerEvents`, `PlayerEvents`, economy and rank logic |
 | `client_scripts/` | client only | JEI events, tooltips, client UI |
-| `data/` | acts as a datapack on the server | Chapters stage definitions (`data/consortium/chapters/stages/*.json`), custom tags |
+| `data/` | acts as a datapack on the server | Chapters stage definitions (`data/consortium/chapters/stages/*.json`), the Consortium Core price table (`data/consortium/consortium_prices/*.json`) and shop catalogue (`data/consortium/consortium_shop/*.json`), custom tags |
 | `assets/` | acts as a resource pack on the client | lang files, textures for custom items |
 
 `startup_scripts/` and `client_scripts/` still hold a comments-only `00_placeholder.js` that keeps the
@@ -24,7 +24,7 @@ and Ad Astra ice recipe removals), the spawner lock (`spawner_locks.js`: `minecr
 
 - English everywhere (comments, chat messages, item names). No em dashes.
 - One file per concern. Load order comes from a `// priority: N` first line (higher loads first; the
-  engine uses 100 for helpers, 90 for data, 60 for charters, 50 for logic, 0 for commands); all server scripts share one
+  engine uses 100 for helpers, 90 for data, 60 for charters, 50 for logic, 40 for the money modifiers, 0 for commands); all server scripts share one
   scope, so top-level names must be unique across files (prefix them, e.g. `consortium...`).
 - KubeJS Rhino quirks: `const` only at file top level or as the first statements of a function, `let`
   inside blocks (a `const` inside a try or for block throws "redeclaration of var"); server scripts
@@ -54,6 +54,7 @@ One server-wide phase for everyone, five phases per season. Files:
 | `server_scripts/consortium_lib.js` (priority 100) | Shared helpers: number formatting, the next event slot, announcements (`tellraw @a` plus `say`, the two commands Simple Discord Link relays; `server.tell()` is never relayed), FTB Teams access and the safe stage writers |
 | `server_scripts/consortium_quotas.js` (priority 90) | The `CONSORTIUM_PHASES` table: phase names, stage ids, quest chapter ids, headline text and the delivery quotas (`Q = D x 10 x r x 0.7`). The economy step edits the amounts here |
 | `server_scripts/consortium_phases.js` (priority 50) | The engine: persistent state, deliveries, milestones, phase completion, the sweeps, boss bar, daily summary, stall rule, login welcome |
+| `server_scripts/consortium_money.js` (priority 40) | The delivery modifiers applied to Consortium Core deliveries through its `DeliveryQuoteEvent`: the charter price table of PROGRESSION 9.1 (+15 % own family, -5 % the two others, read from the `charter_family` of each price family) and the newcomer +25 % of PROGRESSION 12 (7 days from the first login, `GRANTED` accounts, launch cohort excluded). Both factors go into one `setMultiplier` per line. Off when the mod is absent |
 | `server_scripts/consortium_commands.js` (priority 0) | The `/consortium` commands |
 
 How it works:
@@ -97,6 +98,13 @@ How it works:
   `consortium:staff` against the staff rule (a non-staff player joined a staff party, or a staff-only
   team lost the stage); a 5 minute check reconciles every team, refreshes the boss bar and runs the
   daily step when due.
+- **Quota board** (Consortium Core): `consortiumPublishBoard(server, force)` in `consortium_phases.js` hands the mod the
+  phase, name, season day, completion and every quota line (key, label, icon, current, target) as JSON through
+  `ConsortiumCore.publishBoard(json)`; the mod draws it on every Delivery Station screen and keeps no phase state of
+  its own. Called after every recorded delivery, at phase completion, `phase set`, `clearprogress`, `reset` (forced),
+  from `daily` and from the 5 minute check (which also covers the first publish 100 ticks after load and every
+  `/reload`); identical payloads are skipped and publishes are throttled to one per second with one trailing publish.
+  A quota line may carry an optional `icon` item id (`consortium_quotas.js`), else the first listed item, else its id.
 - **Boss bar** `consortium:phase`: "Phase N: <name> - <percent>%", max 100, created on server start and
   only re-sent when its text changes. Players are added to it on login.
 - **Daily step** (section 11): at the first check after 06:00 server time each day (season days roll
@@ -137,12 +145,22 @@ Simple Discord Link: with `broadcastCommands = true` every command the engine ru
 `simple-discord-link.toml.example` lists them (plus `ftbquests` and `consortium`) in `ignoredCommands`.
 `say` and `tellraw @a` return before that check and are relayed as chat instead.
 
+## Consortium Core data (shop and prices)
+
+- `data/consortium/consortium_prices/starter.json`: the price families (placeholder numbers) with their
+  `charter_family` (`raw`, `power`, `transport`, `neutral`) for the modifiers above.
+- `data/consortium/consortium_shop/starter.json`: the shop catalogue (the four chunk loaders behind the
+  `consortium:phase_3` stage, 10 extra FTB Chunks claim chunks twice a day; every price a placeholder). Entry
+  fields: `name`, `description`, `item` or `command` (`{player}`, `{uuid}`, `{tx}`; the claim entry addresses the
+  buyer by `{player}` because FTB Chunks' player argument refuses a UUID), `icon`, `price`, `daily_limit`, `stage`,
+  `phase`. Never sell an item the price table buys: the mod refuses it at load and at purchase.
+
 ## Planned scripts (not written yet)
 
 - `server_scripts/20_ranks.js`: LuckPerms track promotion and server-wide announcement (rule 4.3).
-- Delivery terminal, credits and the Gap Contract (rule 4.2, PROGRESSION.md section 11).
-- `server_scripts/phase_guards.js`: the placement guard and the instant inventory audit (PROGRESSION.md
-  section 2, guards 1 and 2; deferred, DECISIONS.md 2026-09-16).
+- The Gap Contract (rule 4.2, PROGRESSION.md section 11).
+- `phase_guards.js` is **not** coming: the placement guard, the instant inventory audit and the party-creation stage
+  copy live in the Consortium Core mod (v0.2, DECISIONS.md 2026-09-16).
 
 After editing anything here run `packwiz refresh` in the pack root and commit; players and the
 server pick the change up on their next launch or restart.

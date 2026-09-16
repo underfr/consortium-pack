@@ -186,7 +186,11 @@ hash = "e2c79c25dd36695c929d22a58d61b6c92703a78f9d2220b5dd2a67cdb342aeee"
 
 [[files]]
 file = "kubejs/data/consortium/consortium_prices/starter.json"
-hash = "7483e5410bc0549b9a6336abaa52d7c1aaf965a7d546a0d510df48c7bce72711"
+hash = "df00789f9ad5bfed941200db0730bb29d08c709acf66433f0f7b181962f88885"
+
+[[files]]
+file = "kubejs/data/consortium/consortium_shop/starter.json"
+hash = "f8c63505a268c27c354edf15d9b33d9e202d6e00a8f1232a3fe587a08f3d4926"
 
 [[files]]
 file = "kubejs/server_scripts/00_placeholder.js"
@@ -194,7 +198,7 @@ hash = "0629692b9bd78377d36f221b12a6a8bb3dc717f3dae80fb3a13d71932c1892b8"
 
 [[files]]
 file = "kubejs/server_scripts/consortium_charters.js"
-hash = "58547d07351dc1c859ecbbab89ad7abf01aa194a91e9b9e3c1d9ddca7bc0ba1d"
+hash = "f862f0602a2f942f42457fea91317e03db99cd0a1f6f11a26f3c9893db848027"
 
 [[files]]
 file = "kubejs/server_scripts/consortium_commands.js"
@@ -202,15 +206,19 @@ hash = "45c908f4d1f517096ac49b5a2fcb26a178389839d1d8875a7d8bc7416af68607"
 
 [[files]]
 file = "kubejs/server_scripts/consortium_lib.js"
-hash = "7277f043173c818a3a8fb1aec3bfe539d0400b772bdd0a43685d864a134f058f"
+hash = "49298dc51232befe2a08f1daa8df016bf1efabde96ca9230404bfc2ceee818d0"
+
+[[files]]
+file = "kubejs/server_scripts/consortium_money.js"
+hash = "8aacc482df5a8b2652a54e4d168e4a4bcaa757c14a3768a17fc1bc787e63cf8d"
 
 [[files]]
 file = "kubejs/server_scripts/consortium_phases.js"
-hash = "952112d3b26bb230417c139f436ad26bcc583022e1ec3bc5d53cd7819054c362"
+hash = "6b72e493e01ee11a0f042d43bb8027a4f0ee35218ffcc17ef2b37abe7dd08767"
 
 [[files]]
 file = "kubejs/server_scripts/consortium_quotas.js"
-hash = "5490352522b5b7e818d8203cb4dc9ff08345a8409ee26912a10a9f24edf0e592"
+hash = "b10a63319af8baafe9c1d674403135a62525ed781d4a78cef9fa96d34f7b0c86"
 
 [[files]]
 file = "kubejs/server_scripts/economy_locks.js"
