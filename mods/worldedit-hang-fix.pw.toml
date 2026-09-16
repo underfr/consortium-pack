@@ -1,0 +1,13 @@
+name = "WorldEdit Hang Fix"
+filename = "worldedit-hang-fix-v1.0.5-mc1.20.6-neoforge.jar"
+side = "server"
+
+[download]
+url = "https://cdn.modrinth.com/data/uz1wuff3/versions/3W1zIJ1a/worldedit-hang-fix-v1.0.5-mc1.20.6-neoforge.jar"
+hash-format = "sha512"
+hash = "0f4b5cd77939718caf40667c192451196372dc3c01afe5a63a64af7b0464170abe691fd67645c3c106df360038b94acad751dcf8ab7a9de482774bd0339cd367"
+
+[update]
+[update.modrinth]
+mod-id = "uz1wuff3"
+version = "3W1zIJ1a"

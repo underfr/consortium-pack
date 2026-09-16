@@ -1,0 +1,8 @@
+name = "FTB Essentials"
+filename = "ftb-essentials-neoforge-2101.1.10.jar"
+side = "server"
+
+[download]
+url = "https://maven.ftb.dev/releases/dev/ftb/mods/ftb-essentials-neoforge/2101.1.10/ftb-essentials-neoforge-2101.1.10.jar"
+hash-format = "sha256"
+hash = "a61de1b883ec9d6d652276f453e8e60b18bd315fef8c62f21d6545260d526587"

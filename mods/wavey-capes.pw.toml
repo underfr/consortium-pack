@@ -1,0 +1,18 @@
+name = "Wavey Capes"
+filename = "waveycapes-neoforge-1.11.1-mc1.21.1.jar"
+side = "client"
+
+[option]
+optional = true
+default = true
+description = "Cosmetic: cape physics for vanilla and mod capes."
+
+[download]
+url = "https://cdn.modrinth.com/data/kYuIpRLv/versions/dcf00nIA/waveycapes-neoforge-1.11.1-mc1.21.1.jar"
+hash-format = "sha512"
+hash = "50a5403adc87413ddc396e9de4dc901a797b970ff2c4d86f8b3d66cbeb50d424f7ac043a70abe988484c62dfd0d09dcabe183c9bc065b3bb6fb33d9567959e97"
+
+[update]
+[update.modrinth]
+mod-id = "kYuIpRLv"
+version = "dcf00nIA"

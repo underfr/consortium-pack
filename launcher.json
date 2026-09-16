@@ -1,12 +1,22 @@
 {
   "schemaVersion": 1,
-  "minLauncherVersion": "0.2.0",
+  "minLauncherVersion": "0.3.0",
   "server": {
     "name": "The Consortium",
     "address": ""
   },
-  "motd": "Season 1 is in preparation. The full 70-mod pack is now live for testing.",
+  "motd": "Season 1 is in preparation. Pack 0.6.0 (new world generation, optional shaders and cosmetics) is live for testing.",
+  "lowPresetDisables": ["mods/iris.pw.toml"],
+  "optionRequires": {
+    "shaderpacks/complementary-reimagined.pw.toml": "mods/iris.pw.toml",
+    "shaderpacks/makeup-ultra-fast-shaders.pw.toml": "mods/iris.pw.toml"
+  },
   "news": [
+    {
+      "date": "2026-09-17",
+      "title": "Pack 0.6.0: new world generation, shaders and cosmetics",
+      "text": "Terralith, Tectonic, Amplified Nether, Nullscape and four structure mods reshape the Season 1 world (fresh world). Iris shader support with Complementary Reimagined and MakeUp Ultra Fast, plus six cosmetic mods, are optional client entries you can toggle in the launcher (launcher 0.3.0). Staff tools were added on the server side only."
+    },
     {
       "date": "2026-09-14",
       "title": "Full modpack published",

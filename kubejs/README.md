@@ -18,7 +18,12 @@ generates on first run:
 `startup_scripts/` and `client_scripts/` still hold a comments-only `00_placeholder.js` that keeps the
 folder in the pack. `server_scripts/` holds the economy locks (`economy_locks.js`: chunk loader, IE brass
 and Ad Astra ice recipe removals), the spawner lock (`spawner_locks.js`: `minecraft:spawner` added to
-`#mekanism:cardboard_blacklist`) and the progression engine described below.
+`#mekanism:cardboard_blacklist`), the structure loot policy (`structure_loot.js`, priority 30, LootJS 3.7.0,
+guarded by `Platform.isLoaded('lootjs')`: removes the Apotheosis `affix_loot_injection` and
+`gem_loot_injection` global loot modifiers and strips affixed gear and gems at roll time from
+`minecraft:chests/*` and the Terralith, Structory and YUNG's structure tables only; nothing of `@minecraft`
+is removed and `consortium:*` event tables stay outside, see `docs/WORLD_VISUALS_ADMIN_PRESENCE.md` section 2)
+and the progression engine described below.
 
 ## Conventions
 
