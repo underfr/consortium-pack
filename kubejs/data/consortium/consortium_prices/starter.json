@@ -1,0 +1,36 @@
+{
+  "_comment": "Consortium Core price table, starter file. Every base and half_volume here is a PLACEHOLDER from docs/CONSORTIUM_CORE.md section 3 until the Phase 4 price-table work (production time x rarity) replaces it. Prices are keyed by material family (PROGRESSION 9.1): members list every item id or #tag with its weight in family units. base 0 = quota only (the generator family of DECISIONS 2026-09-15).",
+  "defaults": { "floor_ratio": 0.10, "half_life_hours": 6.0, "daily_cap_multiplier": 4 },
+  "families": {
+    "c:ingots/steel": {
+      "name": "Steel", "base": 3.00, "half_volume": 900, "daily_cap": 40, "phase": 2,
+      "members": { "#c:ingots/steel": 1, "#c:storage_blocks/steel": 9, "#c:nuggets/steel": 0.1111 }
+    },
+    "minecraft:iron_ingot": {
+      "name": "Iron", "base": 1.50, "half_volume": 1500, "daily_cap": 40, "phase": 1,
+      "members": { "minecraft:iron_ingot": 1, "minecraft:iron_block": 9, "minecraft:iron_nugget": 0.1111, "minecraft:raw_iron": 1, "minecraft:raw_iron_block": 9 }
+    },
+    "minecraft:copper_ingot": {
+      "name": "Copper", "base": 0.50, "half_volume": 3000, "phase": 1,
+      "members": { "minecraft:copper_ingot": 1, "minecraft:copper_block": 9, "minecraft:raw_copper": 1, "minecraft:raw_copper_block": 9 }
+    },
+    "minecraft:gold_ingot": {
+      "name": "Gold", "base": 4.00, "half_volume": 500, "phase": 2,
+      "members": { "minecraft:gold_ingot": 1, "minecraft:gold_block": 9, "minecraft:gold_nugget": 0.1111, "minecraft:raw_gold": 1, "minecraft:raw_gold_block": 9 }
+    },
+    "minecraft:coal": {
+      "name": "Coal", "base": 0.25, "half_volume": 4000, "phase": 1,
+      "members": { "minecraft:coal": 1, "minecraft:coal_block": 9, "minecraft:charcoal": 1 }
+    },
+    "create:andesite_alloy": {
+      "name": "Andesite Alloy", "base": 4.00, "half_volume": 800, "phase": 1
+    },
+    "minecraft:cobblestone": {
+      "name": "Cobblestone", "base": 0,
+      "members": { "minecraft:cobblestone": 1, "minecraft:stone": 1, "minecraft:cobbled_deepslate": 1, "minecraft:deepslate": 1 }
+    },
+    "minecraft:gravel": { "name": "Gravel", "base": 0 },
+    "minecraft:sand": { "name": "Sand", "base": 0, "members": { "minecraft:sand": 1, "minecraft:red_sand": 1 } },
+    "ae2:singularity": { "name": "Singularity", "base": 0 }
+  }
+}

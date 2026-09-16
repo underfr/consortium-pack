@@ -1,0 +1,75 @@
+// The Consortium - Phase 2: The Foundry.
+// Gated by the Chapters stage consortium:phase_2: the intro quest carries a gamestage task and is invisible
+// until completed, the two other quests hide until the intro is complete, so the chapter only appears once the
+// team holds the stage (FTB Quests 2101.1.35 has no "stage required" field on chapters).
+// Ids: 5C02 + 9 zeros + NNN. 001 chapter, 010 intro quest, 020 objective quest, 030 item quest.
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "phase2"
+	group: "5C0F000000000001"
+	icon: {
+		id: "immersiveengineering:ingot_steel"
+	}
+	id: "5C02000000000001"
+	images: [ ]
+	order_index: 1
+	quest_links: [ ]
+	quests: [
+		{
+			icon: {
+				id: "immersiveengineering:blastbrick"
+			}
+			id: "5C02000000000010"
+			invisible: true
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [{
+				id: "5C02000000000011"
+				stage: "consortium:phase_2"
+				type: "gamestage"
+			}]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C02000000000010"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "minecraft:map"
+			}
+			id: "5C02000000000020"
+			tasks: [{
+				id: "5C02000000000021"
+				type: "checkmark"
+			}]
+			x: 2.5d
+			y: -1.0d
+		}
+		{
+			dependencies: ["5C02000000000010"]
+			hide_until_deps_complete: true
+			id: "5C02000000000030"
+			rewards: [{
+				count: 8
+				id: "5C02000000000032"
+				item: {
+					count: 1
+					id: "immersiveengineering:plate_steel"
+				}
+				type: "item"
+			}]
+			tasks: [{
+				count: 16L
+				id: "5C02000000000031"
+				item: {
+					count: 1
+					id: "immersiveengineering:ingot_steel"
+				}
+				type: "item"
+			}]
+			x: 2.5d
+			y: 1.0d
+		}
+	]
+}

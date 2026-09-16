@@ -1,0 +1,16 @@
+{
+  "items": [
+    "mekanismgenerators:control_rod_assembly",
+    "mekanismgenerators:fission_fuel_assembly",
+    "mekanismgenerators:fission_reactor_casing",
+    "mekanismgenerators:fission_reactor_logic_adapter",
+    "mekanismgenerators:fission_reactor_port",
+    "mekanismgenerators:fusion_reactor_controller",
+    "mekanismgenerators:fusion_reactor_frame",
+    "mekanismgenerators:fusion_reactor_logic_adapter",
+    "mekanismgenerators:fusion_reactor_port",
+    "mekanismgenerators:hohlraum",
+    "mekanismgenerators:laser_focus_matrix",
+    "mekanismgenerators:reactor_glass"
+  ]
+}

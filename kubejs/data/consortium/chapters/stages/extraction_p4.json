@@ -1,0 +1,31 @@
+{
+  "items": [
+    "ad_astra:deepslate_ostrum_ore",
+    "ad_astra:encased_ostrum_block",
+    "ad_astra:glowing_ostrum_pillar",
+    "ad_astra:netherite_space_boots",
+    "ad_astra:netherite_space_helmet",
+    "ad_astra:netherite_space_pants",
+    "ad_astra:netherite_space_suit",
+    "ad_astra:ostrum_block",
+    "ad_astra:ostrum_engine",
+    "ad_astra:ostrum_factory_block",
+    "ad_astra:ostrum_fluid_pipe",
+    "ad_astra:ostrum_ingot",
+    "ad_astra:ostrum_nugget",
+    "ad_astra:ostrum_panel",
+    "ad_astra:ostrum_pillar",
+    "ad_astra:ostrum_plate",
+    "ad_astra:ostrum_plateblock",
+    "ad_astra:ostrum_plating",
+    "ad_astra:ostrum_plating_button",
+    "ad_astra:ostrum_plating_pressure_plate",
+    "ad_astra:ostrum_plating_slab",
+    "ad_astra:ostrum_plating_stairs",
+    "ad_astra:ostrum_sliding_door",
+    "ad_astra:ostrum_tank",
+    "ad_astra:raw_ostrum",
+    "ad_astra:raw_ostrum_block",
+    "ad_astra:tier_3_rocket"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "items": [
+    "mekanism:dosimeter",
+    "mekanism:geiger_counter",
+    "mekanism:hazmat_boots",
+    "mekanism:hazmat_gown",
+    "mekanism:hazmat_mask",
+    "mekanism:hazmat_pants",
+    "mekanism:hydrofluoric_acid_bucket",
+    "mekanism:isotopic_centrifuge",
+    "mekanism:pellet_plutonium",
+    "mekanism:pellet_polonium",
+    "mekanism:radioactive_waste_barrel",
+    "mekanism:solar_neutron_activator",
+    "mekanism:superheated_sodium_bucket",
+    "mekanism:uranium_hexafluoride_bucket",
+    "mekanism:uranium_oxide_bucket"
+  ],
+  "fluids": [
+    "mekanism:hydrofluoric_acid",
+    "mekanism:superheated_sodium",
+    "mekanism:uranium_hexafluoride",
+    "mekanism:uranium_oxide"
+  ],
+  "chemicals": [
+    "mekanism:fissile_fuel",
+    "mekanism:hydrofluoric_acid",
+    "mekanism:nuclear_waste",
+    "mekanism:plutonium",
+    "mekanism:polonium",
+    "mekanism:spent_nuclear_waste",
+    "mekanism:superheated_sodium",
+    "mekanism:uranium_hexafluoride",
+    "mekanism:uranium_oxide"
+  ]
+}

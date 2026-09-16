@@ -1,0 +1,14 @@
+{
+  "items": [
+    "mekanism:ethene_bucket",
+    "mekanism:induction_casing",
+    "mekanism:induction_port",
+    "mekanism:pressurized_reaction_chamber"
+  ],
+  "fluids": [
+    "mekanism:ethene"
+  ],
+  "chemicals": [
+    "mekanism:ethene"
+  ]
+}

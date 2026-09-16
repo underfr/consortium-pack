@@ -1,0 +1,21 @@
+{
+  "items": [
+    "powah:battery_hardened",
+    "powah:capacitor_hardened",
+    "powah:ender_cell_hardened",
+    "powah:ender_gate_hardened",
+    "powah:energized_steel_block",
+    "powah:energizing_rod_hardened",
+    "powah:energy_cable_hardened",
+    "powah:energy_cell_hardened",
+    "powah:energy_discharger_hardened",
+    "powah:energy_hopper_hardened",
+    "powah:furnator_hardened",
+    "powah:magmator_hardened",
+    "powah:player_transmitter_hardened",
+    "powah:reactor_hardened",
+    "powah:solar_panel_hardened",
+    "powah:steel_energized",
+    "powah:thermo_generator_hardened"
+  ]
+}

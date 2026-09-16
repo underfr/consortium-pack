@@ -1,0 +1,20 @@
+{
+  "items": [
+    "ae2:16k_crafting_storage",
+    "ae2:1k_crafting_storage",
+    "ae2:256k_crafting_storage",
+    "ae2:4k_crafting_storage",
+    "ae2:64k_crafting_storage",
+    "ae2:blank_pattern",
+    "ae2:cable_pattern_provider",
+    "ae2:crafting_accelerator",
+    "ae2:crafting_card",
+    "ae2:crafting_pattern",
+    "ae2:crafting_unit",
+    "ae2:molecular_assembler",
+    "ae2:pattern_provider",
+    "ae2:processing_pattern",
+    "ae2:smithing_table_pattern",
+    "ae2:stonecutting_pattern"
+  ]
+}

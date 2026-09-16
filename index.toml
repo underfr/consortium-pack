@@ -10,11 +10,47 @@ hash = "801ce965083775f13b78fa36c5d77dcd2311838b4009b622ea25e6a71c24d626"
 
 [[files]]
 file = "config/create-server.toml"
-hash = "36216a05f3ed63106ba587c8c24ed6315385829e7f3dae695dcf545aba41a270"
+hash = "7d8efaeb26029754fdffe7614fa22cf9055b35389630c15a7a06211b707f34dc"
 
 [[files]]
 file = "config/ftbchunks-world.snbt"
 hash = "45bc75ee64b7ee401ba50790954a34b5e6ab887799434fa4a69a88cdce350e73"
+
+[[files]]
+file = "config/ftbquests/quests/chapter_groups.snbt"
+hash = "6094ea50f356ecb8b017bbac914ae5f4709a4e6d4508a12b92c46105c4495e6b"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/phase1.snbt"
+hash = "a10822098a758b818ce85857f618ddfbf30859eedd6a8039e3343299be5435bc"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/phase2.snbt"
+hash = "7c919b0b1929ed1610882af66a90faec52b1f97791f9d70426854cd2f3c02307"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/phase3.snbt"
+hash = "bb9fac5e11407a2da15566fb719416761c9b40241251505bb96e56e8b7ba7bbf"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/phase4.snbt"
+hash = "481165a49cd00777fbb67ac4ad81033846765676b3a3348fe2368c6640b6cba4"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/phase5.snbt"
+hash = "1b98f016373eb0eb906452db7d48b847218855c4fd1582e6eec3808ba21d6d8d"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/welcome.snbt"
+hash = "d903ec4139c2cc1d0cd46c4115edac3a531c69881838c002c9f1522205ae9490"
+
+[[files]]
+file = "config/ftbquests/quests/data.snbt"
+hash = "e8155a4b5cec798b503dad78189bd9659b8efe80b523dfd8b20c17f08b54d3bf"
+
+[[files]]
+file = "config/ftbquests/quests/lang/en_us.snbt"
+hash = "8b523a5fae017e374860b17244fe62b191b95a83eae9eea0cb97e038da3b2080"
 
 [[files]]
 file = "config/ftbteams-server.snbt"
@@ -23,6 +59,10 @@ hash = "61b37c30c24d841f4d993e933df0d60f198fbcf06671a87a73b9a23f8434858d"
 [[files]]
 file = "config/ftbxmodcompat.snbt"
 hash = "28f2d08dd8ba9ab18a18e44d439d39a0b4072bb3640947bdda06ccb5973bd61e"
+
+[[files]]
+file = "config/immersiveengineering-server.toml"
+hash = "48445bb4ba37dc6b765444a5140b8eb001a858c41b36af627ca33a319ce8b14f"
 
 [[files]]
 file = "config/jei-server.toml"
@@ -49,12 +89,136 @@ file = "kubejs/client_scripts/00_placeholder.js"
 hash = "3e7de141738702b8eebd3afef24403ccfb3a7a991ec20a4134c238cd02164e40"
 
 [[files]]
+file = "kubejs/data/consortium/chapters/stages/energy_p1.json"
+hash = "80a2683c2ffd377defea79387c98ca218b176283e2848b42692532cc307c36fa"
+
+[[files]]
+file = "kubejs/data/consortium/chapters/stages/energy_p2.json"
+hash = "ca5cd4a10e8ecbb47035845b7b6a1479df098bb543c83da2f9aa83a88d865233"
+
+[[files]]
+file = "kubejs/data/consortium/chapters/stages/energy_p3.json"
+hash = "ad752b6fa177e3b4179e06592eeb1d35b1acbd8f03f7533e07b8c6468ccd8d0d"
+
+[[files]]
+file = "kubejs/data/consortium/chapters/stages/energy_p4.json"
+hash = "e15c5e1b18f7bb61031edf7b399095f678398eba8bce20e2091235fb384c1da8"
+
+[[files]]
+file = "kubejs/data/consortium/chapters/stages/energy_p5.json"
+hash = "56bb41f79586377a345137c689873999f9d6f80f7a28c8b4ee82e091f620424e"
+
+[[files]]
+file = "kubejs/data/consortium/chapters/stages/extraction_p1.json"
+hash = "ad41e59dd6ef5eaf82c4a2487a5f1a45de59479fa356a495c2c88ab111536ea6"
+
+[[files]]
+file = "kubejs/data/consortium/chapters/stages/extraction_p2.json"
+hash = "3e8e57557319cda2b04f613e87048d76b5a38a439e65d3efb8050da367929f21"
+
+[[files]]
+file = "kubejs/data/consortium/chapters/stages/extraction_p3.json"
+hash = "7d38f7209207cbc294c98ca4687ecbacc1000f23e36405df9fee8b239acb9dc5"
+
+[[files]]
+file = "kubejs/data/consortium/chapters/stages/extraction_p4.json"
+hash = "df18bd91af91ce07d3fe0701dec0d0bf82a237d9be5bc3122f939cf448e3bf6a"
+
+[[files]]
+file = "kubejs/data/consortium/chapters/stages/extraction_p5.json"
+hash = "5cec9b5054c75cb7fea676371929c1c926d01a3a56df177c0b8a986779224bc0"
+
+[[files]]
+file = "kubejs/data/consortium/chapters/stages/licence_energy.json"
+hash = "03f980fa3e6ae3460e547258f11b4a6f7e91d9022308bf48bbcd89023a83373a"
+
+[[files]]
+file = "kubejs/data/consortium/chapters/stages/licence_extraction.json"
+hash = "40a11cca6ed8b7f0dacb5b4786f159d208c9857282b5a2499ec783dd9cf93c5c"
+
+[[files]]
+file = "kubejs/data/consortium/chapters/stages/licence_logistics.json"
+hash = "5a8bc78cdb2884023ed28130804fdf74da94ceccd4a2d2ae5266c0ea74cc5164"
+
+[[files]]
+file = "kubejs/data/consortium/chapters/stages/logistics_p1.json"
+hash = "6d932bd06008a81f50d2fe5e7ed3439f33c6002125634f46b1dd5fb6e547d8e4"
+
+[[files]]
+file = "kubejs/data/consortium/chapters/stages/logistics_p2.json"
+hash = "1c89e61566d57c6085cbd70a462c9883fbe58a01d9054c2a97416a8a54d3a171"
+
+[[files]]
+file = "kubejs/data/consortium/chapters/stages/logistics_p3.json"
+hash = "79ff800347dada5c148185fdfa2b0646e03057b9e6574106b1f0c6b0939e468c"
+
+[[files]]
+file = "kubejs/data/consortium/chapters/stages/logistics_p4.json"
+hash = "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+
+[[files]]
+file = "kubejs/data/consortium/chapters/stages/logistics_p5.json"
+hash = "f0e70da2514f87ed6419df74fd83a12bcac08a085844f2e14b8fd341e2595a4f"
+
+[[files]]
+file = "kubejs/data/consortium/chapters/stages/phase_1.json"
+hash = "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+
+[[files]]
+file = "kubejs/data/consortium/chapters/stages/phase_2.json"
+hash = "3ed8420a0b0a4e6d2c8938eac36608ad7005b39ab73ae29e13223bd972f0e344"
+
+[[files]]
+file = "kubejs/data/consortium/chapters/stages/phase_3.json"
+hash = "1b20836364267591e80ce312c81bd9b5f9d26f52548ced648ea8e918c52b8ee2"
+
+[[files]]
+file = "kubejs/data/consortium/chapters/stages/phase_4.json"
+hash = "d0625b7d007aa4f71d2dfb6bd544ca97322d286961b3114cd6041f7fc83af609"
+
+[[files]]
+file = "kubejs/data/consortium/chapters/stages/phase_5.json"
+hash = "d977ba53991c066527541839ced4c03fe3cf445f9fbb4f4f86aaeeee04ac9afd"
+
+[[files]]
+file = "kubejs/data/consortium/chapters/stages/staff.json"
+hash = "e2c79c25dd36695c929d22a58d61b6c92703a78f9d2220b5dd2a67cdb342aeee"
+
+[[files]]
+file = "kubejs/data/consortium/consortium_prices/starter.json"
+hash = "7483e5410bc0549b9a6336abaa52d7c1aaf965a7d546a0d510df48c7bce72711"
+
+[[files]]
 file = "kubejs/server_scripts/00_placeholder.js"
 hash = "0629692b9bd78377d36f221b12a6a8bb3dc717f3dae80fb3a13d71932c1892b8"
 
 [[files]]
+file = "kubejs/server_scripts/consortium_charters.js"
+hash = "58547d07351dc1c859ecbbab89ad7abf01aa194a91e9b9e3c1d9ddca7bc0ba1d"
+
+[[files]]
+file = "kubejs/server_scripts/consortium_commands.js"
+hash = "45c908f4d1f517096ac49b5a2fcb26a178389839d1d8875a7d8bc7416af68607"
+
+[[files]]
+file = "kubejs/server_scripts/consortium_lib.js"
+hash = "7277f043173c818a3a8fb1aec3bfe539d0400b772bdd0a43685d864a134f058f"
+
+[[files]]
+file = "kubejs/server_scripts/consortium_phases.js"
+hash = "952112d3b26bb230417c139f436ad26bcc583022e1ec3bc5d53cd7819054c362"
+
+[[files]]
+file = "kubejs/server_scripts/consortium_quotas.js"
+hash = "5490352522b5b7e818d8203cb4dc9ff08345a8409ee26912a10a9f24edf0e592"
+
+[[files]]
 file = "kubejs/server_scripts/economy_locks.js"
-hash = "4f3dde1ed6fda3eda95bcb894ac63c1b4226ba8d214dd2225b3871766c123d56"
+hash = "d8df4dd714f3efb6609800b6f618c993e0e592705a4c80a8263e440f979bdac5"
+
+[[files]]
+file = "kubejs/server_scripts/spawner_locks.js"
+hash = "f375993f893f26e611e95eaf500270e178ecd6a1e4514a9d8d2be92c3e5b9568"
 
 [[files]]
 file = "kubejs/startup_scripts/00_placeholder.js"

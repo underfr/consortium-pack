@@ -1,0 +1,10 @@
+{
+  "items": [
+    "mekanism:advanced_control_circuit",
+    "mekanism:basic_purifying_factory",
+    "mekanism:purification_chamber"
+  ],
+  "chemicals": [
+    "mekanism:oxygen"
+  ]
+}

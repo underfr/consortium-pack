@@ -1,0 +1,72 @@
+// The Consortium - Phase 5: Event Horizon.
+// Gated by the Chapters stage consortium:phase_5 (same pattern as phase2.snbt).
+// Ids: 5C05 + 9 zeros + NNN. 001 chapter, 010 intro quest, 020 objective quest, 030 item quest.
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "phase5"
+	group: "5C0F000000000001"
+	icon: {
+		id: "mekanism:pellet_antimatter"
+	}
+	id: "5C05000000000001"
+	images: [ ]
+	order_index: 4
+	quest_links: [ ]
+	quests: [
+		{
+			icon: {
+				id: "mekanism:pellet_antimatter"
+			}
+			id: "5C05000000000010"
+			invisible: true
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [{
+				id: "5C05000000000011"
+				stage: "consortium:phase_5"
+				type: "gamestage"
+			}]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C05000000000010"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "minecraft:map"
+			}
+			id: "5C05000000000020"
+			tasks: [{
+				id: "5C05000000000021"
+				type: "checkmark"
+			}]
+			x: 2.5d
+			y: -1.0d
+		}
+		{
+			dependencies: ["5C05000000000010"]
+			hide_until_deps_complete: true
+			id: "5C05000000000030"
+			rewards: [{
+				count: 2
+				id: "5C05000000000032"
+				item: {
+					count: 1
+					id: "ad_astra:cryo_fuel_bucket"
+				}
+				type: "item"
+			}]
+			tasks: [{
+				id: "5C05000000000031"
+				item: {
+					count: 1
+					id: "ad_astra:tier_4_rocket"
+				}
+				type: "item"
+			}]
+			x: 2.5d
+			y: 1.0d
+		}
+	]
+}

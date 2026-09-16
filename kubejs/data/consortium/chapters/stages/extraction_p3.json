@@ -1,0 +1,25 @@
+{
+  "items": [
+    "mekanism:alloy_atomic",
+    "mekanism:chemical_dissolution_chamber",
+    "mekanism:chemical_washer",
+    "mekanism:ultimate_control_circuit"
+  ],
+  "chemicals": [
+    "mekanism:clean_copper",
+    "mekanism:clean_gold",
+    "mekanism:clean_iron",
+    "mekanism:clean_lead",
+    "mekanism:clean_osmium",
+    "mekanism:clean_tin",
+    "mekanism:clean_uranium",
+    "mekanism:dirty_copper",
+    "mekanism:dirty_gold",
+    "mekanism:dirty_iron",
+    "mekanism:dirty_lead",
+    "mekanism:dirty_osmium",
+    "mekanism:dirty_tin",
+    "mekanism:dirty_uranium",
+    "mekanism:refined_obsidian"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "items": [
+    "create:blaze_burner",
+    "create:blaze_cake",
+    "create:blaze_cake_base",
+    "create:cinder_flour",
+    "create:empty_blaze_burner",
+    "create:steam_engine",
+    "create:steam_whistle"
+  ]
+}

@@ -1,4 +1,4 @@
-// The Consortium - economy locks (PROJECT_RULES 4.1 and 4.2).
+// The Consortium - economy locks (PROJECT_RULES 4.1 and 4.2, PROGRESSION.md sections 14 and 15).
 //
 // Chunk loading is a paid money sink and Chunk Loaders (SuperMartijn642) is the only
 // chunk-loading system. Every other way to keep chunks loaded is removed here, and the
@@ -7,7 +7,7 @@
 //
 // Recipe ids were read from the mod jars shipped in pack 0.3.0:
 //   chunkloaders 1.2.9, Mekanism 10.7.19.85, Applied Energistics 2 19.2.17,
-//   Immersive Engineering 12.4.2-194.
+//   Immersive Engineering 12.4.2-194, Ad Astra 1.16.26.
 
 ServerEvents.recipes((event) => {
   // Chunk Loaders: shop-only.
@@ -30,4 +30,23 @@ ServerEvents.recipes((event) => {
   // Immersive Engineering: the Resonanz Observer multiblock is a chunk loader with no
   // config toggle; its only specific block has this single recipe.
   event.remove({ id: 'immersiveengineering:crafting/resonanz_engineering' })
+
+  // Immersive Engineering brass (PROGRESSION.md section 15): brass is a phase 2 gate made by
+  // heated Create mixing only. The alloy kiln is free from phase 1 (bronze, constantan,
+  // electrum) and would otherwise output create:brass_ingot with no blaze burner; the arc
+  // furnace recipes are removed for the same reason (verified data/immersiveengineering/recipe/).
+  // Note: arcfurnace/dust_brass carries a neoforge:tag_empty condition on #c:dusts/brass, which
+  // is empty in this pack, so IE never loads it and KubeJS reports 14 removed recipes for the
+  // 15 ids below. The line stays as a safety net for a mod that adds brass dust later.
+  event.remove({ id: 'immersiveengineering:alloysmelter/brass' })
+  event.remove({ id: 'immersiveengineering:arcfurnace/alloy_brass' })
+  event.remove({ id: 'immersiveengineering:arcfurnace/dust_brass' })
+
+  // Ad Astra cryo fuel (PROGRESSION.md section 15): #ad_astra:fuel lists cryo fuel as an
+  // efficient rocket fuel for every tier, and free overworld ice would make launches nearly
+  // free from phase 4. Cryo fuel is made from planet ice shards only
+  // (cryo_fuel_from_cryo_freezing_ice_shard stays).
+  event.remove({ id: 'ad_astra:cryo_freezing/cryo_fuel_from_cryo_freezing_ice' })
+  event.remove({ id: 'ad_astra:cryo_freezing/cryo_fuel_from_cryo_freezing_packed_ice' })
+  event.remove({ id: 'ad_astra:cryo_freezing/cryo_fuel_from_cryo_freezing_blue_ice' })
 })

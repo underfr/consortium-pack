@@ -1,0 +1,255 @@
+// The Consortium - all player-facing quest text (FTB Quests 2101.x keeps titles and descriptions here).
+// Key format: <object_type>.<16 hex id>.<title | quest_subtitle | quest_desc | chapter_subtitle>
+// Placeholder texts: real sentences in the Consortium corporate voice, to be refined with the phase engine.
+{
+	chapter_group.5C0F000000000001.title: "Season 1"
+
+	chapter.5C00000000000001.chapter_subtitle: ["Onboarding for new Consortium employees. About 15 minutes."]
+	chapter.5C00000000000001.title: "Welcome to The Consortium"
+
+	quest.5C00000000000010.quest_desc: [
+		"Welcome aboard. The Consortium has hired you to rebuild industry from the ground up, one delivery at a time."
+		""
+		"Before you touch a single machine, read the server rules on the Discord notice board. They are short, and every employee is expected to know them."
+		""
+		"Tick this quest once you have read them."
+	]
+	quest.5C00000000000010.quest_subtitle: "Read the server rules"
+	quest.5C00000000000010.title: "Employee Handbook"
+	task.5C00000000000011.title: "I have read the rules"
+	reward.5C00000000000013.title: "Welcome rations"
+
+	quest.5C00000000000020.quest_desc: [
+		"Every Consortium operation starts with rotation. Craft a Create hand crank or a water wheel: either one counts, so pick what fits your site."
+		""
+		"The hand crank turns with your own two hands. The water wheel runs on flowing water and never asks for a break."
+		""
+		"Keep the part you make. The Board only needs to see it in your inventory."
+	]
+	quest.5C00000000000020.quest_subtitle: "Craft a hand crank or a water wheel"
+	quest.5C00000000000020.title: "First Rotation"
+	task.5C00000000000021.title: "Hand crank (either task completes the quest)"
+	task.5C00000000000022.title: "Water wheel (either task completes the quest)"
+	reward.5C00000000000023.title: "Company wrench"
+
+	quest.5C00000000000030.quest_desc: [
+		"Every delivery you make to the Consortium goes through the delivery terminal at the Field Office, next to spawn. Deliveries feed the phase quota and pay you in credits."
+		""
+		"The terminal itself arrives in a later update. Until then, find the Field Office, note where the terminal will stand, and tick this quest."
+	]
+	quest.5C00000000000030.quest_subtitle: "Find the delivery terminal at the Field Office"
+	quest.5C00000000000030.title: "The Delivery Terminal"
+	task.5C00000000000031.title: "I found the Field Office"
+	reward.5C00000000000033.title: "Starter stock for your first delivery"
+
+	quest.5C00000000000040.quest_desc: [
+		"Deliver 16 cobblestone at the terminal to earn your first credit and open your employee account. Credits buy services and rank you on the Consortium leaderboard."
+		""
+		"Placeholder: the terminal and the credit system are not live yet. Tick this quest for now; it becomes a real delivery task once the terminal ships."
+	]
+	quest.5C00000000000040.quest_subtitle: "Earn your first credit"
+	quest.5C00000000000040.title: "First Paycheck"
+	task.5C00000000000041.title: "I earned my first credit"
+	reward.5C00000000000043.title: "Signing bonus"
+
+	chapter.5C01000000000001.chapter_subtitle: ["Days 1 to 7. Vanilla, Create kinetics, Farmer's Delight, basic waystones."]
+	chapter.5C01000000000001.title: "Phase 1: Groundbreaking"
+
+	quest.5C01000000000010.quest_desc: [
+		"The Board has staked its claim. A provisional Field Office stands at spawn; everything else is dirt, stone and ambition."
+		"Your first assignment: get rotation going, feed the workforce, and stockpile the raw materials the permanent headquarters will be built from."
+		"When the quota is met, the Board raises the HQ and the public Foundry around the Field Office, and every employee present receives a Founder's Lantern."
+	]
+	quest.5C01000000000010.quest_subtitle: "Phase 1 briefing"
+	quest.5C01000000000010.title: "Groundbreaking"
+	task.5C01000000000011.title: "Briefing acknowledged"
+
+	quest.5C01000000000020.quest_desc: [
+		"The Board expects the following deliveries at the terminal before Phase 2 opens:"
+		"- 40,000 cobblestone (counts for the quota, pays no credits)"
+		"- 2,500 iron ingots"
+		"- 2,000 copper ingots"
+		"- 1,700 zinc ingots"
+		"- 3,500 coal"
+		"- 1,000 andesite alloy"
+		"- 500 andesite funnels"
+		"- 1,000 Farmer's Delight cooked meals"
+		""
+		"Phase progress is shown on the boss bar and with /consortium phase. The phase completes when overall progress reaches 90% and every line is at least 60%."
+		""
+		"Tick this quest once you have read the quota."
+	]
+	quest.5C01000000000020.quest_subtitle: "Groundbreaking deliveries"
+	quest.5C01000000000020.title: "Phase 1 Quota"
+	task.5C01000000000021.title: "Quota read"
+
+	quest.5C01000000000030.quest_desc: [
+		"Andesite alloy is the Consortium's first manufactured good: andesite plus iron nuggets, on any crafting grid."
+		""
+		"Hold 64 of them to prove your line runs. The alloy stays yours; the Board only wants to see it."
+	]
+	quest.5C01000000000030.quest_subtitle: "Show 64 andesite alloy"
+	quest.5C01000000000030.title: "Alloy Order"
+	reward.5C01000000000032.title: "Company casings"
+
+	chapter.5C02000000000001.chapter_subtitle: ["Days 8 to 19. Steel, Create brass and steam, Mekanism basic, IE low voltage, Powah starter and basic."]
+	chapter.5C02000000000001.title: "Phase 2: The Foundry"
+
+	quest.5C02000000000010.quest_desc: [
+		"Groundbreaking is done: the HQ stands and the public Foundry is lit. The Board now wants steel, and a lot of it."
+		"Blast furnaces, brass, steam and the first Mekanism machines are cleared for use. Iron is the bottleneck; plan your mines accordingly."
+		"Meet the quota and the Board schedules the Stress Test: Wither waves in the reinforced furnace pit, and a beacon for the HQ."
+	]
+	quest.5C02000000000010.quest_subtitle: "Phase 2 briefing"
+	quest.5C02000000000010.title: "The Foundry"
+	task.5C02000000000011.title: "Phase 2 clearance granted by the Board"
+
+	quest.5C02000000000020.quest_desc: [
+		"The Board expects the following deliveries at the terminal before Phase 3 opens:"
+		"- 5,000 steel ingots (Mekanism, Immersive Engineering or Ad Astra steel)"
+		"- 5,000 brass ingots"
+		"- 4,000 coal coke"
+		"- 800 energy tablets"
+		"- 400 steel casings"
+		"- 1,500 basic control circuits"
+		"- 600 precision mechanisms"
+		"- 600 brass funnels"
+		""
+		"Phase progress is shown on the boss bar and with /consortium phase. The phase completes when overall progress reaches 90% and every line is at least 60%."
+		""
+		"Tick this quest once you have read the quota."
+	]
+	quest.5C02000000000020.quest_subtitle: "Foundry deliveries"
+	quest.5C02000000000020.title: "Phase 2 Quota"
+	task.5C02000000000021.title: "Quota read"
+
+	quest.5C02000000000030.quest_desc: [
+		"Steel is the Consortium's currency this phase. A crude blast furnace turns iron and coal coke into steel about once a minute while you stand nearby; the Mekanism route through enriched carbon is cheaper on coal."
+		""
+		"Hold 16 Immersive Engineering steel ingots to certify your furnace. The ingots stay yours."
+	]
+	quest.5C02000000000030.quest_subtitle: "Show 16 Immersive Engineering steel ingots"
+	quest.5C02000000000030.title: "Steel Sample"
+	reward.5C02000000000032.title: "Pressed steel plates"
+
+	chapter.5C03000000000001.chapter_subtitle: ["Days 20 to 34. Mekanism advanced and elite, 3x and 4x ores, AE2 storage, IE medium voltage, Powah hardened and blazing."]
+	chapter.5C03000000000001.title: "Phase 3: The Refinery"
+
+	quest.5C03000000000010.quest_desc: [
+		"Steel is flowing and the beacon is lit. The Board moves to the next line item: ore yield."
+		"Advanced and elite Mekanism tiers, 3x and 4x ore processing, AE2 storage and the medium voltage grid are now cleared. The public Refinery at HQ runs at 2x to 3x for a per-stack fee from day one."
+		"Complete the quota and the Board calls the Hostile Takeover, followed by the First Launch: every team lifts off for the Moon on the same countdown."
+	]
+	quest.5C03000000000010.quest_subtitle: "Phase 3 briefing"
+	quest.5C03000000000010.title: "The Refinery"
+	task.5C03000000000011.title: "Phase 3 clearance granted by the Board"
+
+	quest.5C03000000000020.quest_desc: [
+		"The Board expects the following deliveries at the terminal before Phase 4 opens:"
+		"- 3,000 gold ingots"
+		"- 500 refined obsidian ingots"
+		"- 4,000 fluix crystals"
+		"- 2,000 energized steel"
+		"- 2,000 advanced control circuits"
+		"- 1,500 reinforced alloy"
+		"- 100 hydrogen chloride buckets"
+		"- 300 1k ME item storage cells"
+		""
+		"Phase progress is shown on the boss bar and with /consortium phase. The phase completes when overall progress reaches 90% and every line is at least 60%."
+		""
+		"Tick this quest once you have read the quota."
+	]
+	quest.5C03000000000020.quest_subtitle: "Refinery deliveries"
+	quest.5C03000000000020.title: "Phase 3 Quota"
+	task.5C03000000000021.title: "Quota read"
+
+	quest.5C03000000000030.quest_desc: [
+		"An elite factory processes seven stacks at once, which is the scale the Refinery runs at. It takes elite control circuits, reinforced alloy and a steel casing."
+		""
+		"Hold one elite enriching factory to certify your processing line. The factory stays yours."
+	]
+	quest.5C03000000000030.quest_subtitle: "Show an elite enriching factory"
+	quest.5C03000000000030.title: "Elite Factory Certification"
+	reward.5C03000000000032.title: "Speed upgrades"
+
+	chapter.5C04000000000001.chapter_subtitle: ["Days 35 to 50. Mekanism ultimate, chemistry, AE2 autocrafting, the Moon and Mars, IE high voltage, reforging."]
+	chapter.5C04000000000001.title: "Phase 4: Orbital Division"
+
+	quest.5C04000000000010.quest_desc: [
+		"The Refinery held and the rockets flew. The Consortium is now an orbital concern."
+		"Ultimate Mekanism tiers, AE2 autocrafting, the Moon and Mars, high voltage power and reforging are cleared. Desh only exists on the Moon, and every launch burns fuel."
+		"Meet the quota and the Board inaugurates the Consortium station in Earth orbit. The Lunar Outpost opens as soon as the desh line passes 50%."
+	]
+	quest.5C04000000000010.quest_subtitle: "Phase 4 briefing"
+	quest.5C04000000000010.title: "Orbital Division"
+	task.5C04000000000011.title: "Phase 4 clearance granted by the Board"
+
+	quest.5C04000000000020.quest_desc: [
+		"The Board expects the following deliveries at the terminal before Phase 5 opens:"
+		"- 1,500 diamonds"
+		"- 2,000 desh ingots"
+		"- 1,000 atomic alloy"
+		"- 1,000 HDPE sheets"
+		"- 2,000 logic processors"
+		"- 750 engineering processors"
+		"- 400 niotic crystals"
+		"- 300 fuel buckets (rocket fuel, biodiesel or cryo fuel)"
+		""
+		"Phase progress is shown on the boss bar and with /consortium phase. The phase completes when overall progress reaches 90% and every line is at least 60%."
+		""
+		"Tick this quest once you have read the quota."
+	]
+	quest.5C04000000000020.quest_subtitle: "Orbital deliveries"
+	quest.5C04000000000020.title: "Phase 4 Quota"
+	task.5C04000000000021.title: "Quota read"
+
+	quest.5C04000000000030.quest_desc: [
+		"The pattern provider is where an ME network stops storing and starts manufacturing: it pushes encoded patterns into machines and collects the output."
+		""
+		"Hold one pattern provider to certify your autocrafting setup. The provider stays yours."
+	]
+	quest.5C04000000000030.quest_subtitle: "Show a pattern provider"
+	quest.5C04000000000030.title: "Autocrafting Audit"
+	reward.5C04000000000032.title: "Blank patterns"
+
+	chapter.5C05000000000001.chapter_subtitle: ["Days 51 to 70. Fusion, antimatter, AE2 spatial storage, Venus, Mercury and Glacio."]
+	chapter.5C05000000000001.title: "Phase 5: Event Horizon"
+
+	quest.5C05000000000010.quest_desc: [
+		"The station is open and the Board has approved the season project: a Fusion Core, a Frontier Gate to Glacio, and one sealed pellet of antimatter."
+		"Fusion, antimatter, AE2 spatial storage, Venus, Mercury and Glacio are cleared. The charters hold the licences; nobody finishes this alone."
+		"When all three projects stand, the Liquidator is summoned on Glacio and Season 1 closes on the announced end date."
+	]
+	quest.5C05000000000010.quest_subtitle: "Phase 5 briefing"
+	quest.5C05000000000010.title: "Event Horizon"
+	task.5C05000000000011.title: "Phase 5 clearance granted by the Board"
+
+	quest.5C05000000000020.quest_desc: [
+		"The season project's bill of materials. The Board expects the following deliveries at the terminal:"
+		"- 4,000 uranium ingots"
+		"- 1,600 ostrum ingots"
+		"- 1,000 calorite ingots"
+		"- 800 ultimate control circuits"
+		"- 600 polonium pellets"
+		"- 150 plutonium pellets"
+		"- 80 nitro crystals"
+		"- 32 singularities (count for the quota, pay no credits)"
+		"- 1 antimatter pellet (the Antimatter Reserve)"
+		""
+		"Phase progress is shown on the boss bar and with /consortium phase. The phase completes when overall progress reaches 90% and every line is at least 60%."
+		""
+		"Tick this quest once you have read the quota."
+	]
+	quest.5C05000000000020.quest_subtitle: "Season project deliveries"
+	quest.5C05000000000020.title: "Phase 5 Quota"
+	task.5C05000000000021.title: "Quota read"
+
+	quest.5C05000000000030.quest_desc: [
+		"A tier 4 rocket is the only way to Glacio, where the season ends. It is built at the NASA workbench from calorite, the ore that only Venus yields."
+		""
+		"Hold one tier 4 rocket to be cleared for the final expedition. The rocket stays yours."
+	]
+	quest.5C05000000000030.quest_subtitle: "Show a tier 4 rocket"
+	quest.5C05000000000030.title: "Glacio Clearance"
+	reward.5C05000000000032.title: "Cryo fuel for the trip"
+}

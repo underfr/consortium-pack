@@ -1,0 +1,22 @@
+{
+  "items": [
+    "ae2:quantum_entangled_singularity",
+    "ae2:quantum_link",
+    "ae2:quantum_ring",
+    "mekanism:portable_qio_dashboard",
+    "mekanism:portable_teleporter",
+    "mekanism:qio_dashboard",
+    "mekanism:qio_drive_array",
+    "mekanism:qio_drive_base",
+    "mekanism:qio_drive_hyper_dense",
+    "mekanism:qio_drive_supermassive",
+    "mekanism:qio_drive_time_dilating",
+    "mekanism:qio_exporter",
+    "mekanism:qio_importer",
+    "mekanism:qio_redstone_adapter",
+    "mekanism:quantum_entangloporter",
+    "mekanism:teleportation_core",
+    "mekanism:teleporter",
+    "mekanism:teleporter_frame"
+  ]
+}

@@ -1,0 +1,115 @@
+// The Consortium - onboarding chapter (no stage required).
+// Ids: 5C00 + 9 zeros + NNN. NNN = 001 chapter, 0n0 quest n, 0n1/0n2 its tasks, 0n3 its reward.
+// Player-facing text lives in ../lang/en_us.snbt.
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "welcome"
+	group: ""
+	icon: {
+		id: "minecraft:writable_book"
+	}
+	id: "5C00000000000001"
+	images: [ ]
+	order_index: 0
+	quest_links: [ ]
+	quests: [
+		{
+			icon: {
+				id: "minecraft:writable_book"
+			}
+			id: "5C00000000000010"
+			rewards: [{
+				count: 8
+				id: "5C00000000000013"
+				item: {
+					count: 1
+					id: "minecraft:bread"
+				}
+				type: "item"
+			}]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [{
+				id: "5C00000000000011"
+				type: "checkmark"
+			}]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C00000000000010"]
+			id: "5C00000000000020"
+			rewards: [{
+				id: "5C00000000000023"
+				item: {
+					count: 1
+					id: "create:wrench"
+				}
+				type: "item"
+			}]
+			tasks: [
+				{
+					id: "5C00000000000021"
+					item: {
+						count: 1
+						id: "create:hand_crank"
+					}
+					optional_task: true
+					type: "item"
+				}
+				{
+					id: "5C00000000000022"
+					item: {
+						count: 1
+						id: "create:water_wheel"
+					}
+					optional_task: true
+					type: "item"
+				}
+			]
+			x: 2.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C00000000000020"]
+			icon: {
+				id: "create:stock_ticker"
+			}
+			id: "5C00000000000030"
+			rewards: [{
+				count: 16
+				id: "5C00000000000033"
+				item: {
+					count: 1
+					id: "minecraft:cobblestone"
+				}
+				type: "item"
+			}]
+			tasks: [{
+				id: "5C00000000000031"
+				type: "checkmark"
+			}]
+			x: 5.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C00000000000030"]
+			icon: {
+				id: "minecraft:paper"
+			}
+			id: "5C00000000000040"
+			rewards: [{
+				id: "5C00000000000043"
+				type: "xp"
+				xp: 25
+			}]
+			tasks: [{
+				id: "5C00000000000041"
+				type: "checkmark"
+			}]
+			x: 7.5d
+			y: 0.0d
+		}
+	]
+}
