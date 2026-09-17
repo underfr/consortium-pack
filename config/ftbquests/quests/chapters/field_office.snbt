@@ -1,0 +1,228 @@
+// The Consortium - The Field Office (economy chapter, no stage gate). Design: docs/QUESTS.md 4.7.
+// Ids: 5C06 + nine zeros + QQ + X. Flags shop:*, contract:gap and licence:purchased are set by the shop script (consortium_shop.js);
+// market:charter_bonus by consortium_quests.js (DeliveryEvent listener).
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "field_office"
+	group: "5C0F000000000002"
+	icon: {
+		id: "consortium:delivery_terminal"
+	}
+	id: "5C06000000000001"
+	images: [ ]
+	order_index: 0
+	quest_links: [ ]
+	quests: [
+		{
+			icon: {
+				id: "consortium:delivery_terminal"
+			}
+			id: "5C06000000000010"
+			rewards: [{
+				id: "5C06000000000014"
+				type: "xp"
+				xp: 25
+			}]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [{
+				id: "5C06000000000011"
+				type: "checkmark"
+			}]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C06000000000010"]
+			icon: {
+				id: "minecraft:emerald"
+			}
+			id: "5C06000000000020"
+			rewards: [{
+				id: "5C06000000000024"
+				type: "xp"
+				xp: 25
+			}]
+			tasks: [{
+				id: "5C06000000000021"
+				type: "checkmark"
+			}]
+			x: 2.5d
+			y: -1.25d
+		}
+		{
+			dependencies: ["5C06000000000010"]
+			icon: {
+				id: "minecraft:clock"
+			}
+			id: "5C06000000000030"
+			rewards: [{
+				id: "5C06000000000034"
+				type: "xp"
+				xp: 25
+			}]
+			tasks: [{
+				id: "5C06000000000031"
+				type: "checkmark"
+			}]
+			x: 2.5d
+			y: 1.25d
+		}
+		{
+			dependencies: ["5C06000000000020", "5C00000000000060"]
+			icon: {
+				id: "minecraft:oak_sign"
+			}
+			id: "5C06000000000040"
+			rewards: [{
+				icon: {
+					id: "minecraft:gold_nugget"
+				}
+				id: "5C06000000000044"
+				type: "custom"
+			}]
+			tasks: [{
+				id: "5C06000000000041"
+				type: "custom"
+			}]
+			x: 5.0d
+			y: -1.25d
+		}
+		{
+			dependencies: ["5C06000000000010"]
+			icon: {
+				id: "minecraft:chest"
+			}
+			id: "5C06000000000050"
+			rewards: [{
+				icon: {
+					id: "minecraft:gold_nugget"
+				}
+				id: "5C06000000000054"
+				type: "custom"
+			}]
+			tasks: [{
+				id: "5C06000000000051"
+				type: "custom"
+			}]
+			x: 5.0d
+			y: 1.25d
+		}
+		{
+			dependencies: ["5C06000000000050"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "chunkloaders:basic_chunk_loader"
+			}
+			id: "5C06000000000060"
+			rewards: [{
+				id: "5C06000000000064"
+				type: "xp"
+				xp: 100
+			}]
+			tasks: [{
+				id: "5C06000000000061"
+				type: "custom"
+			}]
+			x: 7.5d
+			y: -3.75d
+		}
+		{
+			dependencies: ["5C06000000000050"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "minecraft:filled_map"
+			}
+			id: "5C06000000000070"
+			rewards: [{
+				id: "5C06000000000074"
+				type: "xp"
+				xp: 100
+			}]
+			tasks: [{
+				id: "5C06000000000071"
+				type: "custom"
+			}]
+			x: 7.5d
+			y: -1.25d
+		}
+		{
+			dependencies: ["5C06000000000050"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "waystones:warp_stone"
+			}
+			id: "5C06000000000080"
+			rewards: [{
+				id: "5C06000000000084"
+				type: "xp"
+				xp: 100
+			}]
+			tasks: [{
+				id: "5C06000000000081"
+				type: "custom"
+			}]
+			x: 7.5d
+			y: 1.25d
+		}
+		{
+			dependencies: ["5C06000000000020"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "minecraft:barrel"
+			}
+			id: "5C06000000000090"
+			rewards: [{
+				id: "5C06000000000094"
+				type: "xp"
+				xp: 150
+			}]
+			tasks: [{
+				id: "5C06000000000091"
+				type: "custom"
+			}]
+			x: 5.0d
+			y: 3.75d
+		}
+		{
+			dependencies: ["5C06000000000050"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "minecraft:gold_nugget"
+			}
+			id: "5C060000000000A0"
+			rewards: [{
+				id: "5C060000000000A4"
+				type: "xp"
+				xp: 150
+			}]
+			tasks: [{
+				id: "5C060000000000A1"
+				type: "custom"
+			}]
+			x: 7.5d
+			y: 3.75d
+		}
+		{
+			dependencies: ["5C06000000000050"]
+			icon: {
+				id: "minecraft:written_book"
+			}
+			id: "5C060000000000B0"
+			invisible: true
+			optional: true
+			rewards: [{
+				id: "5C060000000000B4"
+				type: "xp"
+				xp: 200
+			}]
+			tasks: [{
+				id: "5C060000000000B1"
+				type: "custom"
+			}]
+			x: 10.0d
+			y: 0.0d
+		}
+	]
+}

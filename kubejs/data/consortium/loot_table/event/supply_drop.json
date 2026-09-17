@@ -1,0 +1,64 @@
+{
+  "_comment": "The Consortium supply drop crate (docs/EVENTS.md 3.4, rule 4.1): one Apotheosis affix item, 0 to 2 gems and one cosmetic. Every entry is a PROGRESSION 3 free-forever category or a cosmetic outside every price family; never a priced item, never credits, never a ticket item. Rarities and purities are PLACEHOLDER values tuned in the beta. structure_loot.js leaves consortium:* tables outside the affix strip on purpose. The affix entry resolves the world tier of the player who opens the crate (chest loot context).",
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "apotheosis:random_affix_item",
+          "rarities": [
+            "apotheosis:uncommon",
+            "apotheosis:rare"
+          ],
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 0,
+        "max": 2
+      },
+      "entries": [
+        {
+          "type": "apotheosis:random_gem",
+          "purities": [
+            "flawed",
+            "normal"
+          ],
+          "weight": 1
+        }
+      ]
+    },
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:leather_helmet",
+          "functions": [
+            {
+              "function": "minecraft:set_components",
+              "components": {
+                "minecraft:custom_name": "{\"text\": \"Board Courier Cap\", \"color\": \"gold\", \"italic\": false}",
+                "minecraft:lore": [
+                  "{\"text\": \"Recovered a Board supply drop, Season 1\", \"color\": \"gray\", \"italic\": false}"
+                ],
+                "minecraft:enchantment_glint_override": true,
+                "minecraft:custom_data": {
+                  "consortium_cosmetic": "courier_cap"
+                },
+                "minecraft:dyed_color": {
+                  "rgb": 14329120
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "random_sequence": "consortium:event/supply_drop"
+}

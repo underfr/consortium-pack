@@ -3,11 +3,12 @@
 // Chunk loading is a paid money sink and Chunk Loaders (SuperMartijn642) is the only
 // chunk-loading system. Every other way to keep chunks loaded is removed here, and the
 // Chunk Loaders themselves lose their crafting recipes: players buy them from the
-// Consortium shop (Phase 4). Until the shop exists, admins hand them out with /give.
+// Consortium shop (data/consortium/consortium_shop/catalogue.json, from phase 3). The
+// Waystones Warp Stone follows the same pattern (SHOP_CATALOGUE 3.4, DECISIONS 2026-09-17).
 //
-// Recipe ids were read from the mod jars shipped in pack 0.3.0:
+// Recipe ids were read from the mod jars shipped in pack 0.3.0 (Waystones in 0.6.0):
 //   chunkloaders 1.2.9, Mekanism 10.7.19.85, Applied Energistics 2 19.2.17,
-//   Immersive Engineering 12.4.2-194, Ad Astra 1.16.26.
+//   Immersive Engineering 12.4.2-194, Ad Astra 1.16.26, Waystones 21.1.45.
 
 ServerEvents.recipes((event) => {
   // Chunk Loaders: shop-only.
@@ -16,6 +17,11 @@ ServerEvents.recipes((event) => {
   event.remove({ id: 'chunkloaders:advanced_chunk_loader' })
   event.remove({ id: 'chunkloaders:ultimate_chunk_loader' })
   event.remove({ id: 'chunkloaders:single_to_basic_chunk_loader' })
+
+  // Waystones Warp Stone (SHOP_CATALOGUE 3.4): shop-only from phase 2 (600 CC PLACEHOLDER), 128 warps per
+  // stone (durability stays on in config/waystones-common.toml). Every other Waystones item stays craftable:
+  // basic waystones are free forever, the network items are Logistics' phase 2 early access.
+  event.remove({ id: 'waystones:warp_stone' })
 
   // Mekanism: the Anchor Upgrade and the Dimensional Stabilizer keep chunks loaded.
   // Config already disables their behaviour (general.toml allowChunkloading = false);

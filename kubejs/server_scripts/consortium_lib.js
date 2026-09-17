@@ -57,6 +57,18 @@ function consortiumNextSlot() {
   return 'the next event evening'
 }
 
+// The same slot as an epoch ms instant (the events engine's slot rule, EVENTS.md 2.3: a random event must end
+// 5 minutes before it). Always finds one within 8 days.
+function consortiumNextSlotMs() {
+  let now = new Date()
+  for (let i = 0; i < 8; i++) {
+    let c = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i, 20, 0, 0)
+    let d = c.getDay()
+    if ((d === 3 || d === 5 || d === 6) && c.getTime() > now.getTime()) return c.getTime()
+  }
+  return now.getTime() + 8 * 86400000
+}
+
 // Announcement for players: gold "[Consortium]" prefix, yellow body. `extra` is an optional list of
 // extra JSON text parts (for example a clickable link). Reaches Discord only through relayTellRaw.
 function consortiumSay(server, body, extra) {

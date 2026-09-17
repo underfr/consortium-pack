@@ -18,31 +18,43 @@ hash = "45bc75ee64b7ee401ba50790954a34b5e6ab887799434fa4a69a88cdce350e73"
 
 [[files]]
 file = "config/ftbquests/quests/chapter_groups.snbt"
-hash = "6094ea50f356ecb8b017bbac914ae5f4709a4e6d4508a12b92c46105c4495e6b"
+hash = "811f53a5775e4ecfe8116445e2dc9899b0ebb0ba1b1b9f5396ef2a87e6a1cf9d"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/board_events.snbt"
+hash = "220193bf44a015d75413a45fd434e920e705fa2900930942ce5190602e59a50b"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/field_office.snbt"
+hash = "1740b4127e78bbc9d7ba05cbcb544773504d2c397115b7364ca7cb6a3dee7bbb"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/personnel.snbt"
+hash = "87ddb61802604dc0f2498662f7ef2a1c57bb3c1db0ea9dea579ffdecc507a11c"
 
 [[files]]
 file = "config/ftbquests/quests/chapters/phase1.snbt"
-hash = "a10822098a758b818ce85857f618ddfbf30859eedd6a8039e3343299be5435bc"
+hash = "dd7810d873abe6a7894bd99107709d46bea7beb23cead851e9c4d19186795ac1"
 
 [[files]]
 file = "config/ftbquests/quests/chapters/phase2.snbt"
-hash = "7c919b0b1929ed1610882af66a90faec52b1f97791f9d70426854cd2f3c02307"
+hash = "a5a236062b2050d48930e4a97581c1f8cea171546ecb1c2d0269d77402a53c74"
 
 [[files]]
 file = "config/ftbquests/quests/chapters/phase3.snbt"
-hash = "bb9fac5e11407a2da15566fb719416761c9b40241251505bb96e56e8b7ba7bbf"
+hash = "b9413b2c5103a73052e55f570312b8cffdedebaacb8b1625c66aaf28b0c514f6"
 
 [[files]]
 file = "config/ftbquests/quests/chapters/phase4.snbt"
-hash = "481165a49cd00777fbb67ac4ad81033846765676b3a3348fe2368c6640b6cba4"
+hash = "963a1a21ef731f8900c38a7c9d34b784678f98fe35182fb788408a6b4a0c0c75"
 
 [[files]]
 file = "config/ftbquests/quests/chapters/phase5.snbt"
-hash = "1b98f016373eb0eb906452db7d48b847218855c4fd1582e6eec3808ba21d6d8d"
+hash = "9657b2d07ec2934f2f213e012671262ae194b46a4ba4c03073220b2ee41bf4ba"
 
 [[files]]
 file = "config/ftbquests/quests/chapters/welcome.snbt"
-hash = "d903ec4139c2cc1d0cd46c4115edac3a531c69881838c002c9f1522205ae9490"
+hash = "39839eee14c085cf75cd81bd093449f5c5d1c59e79dbfdc40f924164cb76d07a"
 
 [[files]]
 file = "config/ftbquests/quests/data.snbt"
@@ -50,7 +62,7 @@ hash = "e8155a4b5cec798b503dad78189bd9659b8efe80b523dfd8b20c17f08b54d3bf"
 
 [[files]]
 file = "config/ftbquests/quests/lang/en_us.snbt"
-hash = "8b523a5fae017e374860b17244fe62b191b95a83eae9eea0cb97e038da3b2080"
+hash = "230fe845924a57e7ad75507602b9ef5f164c7c40ac3f972628b79ba28a910fda"
 
 [[files]]
 file = "config/ftbteams-server.snbt"
@@ -198,12 +210,32 @@ file = "kubejs/data/consortium/chapters/stages/staff.json"
 hash = "e2c79c25dd36695c929d22a58d61b6c92703a78f9d2220b5dd2a67cdb342aeee"
 
 [[files]]
-file = "kubejs/data/consortium/consortium_prices/starter.json"
-hash = "df00789f9ad5bfed941200db0730bb29d08c709acf66433f0f7b181962f88885"
+file = "kubejs/data/consortium/chapters/stages/vacancy_energy.json"
+hash = "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
 
 [[files]]
-file = "kubejs/data/consortium/consortium_shop/starter.json"
-hash = "f8c63505a268c27c354edf15d9b33d9e202d6e00a8f1232a3fe587a08f3d4926"
+file = "kubejs/data/consortium/chapters/stages/vacancy_extraction.json"
+hash = "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+
+[[files]]
+file = "kubejs/data/consortium/chapters/stages/vacancy_logistics.json"
+hash = "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+
+[[files]]
+file = "kubejs/data/consortium/consortium_prices/starter.json"
+hash = "8c64b87d2cd3c16e8a4c6a1d1b7afab9b28a18b1c1b2b36951c4ab2f7a76038d"
+
+[[files]]
+file = "kubejs/data/consortium/consortium_shop/catalogue.json"
+hash = "738b71bb2cb39674e568fe65ac28157c623fa86047a50160bcb6a5e99b14addc"
+
+[[files]]
+file = "kubejs/data/consortium/loot_table/event/supply_drop.json"
+hash = "b22cc33f575fec419a9b7b1a7193c5f107ed2d1a9fd4e96d499c95e3b00755da"
+
+[[files]]
+file = "kubejs/data/consortium/loot_table/event/supply_drop_late.json"
+hash = "a53fe4c18c8d9609f65ff99dfa4d0698d227599d7b9eb436f5e4b42a7e448634"
 
 [[files]]
 file = "kubejs/server_scripts/00_placeholder.js"
@@ -211,31 +243,47 @@ hash = "0629692b9bd78377d36f221b12a6a8bb3dc717f3dae80fb3a13d71932c1892b8"
 
 [[files]]
 file = "kubejs/server_scripts/consortium_charters.js"
-hash = "f862f0602a2f942f42457fea91317e03db99cd0a1f6f11a26f3c9893db848027"
+hash = "6d4088e96903e06d8af1182af5601af00b7f0bc2cafc927657f6282bf215c56c"
 
 [[files]]
 file = "kubejs/server_scripts/consortium_commands.js"
-hash = "45c908f4d1f517096ac49b5a2fcb26a178389839d1d8875a7d8bc7416af68607"
+hash = "2259731dcb9acc7013ef0e46349edde2080455ca77cb28e7d37a67eeba7c11f7"
+
+[[files]]
+file = "kubejs/server_scripts/consortium_events.js"
+hash = "ecffca3e0fdd8db60e2a232d9b857019ecd80c56ef018dd436d48fc247b34c7e"
+
+[[files]]
+file = "kubejs/server_scripts/consortium_events_lib.js"
+hash = "97978d559b168253d5d26a498a2691529092843b3f0801316ec785bb04cb624d"
 
 [[files]]
 file = "kubejs/server_scripts/consortium_lib.js"
-hash = "49298dc51232befe2a08f1daa8df016bf1efabde96ca9230404bfc2ceee818d0"
+hash = "5b97b51f91832bcfe3f56a6399e5ecbc71b76d7c424d3500e64d08d843ca1334"
 
 [[files]]
 file = "kubejs/server_scripts/consortium_money.js"
-hash = "8aacc482df5a8b2652a54e4d168e4a4bcaa757c14a3768a17fc1bc787e63cf8d"
+hash = "f3d98fc44edea40a5897beec54d2633d23b4b367596b7177e75e2de66a9f842c"
 
 [[files]]
 file = "kubejs/server_scripts/consortium_phases.js"
-hash = "6b72e493e01ee11a0f042d43bb8027a4f0ee35218ffcc17ef2b37abe7dd08767"
+hash = "410d84e4eba85842757bca6475d70c9342a6d654d8952be98f753c3b7891cc1f"
+
+[[files]]
+file = "kubejs/server_scripts/consortium_quests.js"
+hash = "e1df6ff224d3596832880a55a68c2c6c7de54c228e50d4809ba065a5d7945be3"
 
 [[files]]
 file = "kubejs/server_scripts/consortium_quotas.js"
 hash = "b10a63319af8baafe9c1d674403135a62525ed781d4a78cef9fa96d34f7b0c86"
 
 [[files]]
+file = "kubejs/server_scripts/consortium_shop.js"
+hash = "aafc28fce11476d265d529e6441f65828cb5c641b756dea36bedd6f15a786712"
+
+[[files]]
 file = "kubejs/server_scripts/economy_locks.js"
-hash = "d8df4dd714f3efb6609800b6f618c993e0e592705a4c80a8263e440f979bdac5"
+hash = "4244744df107f9f2843b28575c9d74e3d6e468c081602cb9791245689a6fbcee"
 
 [[files]]
 file = "kubejs/server_scripts/spawner_locks.js"

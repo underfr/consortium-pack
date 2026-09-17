@@ -10,15 +10,21 @@
 //   staff.<uuid>: name (string)                                             the STAFF list (section 10)
 //
 // What a team should hold (consortiumWantedStages), reconciled by consortiumApplyTeam:
-//   every team        consortium:phase_1 .. phase_<current>
+//   every team        consortium:phase_1 .. phase_<current>, plus every open sale stage
+//                     (consortium:vacancy_<charter> while the Board sells that licence, SHOP_CATALOGUE 5.2;
+//                     staff teams too, the licence pre-check refuses them anyway)
 //   charter team      <charter>_p1 .. _p<current> (early access repeats the next phase file) and
 //                     licence_<charter> from the phase of section 9.2 (Extraction 3, Energy 4, Logistics 4).
 //                     A team's charter is its OWNER's record (a party uses its owner's charter, members'
 //                     own records stay stored and come back on their personal team, section 9.1)
+//   licence holder    licence_<c> for every charter c whose licence the OWNER bought at the shop or was
+//                     granted by staff (licences.<uuid>.<c>, written by consortium_shop.js), from the
+//                     phase of section 9.2: the record is what keeps a purchased licence from being
+//                     stripped by the sweep below (SHOP_CATALOGUE 5.3)
 //   staff team        every member is in the staff list: staff + every phase, licence and charter stage
 //                     so the Chapters auditor never strips an admin (section 10)
 // Any other consortium:* stage a team holds is stripped (stale charter after a switch, staff on a team
-// with a non-staff member, phases above the current one), so no /ftbteams write is ever needed.
+// with a non-staff member, phases above the current one, a closed sale), so no /ftbteams write is ever needed.
 //
 // Charter switch (section 9.1, staff command /consortium charter set): a player's own choice happens
 // once; a switch is refused while the player's effective or personal team holds any licence stage,
@@ -63,6 +69,23 @@ function consortiumIsStaff(server, uuid) {
   return consortiumStaffList(server).contains(uuid)
 }
 
+// Licence records of a player UUID (SHOP_CATALOGUE 5.1: licences.<uuid>.<charter> { grantedAt, tx, by }),
+// written by consortium_shop.js. Returns the charter ids held, as a JS array (empty when none).
+function consortiumLicenceRecords(server) {
+  return consortiumSub(consortiumState(server), 'licences')
+}
+
+function consortiumLicencesOf(server, uuid) {
+  let records = consortiumLicenceRecords(server)
+  if (!records.contains(uuid)) return []
+  let out = []
+  for (let key of records.getCompound(uuid).getAllKeys()) {
+    let c = String(key)
+    if (CONSORTIUM_CHARTERS[c]) out.push(c)
+  }
+  return out
+}
+
 // A staff member's personal team, or a party whose members are all staff (section 10). A personal team
 // is judged by its player, not its member list: FTB Teams empties that list while the player is in a
 // party, and the team must already hold the staff stages the second the player leaves. Server teams and
@@ -93,6 +116,12 @@ function consortiumWantedStages(server, team) {
   let want = {}
   let n = Consortium.phase(server)
   let max = CONSORTIUM_PHASES.length
+  // Open sale stages (SHOP_CATALOGUE 5.2, 5.3 b): every team, staff included, holds them while the sale is
+  // open; consortium_shop.js (priority 30) defines the reader, so a pack without it wants none.
+  if (typeof consortiumOpenSaleStages === 'function') {
+    let sales = consortiumOpenSaleStages(server)
+    for (let i = 0; i < sales.length; i++) want[sales[i]] = true
+  }
   if (consortiumIsStaffTeam(server, team)) {
     for (let i = 1; i <= max; i++) want[consortiumDef(i).stage] = true
     want[CONSORTIUM_STAGE_STAFF] = true
@@ -103,10 +132,17 @@ function consortiumWantedStages(server, team) {
     return want
   }
   for (let i = 1; i <= n; i++) want[consortiumDef(i).stage] = true
-  let charter = consortiumCharterOf(server, consortiumTeamOwner(team))
+  let owner = consortiumTeamOwner(team)
+  let charter = consortiumCharterOf(server, owner)
   if (charter !== null) {
     let stages = consortiumCharterStages(charter, n)
     for (let i = 0; i < stages.length; i++) want[stages[i]] = true
+  }
+  // Purchased or staff-granted licences (SHOP_CATALOGUE 5.3 a): the owner's records, from the licence phase
+  // of each charter. The team keeps its own charter and holds a second licence stage (5.5, resolved open point).
+  let bought = consortiumLicencesOf(server, owner)
+  for (let i = 0; i < bought.length; i++) {
+    if (n >= CONSORTIUM_CHARTERS[bought[i]].licencePhase) want[CONSORTIUM_STAGE_LICENCE_PREFIX + bought[i]] = true
   }
   return want
 }

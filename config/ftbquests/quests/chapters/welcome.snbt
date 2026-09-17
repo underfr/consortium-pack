@@ -1,6 +1,6 @@
-// The Consortium - onboarding chapter (no stage required).
-// Ids: 5C00 + 9 zeros + NNN. NNN = 001 chapter, 0n0 quest n, 0n1/0n2 its tasks, 0n3 its reward.
-// Player-facing text lives in ../lang/en_us.snbt.
+// The Consortium - onboarding chapter (no stage required). Design: docs/QUESTS.md 4.1.
+// Ids: 5C00 + nine zeros + QQ + X (QQ = quest number in hex, X = 0 quest, 1..3 tasks, 4..7 rewards).
+// Player-facing text lives in ../lang/en_us.snbt; custom tasks and rewards are driven by kubejs/server_scripts/consortium_quests.js.
 {
 	default_hide_dependency_lines: false
 	default_quest_shape: ""
@@ -20,13 +20,9 @@
 			}
 			id: "5C00000000000010"
 			rewards: [{
-				count: 8
-				id: "5C00000000000013"
-				item: {
-					count: 1
-					id: "minecraft:bread"
-				}
-				type: "item"
+				description: "Welcome to The Consortium. Your employee file is open."
+				id: "5C00000000000014"
+				type: "toast"
 			}]
 			shape: "hexagon"
 			size: 1.5d
@@ -39,14 +35,14 @@
 		}
 		{
 			dependencies: ["5C00000000000010"]
+			icon: {
+				id: "create:hand_crank"
+			}
 			id: "5C00000000000020"
 			rewards: [{
-				id: "5C00000000000023"
-				item: {
-					count: 1
-					id: "create:wrench"
-				}
-				type: "item"
+				id: "5C00000000000024"
+				type: "xp"
+				xp: 25
 			}]
 			tasks: [
 				{
@@ -74,21 +70,20 @@
 		{
 			dependencies: ["5C00000000000020"]
 			icon: {
-				id: "create:stock_ticker"
+				id: "consortium:delivery_terminal"
 			}
 			id: "5C00000000000030"
 			rewards: [{
-				count: 16
-				id: "5C00000000000033"
-				item: {
-					count: 1
-					id: "minecraft:cobblestone"
-				}
-				type: "item"
+				id: "5C00000000000034"
+				type: "xp"
+				xp: 25
 			}]
 			tasks: [{
 				id: "5C00000000000031"
-				type: "checkmark"
+				observation_type: "block"
+				timer: 20L
+				to_observe: "consortium:delivery_terminal"
+				type: "observation"
 			}]
 			x: 5.0d
 			y: 0.0d
@@ -96,20 +91,127 @@
 		{
 			dependencies: ["5C00000000000030"]
 			icon: {
-				id: "minecraft:paper"
+				id: "minecraft:cobblestone"
 			}
 			id: "5C00000000000040"
 			rewards: [{
-				id: "5C00000000000043"
+				id: "5C00000000000044"
 				type: "xp"
 				xp: 25
 			}]
 			tasks: [{
 				id: "5C00000000000041"
-				type: "checkmark"
+				type: "custom"
 			}]
 			x: 7.5d
 			y: 0.0d
+		}
+		{
+			dependencies: ["5C00000000000040"]
+			icon: {
+				id: "minecraft:gold_nugget"
+			}
+			id: "5C00000000000050"
+			rewards: [{
+				icon: {
+					id: "minecraft:gold_nugget"
+				}
+				id: "5C00000000000054"
+				type: "custom"
+			}]
+			tasks: [{
+				id: "5C00000000000051"
+				type: "custom"
+			}]
+			x: 10.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C00000000000050"]
+			icon: {
+				id: "minecraft:oak_sign"
+			}
+			id: "5C00000000000060"
+			rewards: [{
+				icon: {
+					id: "minecraft:gold_nugget"
+				}
+				id: "5C00000000000064"
+				type: "custom"
+			}]
+			tasks: [{
+				id: "5C00000000000061"
+				type: "custom"
+			}]
+			x: 12.5d
+			y: -1.25d
+		}
+		{
+			dependencies: ["5C00000000000050"]
+			icon: {
+				id: "consortium:display_panel"
+			}
+			id: "5C00000000000070"
+			rewards: [{
+				id: "5C00000000000074"
+				type: "xp"
+				xp: 50
+			}]
+			tasks: [{
+				id: "5C00000000000071"
+				observation_type: "block"
+				timer: 20L
+				to_observe: "consortium:display_panel"
+				type: "observation"
+			}]
+			x: 12.5d
+			y: 1.25d
+		}
+		{
+			dependencies: ["5C00000000000060"]
+			icon: {
+				id: "waystones:waystone"
+			}
+			id: "5C00000000000080"
+			rewards: [{
+				id: "5C00000000000084"
+				type: "xp"
+				xp: 50
+			}]
+			tasks: [
+				{
+					id: "5C00000000000081"
+					type: "checkmark"
+				}
+				{
+					id: "5C00000000000082"
+					item: {
+						count: 1
+						id: "waystones:waystone"
+					}
+					type: "item"
+				}
+			]
+			x: 15.0d
+			y: -1.25d
+		}
+		{
+			dependencies: ["5C00000000000070"]
+			icon: {
+				id: "minecraft:paper"
+			}
+			id: "5C00000000000090"
+			rewards: [{
+				id: "5C00000000000094"
+				type: "xp"
+				xp: 25
+			}]
+			tasks: [{
+				id: "5C00000000000091"
+				type: "checkmark"
+			}]
+			x: 15.0d
+			y: 1.25d
 		}
 	]
 }

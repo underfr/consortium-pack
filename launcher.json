@@ -5,13 +5,20 @@
     "name": "The Consortium",
     "address": ""
   },
-  "motd": "Season 1 is in preparation. Pack 0.6.0 (new world generation, optional shaders and cosmetics) is live for testing.",
-  "lowPresetDisables": ["mods/iris.pw.toml"],
+  "motd": "Season 1 is in preparation. Pack 0.7.0: the full quest set, the shop catalogue, random events and the complete price table are live for testing.",
+  "lowPresetDisables": [
+    "mods/iris.pw.toml"
+  ],
   "optionRequires": {
     "shaderpacks/complementary-reimagined.pw.toml": "mods/iris.pw.toml",
     "shaderpacks/makeup-ultra-fast-shaders.pw.toml": "mods/iris.pw.toml"
   },
   "news": [
+    {
+      "date": "2026-09-17",
+      "title": "Pack 0.7.0: quests, shop, events and prices",
+      "text": "129 quests in 9 chapters, a 24-entry Consortium shop (chunk loaders, claims, home slots, licences, Gap Contract, season fund, event tickets, cosmetics), a random events engine (Ore Rush, Power Surge, Market Crash, Supply Drop, Bounty, Invasion, Blood Moon, Double Quota Hour, the Friday Zone) and the complete 75-family price table. Launcher 0.3.1 shows your head next to your name."
+    },
     {
       "date": "2026-09-17",
       "title": "Pack 0.6.0: new world generation, shaders and cosmetics",

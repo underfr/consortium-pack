@@ -1,0 +1,220 @@
+{
+  "_comment": "Consortium Core shop catalogue, Season 1 (docs/SHOP_CATALOGUE.md section 3, pack 0.7.0). 24 entries, every price a PLACEHOLDER in credits sized as days of the median design income of docs/PRICE_TABLE.md 6 (rung bands A to E) until the beta-week ledger read. Never sell an item the price table buys (the mod hides and refuses it). Command entries address the buyer by {player} (FTB Chunks refuses a UUID) and carry {tx} so the engine command is idempotent (consortium_shop.js, txs.<tx>); every refusal happens before the debit in the BalanceChangeEvent pre-check of consortium_shop.js because a failed effect is never refunded. Gates: stage = the buyer's team stage (consortium:phase_3 locks the loaders, consortium:vacancy_<charter> is a sale stage the engine opens and closes), phase = the board phase from which the entry sells. The daily limit resets at 00:00 UTC on Consortium Core 0.3.0 and at 06:00 server time from 0.3.1. Replaces starter.json (deleted: the first file in id order wins, so a leftover copy would resurrect the placeholder prices).",
+  "entries": {
+    "chunk_loader_single": {
+      "name": "Single Chunk Loader",
+      "description": "Keeps its own chunk loaded (1 chunk). Chunk Loaders is the only loader on this server.",
+      "item": { "id": "chunkloaders:single_chunk_loader", "count": 1 },
+      "price": 250.00,
+      "daily_limit": 1,
+      "stage": "consortium:phase_3"
+    },
+    "chunk_loader_basic": {
+      "name": "Basic Chunk Loader",
+      "description": "Keeps a 3x3 chunk area loaded (9 chunks): a base and its farms.",
+      "item": { "id": "chunkloaders:basic_chunk_loader", "count": 1 },
+      "price": 1500.00,
+      "daily_limit": 1,
+      "stage": "consortium:phase_3"
+    },
+    "chunk_loader_advanced": {
+      "name": "Advanced Chunk Loader",
+      "description": "Keeps a 5x5 chunk area loaded (25 chunks, the per-player cap in one block).",
+      "item": { "id": "chunkloaders:advanced_chunk_loader", "count": 1 },
+      "price": 2100.00,
+      "daily_limit": 1,
+      "stage": "consortium:phase_3"
+    },
+    "claim_chunks_10": {
+      "name": "10 extra claim chunks",
+      "description": "Permanently raises your FTB Chunks claim allowance by 10 chunks (team limit 200).",
+      "command": "ftbchunks admin extra_claim_chunks {player} add 10",
+      "icon": "minecraft:filled_map",
+      "price": 300.00,
+      "daily_limit": 1
+    },
+    "home_slot_1": {
+      "name": "Home slot 1",
+      "description": "/sethome and /home for one home (10 min cooldown, 5 s warm-up).",
+      "command": "consortium perk grant {player} home_slot_1 {tx}",
+      "icon": "minecraft:red_bed",
+      "price": 800.00,
+      "daily_limit": 1,
+      "phase": 3
+    },
+    "home_slot_2": {
+      "name": "Home slot 2",
+      "description": "A second home. Needs home slot 1.",
+      "command": "consortium perk grant {player} home_slot_2 {tx}",
+      "icon": "minecraft:red_bed",
+      "price": 1500.00,
+      "daily_limit": 1,
+      "phase": 4
+    },
+    "home_slot_3": {
+      "name": "Home slot 3",
+      "description": "A third home, the ceiling all season. Needs home slot 2.",
+      "command": "consortium perk grant {player} home_slot_3 {tx}",
+      "icon": "minecraft:red_bed",
+      "price": 1200.00,
+      "daily_limit": 1,
+      "phase": 5
+    },
+    "warp_pass": {
+      "name": "Board warp pass",
+      "description": "/warp hq for the season (5 min cooldown). HQ only: rockets stay the way to the Moon.",
+      "command": "consortium perk grant {player} warp_pass {tx}",
+      "icon": "minecraft:compass",
+      "price": 600.00,
+      "daily_limit": 1,
+      "phase": 2
+    },
+    "nickname_right": {
+      "name": "Nickname right",
+      "description": "/nickname for the season. No impersonation of players, staff or the Board.",
+      "command": "consortium perk grant {player} nickname {tx}",
+      "icon": "minecraft:name_tag",
+      "price": 500.00,
+      "daily_limit": 1
+    },
+    "waystone_warp_stone": {
+      "name": "Warp Stone",
+      "description": "The hearthstone: 128 warps to any known waystone, plus the usual XP cost. Shop only.",
+      "item": { "id": "waystones:warp_stone", "count": 1 },
+      "price": 600.00,
+      "daily_limit": 1,
+      "phase": 2
+    },
+    "licence_extraction": {
+      "name": "Extraction licence (vacancy)",
+      "description": "The crystallizer and the bucket wheel for a team whose charter is not Extraction.",
+      "command": "consortium licence grant {player} extraction {tx}",
+      "icon": "mekanism:chemical_crystallizer",
+      "price": 3900.00,
+      "daily_limit": 1,
+      "stage": "consortium:vacancy_extraction",
+      "phase": 3
+    },
+    "licence_energy": {
+      "name": "Energy licence (vacancy)",
+      "description": "Fission and fusion multiblocks for a team whose charter is not Energy.",
+      "command": "consortium licence grant {player} energy {tx}",
+      "icon": "mekanismgenerators:fusion_reactor_frame",
+      "price": 5300.00,
+      "daily_limit": 1,
+      "stage": "consortium:vacancy_energy",
+      "phase": 4
+    },
+    "licence_logistics": {
+      "name": "Logistics licence (vacancy)",
+      "description": "Teleporters, QIO and the quantum bridge for a team whose charter is not Logistics.",
+      "command": "consortium licence grant {player} logistics {tx}",
+      "icon": "mekanism:teleporter",
+      "price": 5300.00,
+      "daily_limit": 1,
+      "stage": "consortium:vacancy_logistics",
+      "phase": 4
+    },
+    "season_100": {
+      "name": "Season fund: 100 CC",
+      "description": "A contribution to the season project. Credits are destroyed; the fund is a counter.",
+      "command": "consortium season contribute {player} 100 {tx}",
+      "icon": "minecraft:gold_nugget",
+      "price": 100.00,
+      "daily_limit": 20
+    },
+    "season_500": {
+      "name": "Season fund: 500 CC",
+      "description": "A contribution to the season project. Benefactor title at 500 CC contributed.",
+      "command": "consortium season contribute {player} 500 {tx}",
+      "icon": "minecraft:gold_ingot",
+      "price": 500.00,
+      "daily_limit": 10,
+      "phase": 2
+    },
+    "season_2000": {
+      "name": "Season fund: 2,000 CC",
+      "description": "The big pack. Plaque tiers at 1,000, 3,000 and 6,000 CC contributed.",
+      "command": "consortium season contribute {player} 2000 {tx}",
+      "icon": "minecraft:gold_block",
+      "price": 2000.00,
+      "daily_limit": 5,
+      "phase": 3
+    },
+    "ticket_friday": {
+      "name": "Event ticket",
+      "description": "One entry to the Friday Zone. Consumed when the waves start; unused tickets carry over.",
+      "command": "consortium event ticket {player} add 1 {tx}",
+      "icon": "minecraft:paper",
+      "price": 30.00,
+      "daily_limit": 1,
+      "phase": 2
+    },
+    "title_foundry": {
+      "name": "Title: of the Foundry",
+      "description": "The grey suffix 'of the Foundry'. Switch titles with /consortium title <key>.",
+      "command": "consortium title grant {player} foundry {tx}",
+      "icon": "minecraft:writable_book",
+      "price": 250.00,
+      "daily_limit": 1,
+      "phase": 2
+    },
+    "title_orbital": {
+      "name": "Title: Orbital",
+      "description": "The grey suffix 'Orbital'. Switch titles with /consortium title <key>.",
+      "command": "consortium title grant {player} orbital {tx}",
+      "icon": "minecraft:writable_book",
+      "price": 600.00,
+      "daily_limit": 1,
+      "phase": 4
+    },
+    "title_horizon": {
+      "name": "Title: Event Horizon",
+      "description": "The grey suffix 'of the Event Horizon'. Switch titles with /consortium title <key>.",
+      "command": "consortium title grant {player} horizon {tx}",
+      "icon": "minecraft:writable_book",
+      "price": 500.00,
+      "daily_limit": 1,
+      "phase": 5
+    },
+    "shader_rosequartz": {
+      "name": "Shader: Rose Quartz",
+      "description": "An Immersive Engineering shader for your tools and machines. Cosmetic.",
+      "item": { "id": "immersiveengineering:shader_rosequartz", "count": 1 },
+      "price": 120.00,
+      "daily_limit": 1,
+      "phase": 2
+    },
+    "shader_argo": {
+      "name": "Shader: Argo",
+      "description": "An Immersive Engineering shader for your tools and machines. Cosmetic.",
+      "item": { "id": "immersiveengineering:shader_argo", "count": 1 },
+      "price": 120.00,
+      "daily_limit": 1,
+      "phase": 2
+    },
+    "shader_sunstrike": {
+      "name": "Shader: Sunstrike",
+      "description": "The rarer Immersive Engineering shader. Cosmetic.",
+      "item": { "id": "immersiveengineering:shader_sunstrike", "count": 1 },
+      "price": 130.00,
+      "daily_limit": 1,
+      "phase": 3
+    },
+    "consortium_pennant": {
+      "name": "Consortium Pennant",
+      "description": "A banner that reads as membership: a base decoration, nothing more.",
+      "item": {
+        "id": "minecraft:white_banner",
+        "count": 1,
+        "components": {
+          "minecraft:custom_name": "{\"text\":\"Consortium Pennant\",\"italic\":false}",
+          "minecraft:lore": ["{\"text\":\"Groundbreaking, Season 1\",\"color\":\"gray\",\"italic\":false}"],
+          "minecraft:enchantment_glint_override": true
+        }
+      },
+      "price": 60.00,
+      "daily_limit": 1
+    }
+  }
+}

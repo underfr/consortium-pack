@@ -1,3 +1,7 @@
+// The Consortium - chapter groups. The default group (welcome) is implicit and always exists. Titles live in lang/en_us.snbt.
 {
-	chapter_groups: [{ id: "5C0F000000000001" }]
+	chapter_groups: [
+		{ id: "5C0F000000000001" }
+		{ id: "5C0F000000000002" }
+	]
 }

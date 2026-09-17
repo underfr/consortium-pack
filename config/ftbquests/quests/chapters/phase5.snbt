@@ -1,6 +1,5 @@
-// The Consortium - Phase 5: Event Horizon.
-// Gated by the Chapters stage consortium:phase_5 (same pattern as phase2.snbt).
-// Ids: 5C05 + 9 zeros + NNN. 001 chapter, 010 intro quest, 020 objective quest, 030 item quest.
+// The Consortium - Phase 5: Event Horizon (gated by consortium:phase_5, same pattern as phase 2). Design: docs/QUESTS.md 4.6.
+// Ids: 5C05 + nine zeros + QQ + X. Quota amounts in the briefing come from consortium_quotas.js.
 {
 	default_hide_dependency_lines: false
 	default_quest_shape: ""
@@ -25,6 +24,7 @@
 			tasks: [{
 				id: "5C05000000000011"
 				stage: "consortium:phase_5"
+				team_stage: false
 				type: "gamestage"
 			}]
 			x: 0.0d
@@ -37,36 +37,459 @@
 				id: "minecraft:map"
 			}
 			id: "5C05000000000020"
+			rewards: [{
+				id: "5C05000000000024"
+				type: "xp"
+				xp: 25
+			}]
 			tasks: [{
 				id: "5C05000000000021"
 				type: "checkmark"
 			}]
 			x: 2.5d
-			y: -1.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C05000000000020"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "mekanism:ingot_uranium"
+			}
+			id: "5C05000000000030"
+			rewards: [{
+				icon: {
+					id: "minecraft:gold_nugget"
+				}
+				id: "5C05000000000034"
+				type: "custom"
+			}]
+			tasks: [{
+				id: "5C05000000000031"
+				type: "custom"
+			}]
+			x: 5.0d
+			y: -3.75d
+		}
+		{
+			dependencies: ["5C05000000000020"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "ad_astra:ostrum_ingot"
+			}
+			id: "5C05000000000040"
+			rewards: [{
+				icon: {
+					id: "minecraft:gold_nugget"
+				}
+				id: "5C05000000000044"
+				type: "custom"
+			}]
+			tasks: [{
+				id: "5C05000000000041"
+				type: "custom"
+			}]
+			x: 5.0d
+			y: -1.25d
+		}
+		{
+			dependencies: ["5C05000000000020"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "mekanism:ultimate_control_circuit"
+			}
+			id: "5C05000000000050"
+			rewards: [{
+				icon: {
+					id: "minecraft:gold_nugget"
+				}
+				id: "5C05000000000054"
+				type: "custom"
+			}]
+			tasks: [{
+				id: "5C05000000000051"
+				type: "custom"
+			}]
+			x: 5.0d
+			y: 1.25d
+		}
+		{
+			dependencies: ["5C05000000000020"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "mekanism:pellet_polonium"
+			}
+			id: "5C05000000000060"
+			rewards: [{
+				icon: {
+					id: "minecraft:gold_nugget"
+				}
+				id: "5C05000000000064"
+				type: "custom"
+			}]
+			tasks: [{
+				id: "5C05000000000061"
+				type: "custom"
+			}]
+			x: 5.0d
+			y: 3.75d
 		}
 		{
 			dependencies: ["5C05000000000010"]
 			hide_until_deps_complete: true
-			id: "5C05000000000030"
-			rewards: [{
-				count: 2
-				id: "5C05000000000032"
+			icon: {
+				id: "mekanism:isotopic_centrifuge"
+			}
+			id: "5C05000000000070"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C05000000000074"
+					type: "custom"
+				}
+				{
+					id: "5C05000000000075"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [{
+				id: "5C05000000000071"
 				item: {
 					count: 1
-					id: "ad_astra:cryo_fuel_bucket"
+					id: "mekanism:isotopic_centrifuge"
 				}
 				type: "item"
 			}]
+			x: 7.5d
+			y: -2.5d
+		}
+		{
+			dependencies: ["5C05000000000010"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "ae2:spatial_io_port"
+			}
+			id: "5C05000000000080"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C05000000000084"
+					type: "custom"
+				}
+				{
+					id: "5C05000000000085"
+					type: "xp"
+					xp: 150
+				}
+			]
 			tasks: [{
-				id: "5C05000000000031"
+				id: "5C05000000000081"
+				item: {
+					count: 1
+					id: "ae2:spatial_io_port"
+				}
+				type: "item"
+			}]
+			x: 7.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C05000000000010"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "ad_astra:tier_3_rocket"
+			}
+			id: "5C05000000000090"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C05000000000094"
+					type: "custom"
+				}
+				{
+					id: "5C05000000000095"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [{
+				id: "5C05000000000091"
+				item: {
+					count: 1
+					id: "ad_astra:tier_3_rocket"
+				}
+				type: "item"
+			}]
+			x: 7.5d
+			y: 2.5d
+		}
+		{
+			dependencies: ["5C05000000000010"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "ad_astra:venus_sand"
+			}
+			id: "5C050000000000A0"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C050000000000A4"
+					team_reward: true
+					type: "custom"
+				}
+				{
+					id: "5C050000000000A5"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [{
+				dimension: "ad_astra:venus"
+				id: "5C050000000000A1"
+				type: "dimension"
+			}]
+			x: 10.0d
+			y: -2.5d
+		}
+		{
+			dependencies: ["5C05000000000010"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "ad_astra:tier_4_rocket"
+			}
+			id: "5C050000000000B0"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C050000000000B4"
+					type: "custom"
+				}
+				{
+					id: "5C050000000000B5"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [{
+				id: "5C050000000000B1"
 				item: {
 					count: 1
 					id: "ad_astra:tier_4_rocket"
 				}
 				type: "item"
 			}]
-			x: 2.5d
-			y: 1.0d
+			x: 10.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C05000000000010"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "ad_astra:glacio_stone"
+			}
+			id: "5C050000000000C0"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C050000000000C4"
+					team_reward: true
+					type: "custom"
+				}
+				{
+					id: "5C050000000000C5"
+					type: "xp"
+					xp: 150
+				}
+			]
+			tasks: [{
+				dimension: "ad_astra:glacio"
+				id: "5C050000000000C1"
+				type: "dimension"
+			}]
+			x: 10.0d
+			y: 2.5d
+		}
+		{
+			dependencies: ["5C05000000000010"]
+			icon: {
+				id: "mekanism:digital_miner"
+			}
+			id: "5C050000000000D0"
+			invisible: true
+			optional: true
+			rewards: [{
+				id: "5C050000000000D4"
+				type: "xp"
+				xp: 300
+			}]
+			tasks: [{
+				id: "5C050000000000D1"
+				stage: "consortium:extraction_p5"
+				team_stage: false
+				type: "gamestage"
+			}]
+			x: 12.5d
+			y: -2.5d
+		}
+		{
+			dependencies: ["5C05000000000010"]
+			icon: {
+				id: "mekanism:module_charge_distribution_unit"
+			}
+			id: "5C050000000000E0"
+			invisible: true
+			optional: true
+			rewards: [{
+				id: "5C050000000000E4"
+				type: "xp"
+				xp: 300
+			}]
+			tasks: [{
+				id: "5C050000000000E1"
+				stage: "consortium:energy_p5"
+				team_stage: false
+				type: "gamestage"
+			}]
+			x: 12.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C05000000000010"]
+			icon: {
+				id: "mekanism:module_gravitational_modulating_unit"
+			}
+			id: "5C050000000000F0"
+			invisible: true
+			optional: true
+			rewards: [{
+				id: "5C050000000000F4"
+				type: "xp"
+				xp: 300
+			}]
+			tasks: [{
+				id: "5C050000000000F1"
+				stage: "consortium:logistics_p5"
+				team_stage: false
+				type: "gamestage"
+			}]
+			x: 12.5d
+			y: 2.5d
+		}
+		{
+			dependencies: ["5C05000000000020"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "mekanismgenerators:fusion_reactor_frame"
+			}
+			id: "5C05000000000100"
+			optional: true
+			rewards: [{
+				icon: {
+					id: "minecraft:lever"
+				}
+				id: "5C05000000000104"
+				type: "custom"
+			}]
+			tasks: [{
+				id: "5C05000000000101"
+				type: "custom"
+			}]
+			x: 15.0d
+			y: -2.5d
+		}
+		{
+			dependencies: ["5C05000000000020"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "ae2:quantum_link"
+			}
+			id: "5C05000000000110"
+			optional: true
+			rewards: [{
+				icon: {
+					id: "minecraft:item_frame"
+				}
+				id: "5C05000000000114"
+				type: "custom"
+			}]
+			tasks: [{
+				id: "5C05000000000111"
+				type: "custom"
+			}]
+			x: 15.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C05000000000020"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "mekanism:pellet_antimatter"
+			}
+			id: "5C05000000000120"
+			optional: true
+			rewards: [{
+				icon: {
+					id: "minecraft:paper"
+				}
+				id: "5C05000000000124"
+				type: "custom"
+			}]
+			tasks: [{
+				id: "5C05000000000121"
+				type: "custom"
+			}]
+			x: 15.0d
+			y: 2.5d
+		}
+		{
+			dependencies: ["5C05000000000030", "5C05000000000040", "5C05000000000050", "5C05000000000060"]
+			icon: {
+				id: "minecraft:wither_skeleton_skull"
+			}
+			id: "5C05000000000130"
+			min_required_dependencies: 1
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C05000000000134"
+					type: "custom"
+				}
+				{
+					auto: "invisible"
+					icon: {
+						id: "minecraft:name_tag"
+					}
+					id: "5C05000000000135"
+					type: "custom"
+				}
+				{
+					id: "5C05000000000136"
+					type: "xp_levels"
+					xp_levels: 5
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [{
+				id: "5C05000000000131"
+				type: "custom"
+			}]
+			x: 17.5d
+			y: 0.0d
 		}
 	]
 }

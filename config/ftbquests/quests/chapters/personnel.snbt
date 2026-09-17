@@ -1,0 +1,210 @@
+// The Consortium - Personnel File (community and cosmetics, no stage gate). Design: docs/QUESTS.md 4.9.
+// Ids: 5C08 + nine zeros + QQ + X. Rank thresholds come from CONSORTIUM_RANK_THRESHOLDS (ranks step) through consortium_quests.js.
+{
+	default_hide_dependency_lines: false
+	default_quest_shape: ""
+	filename: "personnel"
+	group: "5C0F000000000002"
+	icon: {
+		id: "minecraft:name_tag"
+	}
+	id: "5C08000000000001"
+	images: [ ]
+	order_index: 2
+	quest_links: [ ]
+	quests: [
+		{
+			icon: {
+				id: "minecraft:name_tag"
+			}
+			id: "5C08000000000010"
+			rewards: [{
+				description: "Personnel file opened. Rank: Recruit."
+				id: "5C08000000000014"
+				type: "toast"
+			}]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [{
+				id: "5C08000000000011"
+				type: "checkmark"
+			}]
+			x: 0.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C08000000000010"]
+			icon: {
+				id: "minecraft:copper_ingot"
+			}
+			id: "5C08000000000020"
+			rewards: [{
+				id: "5C08000000000024"
+				type: "xp"
+				xp: 100
+			}]
+			tasks: [{
+				id: "5C08000000000021"
+				type: "custom"
+			}]
+			x: 2.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C08000000000020"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "minecraft:iron_ingot"
+			}
+			id: "5C08000000000030"
+			rewards: [{
+				id: "5C08000000000034"
+				type: "xp"
+				xp: 200
+			}]
+			tasks: [{
+				id: "5C08000000000031"
+				type: "custom"
+			}]
+			x: 5.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C08000000000030"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "minecraft:gold_ingot"
+			}
+			id: "5C08000000000040"
+			rewards: [{
+				id: "5C08000000000044"
+				type: "xp"
+				xp: 300
+			}]
+			tasks: [{
+				id: "5C08000000000041"
+				type: "custom"
+			}]
+			x: 7.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C08000000000040"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "minecraft:diamond"
+			}
+			id: "5C08000000000050"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:paper"
+					}
+					id: "5C08000000000054"
+					type: "custom"
+				}
+				{
+					id: "5C08000000000055"
+					type: "xp"
+					xp: 500
+				}
+			]
+			tasks: [{
+				id: "5C08000000000051"
+				type: "custom"
+			}]
+			x: 10.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C08000000000010"]
+			icon: {
+				id: "minecraft:lantern"
+			}
+			id: "5C08000000000060"
+			invisible: true
+			rewards: [{
+				auto: "invisible"
+				icon: {
+					id: "minecraft:name_tag"
+				}
+				id: "5C08000000000064"
+				type: "custom"
+			}]
+			tasks: [{
+				id: "5C08000000000061"
+				type: "custom"
+			}]
+			x: 2.5d
+			y: -2.5d
+		}
+		{
+			dependencies: ["5C08000000000010"]
+			icon: {
+				id: "minecraft:writable_book"
+			}
+			id: "5C08000000000070"
+			rewards: [{
+				id: "5C08000000000074"
+				type: "xp"
+				xp: 200
+			}]
+			tasks: [{
+				id: "5C08000000000071"
+				type: "custom"
+			}]
+			x: 2.5d
+			y: 2.5d
+		}
+		{
+			dependencies: ["5C08000000000070"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "minecraft:spyglass"
+			}
+			id: "5C08000000000080"
+			rewards: [{
+				auto: "invisible"
+				icon: {
+					id: "minecraft:name_tag"
+				}
+				id: "5C08000000000084"
+				type: "custom"
+			}]
+			tasks: [{
+				id: "5C08000000000081"
+				type: "custom"
+			}]
+			x: 5.0d
+			y: 2.5d
+		}
+		{
+			dependencies: ["5C08000000000010"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "minecraft:paper"
+			}
+			id: "5C08000000000090"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:paper"
+					}
+					id: "5C08000000000094"
+					type: "custom"
+				}
+				{
+					id: "5C08000000000095"
+					type: "xp"
+					xp: 500
+				}
+			]
+			tasks: [{
+				id: "5C08000000000091"
+				type: "custom"
+			}]
+			x: 12.5d
+			y: 0.0d
+		}
+	]
+}

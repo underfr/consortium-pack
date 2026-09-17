@@ -1,111 +1,360 @@
 // The Consortium - all player-facing quest text (FTB Quests 2101.x keeps titles and descriptions here).
 // Key format: <object_type>.<16 hex id>.<title | quest_subtitle | quest_desc | chapter_subtitle>
-// Placeholder texts: real sentences in the Consortium corporate voice, to be refined with the phase engine.
+// Every string is double-quoted (apostrophes are legal only there), one list entry per line, "" for a blank line,
+// {@pagebreak} starts a new page. Colour codes: &6 gold, &7 grey, &r reset. No em or en dashes.
+// Every credit amount quoted here is a PLACEHOLDER mirrored from CONSORTIUM_QUEST_REWARDS in consortium_quests.js.
 {
 	chapter_group.5C0F000000000001.title: "Season 1"
+	chapter_group.5C0F000000000002.title: "Company Life"
 
-	chapter.5C00000000000001.chapter_subtitle: ["Onboarding for new Consortium employees. About 15 minutes."]
+	chapter.5C00000000000001.chapter_subtitle: ["Onboarding for new Consortium employees. About 15 minutes, first paycheck included."]
 	chapter.5C00000000000001.title: "Welcome to The Consortium"
 
-	quest.5C00000000000010.quest_desc: [
-		"Welcome aboard. The Consortium has hired you to rebuild industry from the ground up, one delivery at a time."
-		""
-		"Before you touch a single machine, read the server rules on the Discord notice board. They are short, and every employee is expected to know them."
-		""
-		"Tick this quest once you have read them."
-	]
-	quest.5C00000000000010.quest_subtitle: "Read the server rules"
 	quest.5C00000000000010.title: "Employee Handbook"
+	quest.5C00000000000010.quest_subtitle: "Read the rulebook"
+	quest.5C00000000000010.quest_desc: [
+		"Welcome aboard. The Board hired you to rebuild industry from the ground up, one delivery at a time. Everything you make can be sold at the Field Office; everything the Board sells is a service, never a resource."
+		""
+		"The rules are short. Chat and commands are logged for moderation, on the server and on the Discord bridge. The world border is 3,000 blocks. No portal chunk loading, no second account. The full text is on the Discord notice board."
+		""
+		"&7Tick this assignment once you have read them. No fee: reading is part of the job.&r"
+	]
 	task.5C00000000000011.title: "I have read the rules"
-	reward.5C00000000000013.title: "Welcome rations"
+	reward.5C00000000000014.title: "Welcome aboard"
 
+	quest.5C00000000000020.title: "First Rotation"
+	quest.5C00000000000020.quest_subtitle: "Craft a hand crank or a water wheel"
 	quest.5C00000000000020.quest_desc: [
 		"Every Consortium operation starts with rotation. Craft a Create hand crank or a water wheel: either one counts, so pick what fits your site."
 		""
-		"The hand crank turns with your own two hands. The water wheel runs on flowing water and never asks for a break."
+		"The hand crank turns with your own two hands. The water wheel runs on flowing water and never asks for a break. Keep the part: the Board only needs to see it in your inventory."
 		""
-		"Keep the part you make. The Board only needs to see it in your inventory."
+		"&7Onboarding bonus: 25 XP.&r"
 	]
-	quest.5C00000000000020.quest_subtitle: "Craft a hand crank or a water wheel"
-	quest.5C00000000000020.title: "First Rotation"
-	task.5C00000000000021.title: "Hand crank (either task completes the quest)"
-	task.5C00000000000022.title: "Water wheel (either task completes the quest)"
-	reward.5C00000000000023.title: "Company wrench"
+	task.5C00000000000021.title: "Hand crank (either one completes the assignment)"
+	task.5C00000000000022.title: "Water wheel (either one completes the assignment)"
+	reward.5C00000000000024.title: "Onboarding bonus: 25 XP"
 
+	quest.5C00000000000030.title: "The Field Office"
+	quest.5C00000000000030.quest_subtitle: "Find the delivery terminal"
 	quest.5C00000000000030.quest_desc: [
-		"Every delivery you make to the Consortium goes through the delivery terminal at the Field Office, next to spawn. Deliveries feed the phase quota and pay you in credits."
+		"The Field Office stands at spawn from minute one. Inside it, the delivery terminal: the Board buys what it lists, at today's price, and every unit feeds the phase counter."
 		""
-		"The terminal itself arrives in a later update. Until then, find the Field Office, note where the terminal will stand, and tick this quest."
+		"Walk up to the terminal and look at it for a second. Right-click opens the delivery screen: put items in the grid, read the quote, confirm."
+		""
+		"&7Onboarding bonus: 25 XP.&r"
 	]
-	quest.5C00000000000030.quest_subtitle: "Find the delivery terminal at the Field Office"
-	quest.5C00000000000030.title: "The Delivery Terminal"
-	task.5C00000000000031.title: "I found the Field Office"
-	reward.5C00000000000033.title: "Starter stock for your first delivery"
+	task.5C00000000000031.title: "Look at the delivery terminal"
+	reward.5C00000000000034.title: "Onboarding bonus: 25 XP"
 
+	quest.5C00000000000040.title: "First Load"
+	quest.5C00000000000040.quest_subtitle: "Deliver 16 cobblestone"
 	quest.5C00000000000040.quest_desc: [
-		"Deliver 16 cobblestone at the terminal to earn your first credit and open your employee account. Credits buy services and rank you on the Consortium leaderboard."
+		"A practice run. Put 16 cobblestone in the terminal grid and confirm. The terminal takes it, the phase counter moves, and you are paid nothing: cobblestone is a quota-only line."
 		""
-		"Placeholder: the terminal and the credit system are not live yet. Tick this quest for now; it becomes a real delivery task once the terminal ships."
+		"In phase 1 those 16 blocks count toward the Groundbreaking quota. Later they are just practice. Your own deliveries count; a crew mate's do not."
+		""
+		"&7Onboarding bonus: 25 XP. The first credit comes with the next assignment.&r"
 	]
-	quest.5C00000000000040.quest_subtitle: "Earn your first credit"
-	quest.5C00000000000040.title: "First Paycheck"
-	task.5C00000000000041.title: "I earned my first credit"
-	reward.5C00000000000043.title: "Signing bonus"
+	task.5C00000000000041.title: "16 cobblestone delivered at the terminal"
+	reward.5C00000000000044.title: "Onboarding bonus: 25 XP"
+
+	quest.5C00000000000050.title: "First Paycheck"
+	quest.5C00000000000050.quest_subtitle: "Earn your first credit"
+	quest.5C00000000000050.quest_desc: [
+		"Now deliver something the Board pays for. One coal is enough: a few cents, but a paycheck. Copper, iron or andesite alloy work too."
+		""
+		"The confirmation shows the item, the unit price and the total. /credits shows your balance. Prices drop while everybody sells the same thing and recover over the day, so the first seller of the evening gets the best price."
+		""
+		"&7Signing bonus: 5.00 CC, paid to the account the terminal paid.&r"
+	]
+	task.5C00000000000051.title: "The terminal paid me at least once"
+	reward.5C00000000000054.title: "Signing bonus: 5.00 CC"
+
+	quest.5C00000000000060.title: "Choose Your Charter"
+	quest.5C00000000000060.quest_subtitle: "Extraction, Energy or Logistics"
+	quest.5C00000000000060.quest_desc: [
+		"Three desks, one choice per player. Extraction pays +15 % on raw materials, Energy on power items, Logistics on transport and storage; each pays -5 % on the two others. A charter also opens next phase's kit one phase early and, later in the season, a licence nobody else holds."
+		""
+		"Type /consortium charter extraction, energy or logistics. The choice is yours, not your party's: choose before you claim this assignment. Switching goes through staff, once per season."
+		""
+		"&7Desk fee: 5.00 CC, paid to a player whose own charter is recorded.&r"
+	]
+	task.5C00000000000061.title: "My charter is recorded"
+	reward.5C00000000000064.title: "Desk fee: 5.00 CC"
+
+	quest.5C00000000000070.title: "Read the Board"
+	quest.5C00000000000070.quest_subtitle: "Look at the quota board"
+	quest.5C00000000000070.quest_desc: [
+		"The panels above the terminal are the quota board: one line per delivery the Board wants this phase, current over target, and the total at the top."
+		""
+		"The boss bar carries the same total. The phase completes when the average of the lines reaches 90 % and every line stands at 60 % or more. /consortium phase prints the table in chat."
+		""
+		"&7Onboarding bonus: 50 XP.&r"
+	]
+	task.5C00000000000071.title: "Look at the quota board"
+	reward.5C00000000000074.title: "Onboarding bonus: 50 XP"
+
+	quest.5C00000000000080.title: "Claim and Rest"
+	quest.5C00000000000080.quest_subtitle: "Claim your site and set a waystone"
+	quest.5C00000000000080.quest_desc: [
+		"Claim your site before you build. Open the FTB Chunks map (default key M) and claim up to 16 chunks per player; claims add up in a party. Nothing inside a claim can be broken by another crew."
+		""
+		"Then craft a waystone. It is your return ticket to your base and to HQ, at a small XP cost per warp. Nothing lost on death is irreplaceable, but a bed and a waystone save a long walk."
+		""
+		"&7Onboarding bonus: 50 XP.&r"
+	]
+	task.5C00000000000081.title: "I claimed my chunks"
+	task.5C00000000000082.title: "Waystone"
+	reward.5C00000000000084.title: "Onboarding bonus: 50 XP"
+
+	quest.5C00000000000090.title: "Tab and Chat"
+	quest.5C00000000000090.quest_subtitle: "Know where the numbers are"
+	quest.5C00000000000090.quest_desc: [
+		"Press Tab: the header shows the phase, the season day and your credits. Chat shows your rank before your name. /credits top is public; balances are not."
+		""
+		"The Discord bridge relays chat both ways, so the same rules apply there. The Board Calendar chapter lists the weekly contract and the Friday and Saturday events; the Field Office chapter explains the prices."
+		""
+		"&7Onboarding bonus: 25 XP. Onboarding complete: the Season 1 chapters are yours.&r"
+	]
+	task.5C00000000000091.title: "I know where the numbers are"
+	reward.5C00000000000094.title: "Onboarding bonus: 25 XP"
 
 	chapter.5C01000000000001.chapter_subtitle: ["Days 1 to 7. Vanilla, Create kinetics, Farmer's Delight, basic waystones."]
 	chapter.5C01000000000001.title: "Phase 1: Groundbreaking"
 
+	quest.5C01000000000010.title: "Groundbreaking"
+	quest.5C01000000000010.quest_subtitle: "Phase 1 briefing"
 	quest.5C01000000000010.quest_desc: [
 		"The Board has staked its claim. A provisional Field Office stands at spawn; everything else is dirt, stone and ambition."
-		"Your first assignment: get rotation going, feed the workforce, and stockpile the raw materials the permanent headquarters will be built from."
-		"When the quota is met, the Board raises the HQ and the public Foundry around the Field Office, and every employee present receives a Founder's Lantern."
+		""
+		"Get rotation going, feed the crew and stockpile the raw materials the permanent headquarters will be built from. When the quota lands, the Board raises the HQ and the public Foundry around the Field Office."
+		""
+		"&7Acknowledge the briefing to open the phase assignments.&r"
 	]
-	quest.5C01000000000010.quest_subtitle: "Phase 1 briefing"
-	quest.5C01000000000010.title: "Groundbreaking"
 	task.5C01000000000011.title: "Briefing acknowledged"
+	reward.5C01000000000014.title: "Briefing acknowledged"
 
+	quest.5C01000000000020.title: "Phase 1 Quota"
+	quest.5C01000000000020.quest_subtitle: "Groundbreaking deliveries"
 	quest.5C01000000000020.quest_desc: [
-		"The Board expects the following deliveries at the terminal before Phase 2 opens:"
-		"- 40,000 cobblestone (counts for the quota, pays no credits)"
+		"The Board expects the following deliveries at the terminal before phase 2 opens:"
+		"- 40,000 cobblestone (counts for the quota, pays nothing)"
 		"- 2,500 iron ingots"
 		"- 2,000 copper ingots"
 		"- 1,700 zinc ingots"
 		"- 3,500 coal"
 		"- 1,000 andesite alloy"
 		"- 500 andesite funnels"
-		"- 1,000 Farmer's Delight cooked meals"
+		"- 1,000 cooked meals"
+		"{@pagebreak}"
+		"Progress is on the quota board above the terminal, on the boss bar and in /consortium phase. The phase completes when the average of the lines reaches 90 % and every line stands at 60 % or more."
 		""
-		"Phase progress is shown on the boss bar and with /consortium phase. The phase completes when overall progress reaches 90% and every line is at least 60%."
+		"Cobblestone counts for the quota and pays nothing. Everything else pays at the terminal price, up to the daily cap of its line."
 		""
-		"Tick this quest once you have read the quota."
+		"&7Briefing bonus: 25 XP.&r"
 	]
-	quest.5C01000000000020.quest_subtitle: "Groundbreaking deliveries"
-	quest.5C01000000000020.title: "Phase 1 Quota"
 	task.5C01000000000021.title: "Quota read"
+	reward.5C01000000000024.title: "Briefing bonus: 25 XP"
 
+	quest.5C01000000000030.title: "Iron Run"
+	quest.5C01000000000030.quest_subtitle: "Deliver 64 iron"
 	quest.5C01000000000030.quest_desc: [
-		"Andesite alloy is the Consortium's first manufactured good: andesite plus iron nuggets, on any crafting grid."
+		"Iron is the phase 1 bottleneck. Every mechanical press, every andesite alloy and the beacon pyramid of the Stress Test eat it. The Board wants 2,500 ingots this phase and pays for every one."
 		""
-		"Hold 64 of them to prove your line runs. The alloy stays yours; the Board only wants to see it."
+		"Deliver 64 units of the iron family at the terminal: ingots, blocks, raw iron and nuggets all count. Credits are paid up to the daily cap of the line; every unit counts for the quota."
+		""
+		"Your own deliveries count; a crew mate's do not."
+		""
+		"&7Assignment fee: 10.00 CC, paid to the crew member who delivered it.&r"
 	]
-	quest.5C01000000000030.quest_subtitle: "Show 64 andesite alloy"
-	quest.5C01000000000030.title: "Alloy Order"
-	reward.5C01000000000032.title: "Company casings"
+	task.5C01000000000031.title: "64 iron delivered at the terminal"
+	reward.5C01000000000034.title: "Assignment fee: 10.00 CC"
+
+	quest.5C01000000000040.title: "Coal Line"
+	quest.5C01000000000040.quest_subtitle: "Deliver 128 coal"
+	quest.5C01000000000040.quest_desc: [
+		"Coal fuels the Foundry: the blast furnaces, the coke ovens and every furnace at HQ. The Board wants 3,500 coal this phase."
+		""
+		"Deliver 128 units of the coal family: coal, charcoal and coal blocks count. Charcoal from a tree farm is accepted at the same price, and the daily cap of the line bounds what a farm can earn."
+		""
+		"Your own deliveries count; a crew mate's do not."
+		""
+		"&7Assignment fee: 10.00 CC, paid to the crew member who delivered it.&r"
+	]
+	task.5C01000000000041.title: "128 coal delivered at the terminal"
+	reward.5C01000000000044.title: "Assignment fee: 10.00 CC"
+
+	quest.5C01000000000050.title: "Alloy Order"
+	quest.5C01000000000050.quest_subtitle: "Deliver 64 andesite alloy"
+	quest.5C01000000000050.quest_desc: [
+		"Andesite alloy is the Consortium's first manufactured good: andesite and iron nuggets on any crafting grid, or andesite and iron in a mixer. Every Create machine of the phase starts with it, and the Board wants 1,000 of it this phase."
+		""
+		"Deliver 64 andesite alloy at the terminal."
+		""
+		"Your own deliveries count; a crew mate's do not."
+		""
+		"&7Assignment fee: 10.00 CC, paid to the crew member who delivered it.&r"
+	]
+	task.5C01000000000051.title: "64 andesite alloy delivered at the terminal"
+	reward.5C01000000000054.title: "Assignment fee: 10.00 CC"
+
+	quest.5C01000000000060.title: "Kitchen Duty"
+	quest.5C01000000000060.quest_subtitle: "Deliver 32 cooked meals"
+	quest.5C01000000000060.quest_desc: [
+		"A crew that eats works. The Board buys every cooking pot meal of Farmer's Delight, plus beetroot soup, mushroom stew and rabbit stew, as one line: cooked meals, 1,000 of them this phase."
+		""
+		"One cooking pot over a heat source makes a meal every ten seconds. Deliver 32 meals of any kind; the bowls come back."
+		""
+		"Your own deliveries count; a crew mate's do not."
+		""
+		"&7Assignment fee: 10.00 CC, paid to the crew member who delivered it.&r"
+	]
+	task.5C01000000000061.title: "32 cooked meals delivered at the terminal"
+	reward.5C01000000000064.title: "Assignment fee: 10.00 CC"
+
+	quest.5C01000000000070.title: "Water Power"
+	quest.5C01000000000070.quest_subtitle: "Show one water wheel"
+	quest.5C01000000000070.quest_desc: [
+		"The water wheel is the phase 1 power plant: place it in flowing water and it turns for free, all day. Large water wheels turn slower with more force."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 5.00 CC and 50 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C01000000000071.title: "Water wheel"
+	reward.5C01000000000074.title: "Certification bonus: 5.00 CC"
+	reward.5C01000000000075.title: "Certification bonus: 50 XP"
+
+	quest.5C01000000000080.title: "Millstone"
+	quest.5C01000000000080.quest_subtitle: "Show one millstone"
+	quest.5C01000000000080.quest_desc: [
+		"The millstone is the first Create processor: it grinds wheat into flour, gravel into flint and cobblestone into gravel, on rotation alone. Every kitchen and every crushing line starts here."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 5.00 CC and 50 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C01000000000081.title: "Millstone"
+	reward.5C01000000000084.title: "Certification bonus: 5.00 CC"
+	reward.5C01000000000085.title: "Certification bonus: 50 XP"
+
+	quest.5C01000000000090.title: "Pressed"
+	quest.5C01000000000090.quest_subtitle: "Show one mechanical press"
+	quest.5C01000000000090.quest_desc: [
+		"The mechanical press stamps plates and packs blocks. Iron sheets go into the Foundry's machines, and a press over a belt is the first automation of the phase."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 5.00 CC and 50 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C01000000000091.title: "Mechanical press"
+	reward.5C01000000000094.title: "Certification bonus: 5.00 CC"
+	reward.5C01000000000095.title: "Certification bonus: 50 XP"
+
+	quest.5C010000000000A0.title: "Kitchen Line"
+	quest.5C010000000000A0.quest_subtitle: "Show one cooking pot"
+	quest.5C010000000000A0.quest_desc: [
+		"The cooking pot of Farmer's Delight turns crops and meat into the meals the Board buys. Put it over a fire, a campfire or a stove, feed it and hold a bowl under it."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 5.00 CC and 50 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C010000000000A1.title: "Cooking pot"
+	reward.5C010000000000A4.title: "Certification bonus: 5.00 CC"
+	reward.5C010000000000A5.title: "Certification bonus: 50 XP"
+
+	quest.5C010000000000B0.title: "Cold Mix"
+	quest.5C010000000000B0.quest_subtitle: "Show one mechanical mixer"
+	quest.5C010000000000B0.quest_desc: [
+		"The mechanical mixer makes andesite alloy without a press line: andesite and iron nuggets in the basin, rotation on top. Heated with a blaze burner it makes brass in phase 2."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 5.00 CC and 50 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C010000000000B1.title: "Mechanical mixer"
+	reward.5C010000000000B4.title: "Certification bonus: 5.00 CC"
+	reward.5C010000000000B5.title: "Certification bonus: 50 XP"
+
+	quest.5C010000000000C0.title: "Crude Blast Furnace Clearance"
+	quest.5C010000000000C0.quest_subtitle: "Extraction early access"
+	quest.5C010000000000C0.quest_desc: [
+		"Your charter may build the crude blast furnace one phase early: iron and coal coke in, steel out, about one ingot a minute while somebody stands nearby."
+		""
+		"Steel delivered now pays at the terminal price and counts for the quota once phase 2 opens."
+		""
+		"&7Clearance bonus: 100 XP. Granted automatically to every Extraction team; other charters never see this entry.&r"
+	]
+	task.5C010000000000C1.title: "Extraction early access (charter stage, granted by the Board)"
+	reward.5C010000000000C4.title: "Clearance bonus: 100 XP"
+
+	quest.5C010000000000D0.title: "Steam Clearance"
+	quest.5C010000000000D0.quest_subtitle: "Energy early access"
+	quest.5C010000000000D0.quest_desc: [
+		"Steam engines and blaze burners are yours now: a boiler over burners turns water into the strongest rotation of the early game."
+		""
+		"A Nether trip for blaze rods comes first."
+		""
+		"&7Clearance bonus: 100 XP. Granted automatically to every Energy team; other charters never see this entry.&r"
+	]
+	task.5C010000000000D1.title: "Energy early access (charter stage, granted by the Board)"
+	reward.5C010000000000D4.title: "Clearance bonus: 100 XP"
+
+	quest.5C010000000000E0.title: "Warp Plate Clearance"
+	quest.5C010000000000E0.quest_subtitle: "Logistics early access"
+	quest.5C010000000000E0.quest_desc: [
+		"Warp plates, sharestones and portstones are yours now. The waystone network between the bases and HQ is your charter's first product."
+		""
+		"The Board pays nothing for it; the crew will."
+		""
+		"&7Clearance bonus: 100 XP. Granted automatically to every Logistics team; other charters never see this entry.&r"
+	]
+	task.5C010000000000E1.title: "Logistics early access (charter stage, granted by the Board)"
+	reward.5C010000000000E4.title: "Clearance bonus: 100 XP"
+
+	quest.5C010000000000F0.title: "The Groundbreaking"
+	quest.5C010000000000F0.quest_subtitle: "Attend the ceremony"
+	quest.5C010000000000F0.quest_desc: [
+		"When the phase 1 quota lands, the Board convenes at the Field Office. The schematicannon fires the HQ around it and the public Foundry opens its doors."
+		""
+		"Be there. Staff records every employee present at the ceremony; a crew mate who stayed home is not on the list."
+		""
+		"&7Ceremony keepsake: the Founder's Lantern, a plain lantern with the Board's engraving. No production value, all the bragging rights; handed to a player staff recorded as present.&r"
+	]
+	task.5C010000000000F1.title: "The Groundbreaking: recorded by staff as present"
+	reward.5C010000000000F4.title: "Founder's Lantern"
+
+	quest.5C01000000000100.title: "Phase 1 Complete"
+	quest.5C01000000000100.quest_subtitle: "The Board opens the Foundry"
+	quest.5C01000000000100.quest_desc: [
+		"The quota is met and phase 2 is open: steel, brass, steam, Mekanism basic machines and low voltage. The [open quests] link of the unlock message points at the next chapter."
+		""
+		"This assignment completes once your team holds phase 2 and you have delivered at least one run of this phase yourself."
+		""
+		"&7Phase bonus: 25.00 CC and 2 levels, paid to a crew member with a completed run of the phase.&r"
+	]
+	task.5C01000000000101.title: "Stage: phase 2 open"
+	reward.5C01000000000104.title: "Phase bonus: 25.00 CC"
+	reward.5C01000000000105.title: "Phase bonus: 2 levels"
 
 	chapter.5C02000000000001.chapter_subtitle: ["Days 8 to 19. Steel, Create brass and steam, Mekanism basic, IE low voltage, Powah starter and basic."]
 	chapter.5C02000000000001.title: "Phase 2: The Foundry"
 
-	quest.5C02000000000010.quest_desc: [
-		"Groundbreaking is done: the HQ stands and the public Foundry is lit. The Board now wants steel, and a lot of it."
-		"Blast furnaces, brass, steam and the first Mekanism machines are cleared for use. Iron is the bottleneck; plan your mines accordingly."
-		"Meet the quota and the Board schedules the Stress Test: Wither waves in the reinforced furnace pit, and a beacon for the HQ."
-	]
-	quest.5C02000000000010.quest_subtitle: "Phase 2 briefing"
 	quest.5C02000000000010.title: "The Foundry"
-	task.5C02000000000011.title: "Phase 2 clearance granted by the Board"
+	quest.5C02000000000010.quest_subtitle: "Phase 2 clearance"
+	quest.5C02000000000010.quest_desc: [
+		"The HQ stands and the public Foundry is lit. The Board now wants steel, and a lot of it. Blast furnaces, brass, steam and the first Mekanism machines are cleared."
+		""
+		"Iron is the bottleneck; plan your mines accordingly. Meet the quota and the Board schedules the Stress Test: Wither waves in the reinforced pit, and a beacon for the HQ."
+	]
+	task.5C02000000000011.title: "Stage: phase 2 clearance granted by the Board"
 
+	quest.5C02000000000020.title: "Phase 2 Quota"
+	quest.5C02000000000020.quest_subtitle: "Foundry deliveries"
 	quest.5C02000000000020.quest_desc: [
-		"The Board expects the following deliveries at the terminal before Phase 3 opens:"
+		"The Board expects the following deliveries at the terminal before phase 3 opens:"
 		"- 5,000 steel ingots (Mekanism, Immersive Engineering or Ad Astra steel)"
 		"- 5,000 brass ingots"
 		"- 4,000 coal coke"
@@ -114,38 +363,238 @@
 		"- 1,500 basic control circuits"
 		"- 600 precision mechanisms"
 		"- 600 brass funnels"
+		"{@pagebreak}"
+		"Progress is on the quota board above the terminal, on the boss bar and in /consortium phase. The phase completes when the average of the lines reaches 90 % and every line stands at 60 % or more."
 		""
-		"Phase progress is shown on the boss bar and with /consortium phase. The phase completes when overall progress reaches 90% and every line is at least 60%."
+		"Coal coke can be stockpiled before the phase opens: the coke oven is free forever. The Mekanism steel route through enriched carbon is the cheap one on coal."
 		""
-		"Tick this quest once you have read the quota."
+		"&7Briefing bonus: 25 XP.&r"
 	]
-	quest.5C02000000000020.quest_subtitle: "Foundry deliveries"
-	quest.5C02000000000020.title: "Phase 2 Quota"
 	task.5C02000000000021.title: "Quota read"
+	reward.5C02000000000024.title: "Briefing bonus: 25 XP"
 
+	quest.5C02000000000030.title: "Steel Run"
+	quest.5C02000000000030.quest_subtitle: "Deliver 64 steel"
 	quest.5C02000000000030.quest_desc: [
-		"Steel is the Consortium's currency this phase. A crude blast furnace turns iron and coal coke into steel about once a minute while you stand nearby; the Mekanism route through enriched carbon is cheaper on coal."
+		"Steel is the currency of the Foundry. One crude blast furnace makes about one ingot a minute while somebody stands nearby; the Mekanism route through enriched carbon and the energized smelter is cheaper on coal. The Board wants 5,000 ingots."
 		""
-		"Hold 16 Immersive Engineering steel ingots to certify your furnace. The ingots stay yours."
+		"Deliver 64 units of the steel family: Mekanism, Immersive Engineering and Ad Astra steel all count."
+		""
+		"Your own deliveries count; a crew mate's do not."
+		""
+		"&7Assignment fee: 20.00 CC, paid to the crew member who delivered it.&r"
 	]
-	quest.5C02000000000030.quest_subtitle: "Show 16 Immersive Engineering steel ingots"
-	quest.5C02000000000030.title: "Steel Sample"
-	reward.5C02000000000032.title: "Pressed steel plates"
+	task.5C02000000000031.title: "64 steel delivered at the terminal"
+	reward.5C02000000000034.title: "Assignment fee: 20.00 CC"
+
+	quest.5C02000000000040.title: "Brass Run"
+	quest.5C02000000000040.quest_subtitle: "Deliver 64 brass"
+	quest.5C02000000000040.quest_desc: [
+		"Brass is copper and zinc mixed over a blaze burner: one of each gives two ingots. Brass casings, funnels and tunnels all start here, and the Board wants 5,000 ingots."
+		""
+		"Deliver 64 brass ingots at the terminal."
+		""
+		"Your own deliveries count; a crew mate's do not."
+		""
+		"&7Assignment fee: 20.00 CC, paid to the crew member who delivered it.&r"
+	]
+	task.5C02000000000041.title: "64 brass delivered at the terminal"
+	reward.5C02000000000044.title: "Assignment fee: 20.00 CC"
+
+	quest.5C02000000000050.title: "Coke Line"
+	quest.5C02000000000050.quest_subtitle: "Deliver 128 coal coke"
+	quest.5C02000000000050.quest_desc: [
+		"The coke oven turns coal into coke and creosote; one full batch is 16 coke. Coke feeds the blast furnaces, and the Board wants 4,000 of it."
+		""
+		"Deliver 128 coal coke. The oven is free forever, so this line can run before the phase opens."
+		""
+		"Your own deliveries count; a crew mate's do not."
+		""
+		"&7Assignment fee: 20.00 CC, paid to the crew member who delivered it.&r"
+	]
+	task.5C02000000000051.title: "128 coal coke delivered at the terminal"
+	reward.5C02000000000054.title: "Assignment fee: 20.00 CC"
+
+	quest.5C02000000000060.title: "Circuit Order"
+	quest.5C02000000000060.quest_subtitle: "Deliver 32 basic control circuits"
+	quest.5C02000000000060.quest_desc: [
+		"The metallurgic infuser makes basic control circuits from osmium and redstone. Every Mekanism machine of the phase carries one, and the Board wants 1,500 of them."
+		""
+		"Deliver 32 basic control circuits at the terminal."
+		""
+		"Your own deliveries count; a crew mate's do not."
+		""
+		"&7Assignment fee: 20.00 CC, paid to the crew member who delivered it.&r"
+	]
+	task.5C02000000000061.title: "32 basic control circuits delivered at the terminal"
+	reward.5C02000000000064.title: "Assignment fee: 20.00 CC"
+
+	quest.5C02000000000070.title: "Blast Brick"
+	quest.5C02000000000070.quest_subtitle: "Show one blast brick"
+	quest.5C02000000000070.quest_desc: [
+		"Blast bricks are nether bricks and blaze powder, and 27 of them make the crude blast furnace: the first steel of the season, with nothing but coal coke and iron."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 15.00 CC and 75 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C02000000000071.title: "Blast brick"
+	reward.5C02000000000074.title: "Certification bonus: 15.00 CC"
+	reward.5C02000000000075.title: "Certification bonus: 75 XP"
+
+	quest.5C02000000000080.title: "Steam Engine"
+	quest.5C02000000000080.quest_subtitle: "Show one steam engine"
+	quest.5C02000000000080.quest_desc: [
+		"A boiler of fluid tanks over blaze burners, a steam engine on its side: the strongest rotation of phase 2, the one that runs the Foundry's presses and mixers."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 15.00 CC and 75 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C02000000000081.title: "Steam engine"
+	reward.5C02000000000084.title: "Certification bonus: 15.00 CC"
+	reward.5C02000000000085.title: "Certification bonus: 75 XP"
+
+	quest.5C02000000000090.title: "Metallurgic Infuser"
+	quest.5C02000000000090.quest_subtitle: "Show one metallurgic infuser"
+	quest.5C02000000000090.quest_desc: [
+		"The metallurgic infuser is the Mekanism entry point: enriched carbon into iron makes steel, redstone into copper makes infused alloy, osmium and redstone make circuits. It needs an energy cube and a generator next to it."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 15.00 CC and 75 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C02000000000091.title: "Metallurgic infuser"
+	reward.5C02000000000094.title: "Certification bonus: 15.00 CC"
+	reward.5C02000000000095.title: "Certification bonus: 75 XP"
+
+	quest.5C020000000000A0.title: "Basic Energy Cube"
+	quest.5C020000000000A0.quest_subtitle: "Show one basic energy cube"
+	quest.5C020000000000A0.quest_desc: [
+		"The basic energy cube stores and passes power. Every Mekanism machine wants one on the line, and a heat generator next to lava is the cheapest thing that fills it."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 15.00 CC and 75 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C020000000000A1.title: "Basic energy cube"
+	reward.5C020000000000A4.title: "Certification bonus: 15.00 CC"
+	reward.5C020000000000A5.title: "Certification bonus: 75 XP"
+
+	quest.5C020000000000B0.title: "LV Capacitor"
+	quest.5C020000000000B0.quest_subtitle: "Show one LV capacitor"
+	quest.5C020000000000B0.quest_desc: [
+		"The LV capacitor is Immersive Engineering's battery: LV wires between connectors, a capacitor at the end. A kinetic dynamo on a windmill or a water wheel fills it in phase 2."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 15.00 CC and 75 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C020000000000B1.title: "LV capacitor"
+	reward.5C020000000000B4.title: "Certification bonus: 15.00 CC"
+	reward.5C020000000000B5.title: "Certification bonus: 75 XP"
+
+	quest.5C020000000000C0.title: "Starter Reactor"
+	quest.5C020000000000C0.quest_subtitle: "Show one starter reactor"
+	quest.5C020000000000C0.quest_desc: [
+		"The Powah starter reactor burns uraninite for steady power. Uraninite is a new ore of the phase; the reactor is a 3x3x3 multiblock of reactor blocks."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 15.00 CC and 75 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C020000000000C1.title: "Starter reactor"
+	reward.5C020000000000C4.title: "Certification bonus: 15.00 CC"
+	reward.5C020000000000C5.title: "Certification bonus: 75 XP"
+
+	quest.5C020000000000D0.title: "Precision Mechanism"
+	quest.5C020000000000D0.quest_subtitle: "Show one precision mechanism"
+	quest.5C020000000000D0.quest_desc: [
+		"The precision mechanism is Create's brass milestone: a gold sheet through five deployer loops of cogwheels, nuggets and iron. It is also a quota line, so the deployer line pays twice."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 15.00 CC and 75 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C020000000000D1.title: "Precision mechanism"
+	reward.5C020000000000D4.title: "Certification bonus: 15.00 CC"
+	reward.5C020000000000D5.title: "Certification bonus: 75 XP"
+
+	quest.5C020000000000E0.title: "Purification Clearance"
+	quest.5C020000000000E0.quest_subtitle: "Extraction early access"
+	quest.5C020000000000E0.quest_desc: [
+		"Purification chambers and the 3x ore route are yours one phase early: oxygen from flint in the chamber, clumps out."
+		""
+		"Ore yield is the whole of phase 3; you start it now."
+		""
+		"&7Clearance bonus: 150 XP. Granted automatically to every Extraction team; other charters never see this entry.&r"
+	]
+	task.5C020000000000E1.title: "Extraction early access (charter stage, granted by the Board)"
+	reward.5C020000000000E4.title: "Clearance bonus: 150 XP"
+
+	quest.5C020000000000F0.title: "Hardened Clearance"
+	quest.5C020000000000F0.quest_subtitle: "Energy early access"
+	quest.5C020000000000F0.quest_desc: [
+		"The Powah hardened tier and energized steel are yours now: an energizing orb with rods turns iron and gold into the metal every later Powah block is made of."
+		""
+		"&7Clearance bonus: 150 XP. Granted automatically to every Energy team; other charters never see this entry.&r"
+	]
+	task.5C020000000000F1.title: "Energy early access (charter stage, granted by the Board)"
+	reward.5C020000000000F4.title: "Clearance bonus: 150 XP"
+
+	quest.5C02000000000100.title: "Storage Clearance"
+	quest.5C02000000000100.quest_subtitle: "Logistics early access"
+	quest.5C02000000000100.quest_desc: [
+		"AE2 basic storage is yours now: an ME drive, a 1k cell and a terminal."
+		""
+		"Trains stay phase 3 for everyone."
+		""
+		"&7Clearance bonus: 150 XP. Granted automatically to every Logistics team; other charters never see this entry.&r"
+	]
+	task.5C02000000000101.title: "Logistics early access (charter stage, granted by the Board)"
+	reward.5C02000000000104.title: "Clearance bonus: 150 XP"
+
+	quest.5C02000000000110.title: "The Stress Test"
+	quest.5C02000000000110.quest_subtitle: "Survive the Wither waves"
+	quest.5C02000000000110.quest_desc: [
+		"When the quota lands, the Board convenes at the reinforced pit of the Foundry. Three waves, Withers included, steel armour expected. The nether star lights the HQ beacon."
+		""
+		"Staff records everyone inside the pit at the end of the third wave."
+		""
+		"&7Ceremony keepsake: the Beacon Shard, a glass pane cut from the first beacon's light. No production value, all the bragging rights; handed to a player staff recorded as present.&r"
+	]
+	task.5C02000000000111.title: "The Stress Test: recorded by staff as present"
+	reward.5C02000000000114.title: "Beacon Shard"
+
+	quest.5C02000000000120.title: "Phase 2 Complete"
+	quest.5C02000000000120.quest_subtitle: "The Board opens the Refinery"
+	quest.5C02000000000120.quest_desc: [
+		"Phase 3 is open: advanced and elite Mekanism tiers, 3x and 4x ore processing, AE2 storage, medium voltage and trains. The public Refinery at HQ runs at 2x to 3x from day one, for a per-stack fee."
+		""
+		"This assignment completes once your team holds phase 3 and you have delivered at least one run of this phase yourself."
+		""
+		"&7Phase bonus: 75.00 CC and 3 levels, paid to a crew member with a completed run of the phase.&r"
+	]
+	task.5C02000000000121.title: "Stage: phase 3 open"
+	reward.5C02000000000124.title: "Phase bonus: 75.00 CC"
+	reward.5C02000000000125.title: "Phase bonus: 3 levels"
 
 	chapter.5C03000000000001.chapter_subtitle: ["Days 20 to 34. Mekanism advanced and elite, 3x and 4x ores, AE2 storage, IE medium voltage, Powah hardened and blazing."]
 	chapter.5C03000000000001.title: "Phase 3: The Refinery"
 
-	quest.5C03000000000010.quest_desc: [
-		"Steel is flowing and the beacon is lit. The Board moves to the next line item: ore yield."
-		"Advanced and elite Mekanism tiers, 3x and 4x ore processing, AE2 storage and the medium voltage grid are now cleared. The public Refinery at HQ runs at 2x to 3x for a per-stack fee from day one."
-		"Complete the quota and the Board calls the Hostile Takeover, followed by the First Launch: every team lifts off for the Moon on the same countdown."
-	]
-	quest.5C03000000000010.quest_subtitle: "Phase 3 briefing"
 	quest.5C03000000000010.title: "The Refinery"
-	task.5C03000000000011.title: "Phase 3 clearance granted by the Board"
+	quest.5C03000000000010.quest_subtitle: "Phase 3 clearance"
+	quest.5C03000000000010.quest_desc: [
+		"Steel is flowing and the beacon is lit. The Board moves to the next line item: ore yield. Advanced and elite Mekanism tiers, 3x and 4x ore processing, AE2 storage, medium voltage and trains are cleared."
+		""
+		"Complete the quota and the Board calls the Hostile Takeover, then the First Launch: every crew lifts off for the Moon on the same countdown."
+	]
+	task.5C03000000000011.title: "Stage: phase 3 clearance granted by the Board"
 
+	quest.5C03000000000020.title: "Phase 3 Quota"
+	quest.5C03000000000020.quest_subtitle: "Refinery deliveries"
 	quest.5C03000000000020.quest_desc: [
-		"The Board expects the following deliveries at the terminal before Phase 4 opens:"
+		"The Board expects the following deliveries at the terminal before phase 4 opens:"
 		"- 3,000 gold ingots"
 		"- 500 refined obsidian ingots"
 		"- 4,000 fluix crystals"
@@ -153,39 +602,247 @@
 		"- 2,000 advanced control circuits"
 		"- 1,500 reinforced alloy"
 		"- 100 hydrogen chloride buckets"
-		"- 300 1k ME item storage cells"
+		"- 300 1k storage cells"
+		"{@pagebreak}"
+		"Progress is on the quota board above the terminal, on the boss bar and in /consortium phase. The phase completes when the average of the lines reaches 90 % and every line stands at 60 % or more."
 		""
-		"Phase progress is shown on the boss bar and with /consortium phase. The phase completes when overall progress reaches 90% and every line is at least 60%."
+		"Gold is the open line a pickaxe can deliver from day one. Hydrogen chloride needs the brine and evaporation chain; one bucket is a big number."
 		""
-		"Tick this quest once you have read the quota."
+		"&7Briefing bonus: 25 XP.&r"
 	]
-	quest.5C03000000000020.quest_subtitle: "Refinery deliveries"
-	quest.5C03000000000020.title: "Phase 3 Quota"
 	task.5C03000000000021.title: "Quota read"
+	reward.5C03000000000024.title: "Briefing bonus: 25 XP"
 
+	quest.5C03000000000030.title: "Gold Run"
+	quest.5C03000000000030.quest_subtitle: "Deliver 64 gold"
 	quest.5C03000000000030.quest_desc: [
-		"An elite factory processes seven stacks at once, which is the scale the Refinery runs at. It takes elite control circuits, reinforced alloy and a steel casing."
+		"Gold goes into energized steel, energy tablets and every AE2 processor. A pickaxe in the badlands delivers it on day one; 4x injection in the chemical chain makes it four ingots an ore. The Board wants 3,000 ingots."
 		""
-		"Hold one elite enriching factory to certify your processing line. The factory stays yours."
+		"Deliver 64 units of the gold family: ingots, blocks, raw gold and nuggets count."
+		""
+		"Your own deliveries count; a crew mate's do not."
+		""
+		"&7Assignment fee: 20.00 CC, paid to the crew member who delivered it.&r"
 	]
-	quest.5C03000000000030.quest_subtitle: "Show an elite enriching factory"
-	quest.5C03000000000030.title: "Elite Factory Certification"
-	reward.5C03000000000032.title: "Speed upgrades"
+	task.5C03000000000031.title: "64 gold delivered at the terminal"
+	reward.5C03000000000034.title: "Assignment fee: 20.00 CC"
+
+	quest.5C03000000000040.title: "Fluix Run"
+	quest.5C03000000000040.quest_subtitle: "Deliver 128 fluix crystals"
+	quest.5C03000000000040.quest_desc: [
+		"Fluix is charged certus, nether quartz and redstone dropped in water: two crystals per set. Every ME cable, cell and processor needs it, and the Board wants 4,000 crystals. Budding certus clusters keep the line running."
+		""
+		"Deliver 128 fluix crystals at the terminal."
+		""
+		"Your own deliveries count; a crew mate's do not."
+		""
+		"&7Assignment fee: 20.00 CC, paid to the crew member who delivered it.&r"
+	]
+	task.5C03000000000041.title: "128 fluix crystals delivered at the terminal"
+	reward.5C03000000000044.title: "Assignment fee: 20.00 CC"
+
+	quest.5C03000000000050.title: "Energized Order"
+	quest.5C03000000000050.quest_subtitle: "Deliver 64 energized steel"
+	quest.5C03000000000050.quest_desc: [
+		"The energizing orb with hardened rods turns one iron and one gold plus 10 kFE into two energized steel. The Board wants 2,000, one for every Powah block of the season."
+		""
+		"Deliver 64 energized steel at the terminal."
+		""
+		"Your own deliveries count; a crew mate's do not."
+		""
+		"&7Assignment fee: 20.00 CC, paid to the crew member who delivered it.&r"
+	]
+	task.5C03000000000051.title: "64 energized steel delivered at the terminal"
+	reward.5C03000000000054.title: "Assignment fee: 20.00 CC"
+
+	quest.5C03000000000060.title: "Advanced Circuits"
+	quest.5C03000000000060.quest_subtitle: "Deliver 32 advanced control circuits"
+	quest.5C03000000000060.quest_desc: [
+		"Two infused alloys around one basic circuit make an advanced control circuit. The advanced tier of every Mekanism machine and factory carries one; the Board wants 2,000 of them."
+		""
+		"Deliver 32 advanced control circuits at the terminal."
+		""
+		"Your own deliveries count; a crew mate's do not."
+		""
+		"&7Assignment fee: 20.00 CC, paid to the crew member who delivered it.&r"
+	]
+	task.5C03000000000061.title: "32 advanced control circuits delivered at the terminal"
+	reward.5C03000000000064.title: "Assignment fee: 20.00 CC"
+
+	quest.5C03000000000070.title: "Purification Chamber"
+	quest.5C03000000000070.quest_subtitle: "Show one purification chamber"
+	quest.5C03000000000070.quest_desc: [
+		"Three ingots an ore. The purification chamber takes oxygen from an electrolytic separator or from flint in the chamber, and clumps come out for the crusher and the enrichment line."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 20.00 CC and 100 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C03000000000071.title: "Purification chamber"
+	reward.5C03000000000074.title: "Certification bonus: 20.00 CC"
+	reward.5C03000000000075.title: "Certification bonus: 100 XP"
+
+	quest.5C03000000000080.title: "Elite Factory"
+	quest.5C03000000000080.quest_subtitle: "Show one elite enriching factory"
+	quest.5C03000000000080.quest_desc: [
+		"An elite factory processes seven stacks at once, the scale the Refinery runs at. It takes elite control circuits, reinforced alloy and a steel casing; an elite tier installer upgrades an advanced one in place."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 20.00 CC and 100 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C03000000000081.title: "Elite enriching factory"
+	reward.5C03000000000084.title: "Certification bonus: 20.00 CC"
+	reward.5C03000000000085.title: "Certification bonus: 100 XP"
+
+	quest.5C03000000000090.title: "ME Drive"
+	quest.5C03000000000090.quest_subtitle: "Show one ME drive"
+	quest.5C03000000000090.quest_desc: [
+		"The network starts with a drive: ten cells in one block, a terminal on a cable, and your chests are history. Fluix, certus and a controller come later; the drive comes first."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 20.00 CC and 100 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C03000000000091.title: "ME drive"
+	reward.5C03000000000094.title: "Certification bonus: 20.00 CC"
+	reward.5C03000000000095.title: "Certification bonus: 100 XP"
+
+	quest.5C030000000000A0.title: "MV Capacitor"
+	quest.5C030000000000A0.quest_subtitle: "Show one MV capacitor"
+	quest.5C030000000000A0.quest_desc: [
+		"Medium voltage: MV wires carry more, and the diesel generator and the arc furnace want it. The MV capacitor stores it and is the ticket into Immersive Engineering's multiblock era."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 20.00 CC and 100 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C030000000000A1.title: "MV capacitor"
+	reward.5C030000000000A4.title: "Certification bonus: 20.00 CC"
+	reward.5C030000000000A5.title: "Certification bonus: 100 XP"
+
+	quest.5C030000000000B0.title: "Blazing Reactor"
+	quest.5C030000000000B0.quest_subtitle: "Show one blazing reactor"
+	quest.5C030000000000B0.quest_desc: [
+		"The blazing tier reactor: blazing crystals from blaze rods and energized steel, a bigger multiblock, a lot more power. Uraninite goes further in it."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 20.00 CC and 100 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C030000000000B1.title: "Blazing reactor"
+	reward.5C030000000000B4.title: "Certification bonus: 20.00 CC"
+	reward.5C030000000000B5.title: "Certification bonus: 100 XP"
+
+	quest.5C030000000000C0.title: "Track Station"
+	quest.5C030000000000C0.quest_subtitle: "Show one track station"
+	quest.5C030000000000C0.quest_desc: [
+		"Trains are public this phase. A track station on Create rails, a schedule in a conductor's hand, and a line between two bases moves more than any belt."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 20.00 CC and 100 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C030000000000C1.title: "Track station"
+	reward.5C030000000000C4.title: "Certification bonus: 20.00 CC"
+	reward.5C030000000000C5.title: "Certification bonus: 100 XP"
+
+	quest.5C030000000000D0.title: "Dissolution Clearance"
+	quest.5C030000000000D0.quest_subtitle: "Extraction early access"
+	quest.5C030000000000D0.quest_desc: [
+		"The 5x ore route is yours one phase early: chemical dissolution chamber, chemical washer and crystallizer, atomic alloy in the machines."
+		""
+		"Five ingots an ore is the ceiling of the season."
+		""
+		"&7Clearance bonus: 200 XP. Granted automatically to every Extraction team; other charters never see this entry.&r"
+	]
+	task.5C030000000000D1.title: "Extraction early access (charter stage, granted by the Board)"
+	reward.5C030000000000D4.title: "Clearance bonus: 200 XP"
+
+	quest.5C030000000000E0.title: "Extraction Licence"
+	quest.5C030000000000E0.quest_subtitle: "Licensed: crystallizer and bucket wheel"
+	quest.5C030000000000E0.quest_desc: [
+		"The Board issues the Extraction licence at phase 3. It is exclusive all season: the chemical crystallizer route for lithium dust and, at the end, the antimatter pellet are yours to make. A charter switch is refused from now on."
+		""
+		"&7Company title: Licensed Extractor, shown after your name. Granted to the licensed team's members automatically; switch between held titles with /consortium title. Clearance bonus: 200 XP.&r"
+	]
+	task.5C030000000000E1.title: "Stage: Extraction licence"
+	reward.5C030000000000E4.title: "Company title: Licensed Extractor"
+	reward.5C030000000000E5.title: "Clearance bonus: 200 XP"
+
+	quest.5C030000000000F0.title: "Reaction Clearance"
+	quest.5C030000000000F0.quest_subtitle: "Energy early access"
+	quest.5C030000000000F0.quest_desc: [
+		"The pressurized reaction chamber, ethene and the induction casing are yours one phase early: HDPE and the induction matrix start here."
+		""
+		"&7Clearance bonus: 200 XP. Granted automatically to every Energy team; other charters never see this entry.&r"
+	]
+	task.5C030000000000F1.title: "Energy early access (charter stage, granted by the Board)"
+	reward.5C030000000000F4.title: "Clearance bonus: 200 XP"
+
+	quest.5C03000000000100.title: "Autocrafting Clearance"
+	quest.5C03000000000100.quest_subtitle: "Logistics early access"
+	quest.5C03000000000100.quest_desc: [
+		"Pattern providers and molecular assemblers are yours one phase early. The network stops storing and starts manufacturing."
+		""
+		"&7Clearance bonus: 200 XP. Granted automatically to every Logistics team; other charters never see this entry.&r"
+	]
+	task.5C03000000000101.title: "Logistics early access (charter stage, granted by the Board)"
+	reward.5C03000000000104.title: "Clearance bonus: 200 XP"
+
+	quest.5C03000000000110.title: "The Hostile Takeover"
+	quest.5C03000000000110.quest_subtitle: "Hold the Refinery"
+	quest.5C03000000000110.quest_desc: [
+		"When the quota lands, the Board convenes at the Refinery claim. Three waves of Apothic invaders want the machines; you want the loot and the reforging materials of phase 4."
+		""
+		"Staff records the defenders standing at the end of the third wave."
+		""
+		"&7Ceremony keepsake: the Refinery Badge, a flower pot with the Refinery's stamp. No production value, all the bragging rights; handed to a player staff recorded as present.&r"
+	]
+	task.5C03000000000111.title: "The Hostile Takeover: recorded by staff as present"
+	reward.5C03000000000114.title: "Refinery Badge"
+
+	quest.5C03000000000120.title: "The First Launch"
+	quest.5C03000000000120.quest_subtitle: "Lift off with everyone"
+	quest.5C03000000000120.quest_desc: [
+		"Phase 4 is already open at completion, and the Board sets a launch date. Build a tier 1 rocket in the days before the slot, or take a seat in the public HQ rocket. Every rocket lifts off on the same countdown."
+		""
+		"Staff records everyone on the launch field at zero."
+		""
+		"&7Ceremony keepsake: the Launch Patch, a paper patch with the launch date. No production value, all the bragging rights; handed to a player staff recorded as present.&r"
+	]
+	task.5C03000000000121.title: "The First Launch: recorded by staff as present"
+	reward.5C03000000000124.title: "Launch Patch"
+
+	quest.5C03000000000130.title: "Phase 3 Complete"
+	quest.5C03000000000130.quest_subtitle: "The Board goes orbital"
+	quest.5C03000000000130.quest_desc: [
+		"Phase 4 is open: ultimate Mekanism tiers, AE2 autocrafting, the Moon and Mars, high voltage and reforging. Desh only exists on the Moon and every launch burns fuel."
+		""
+		"This assignment completes once your team holds phase 4 and you have delivered at least one run of this phase yourself."
+		""
+		"&7Phase bonus: 100.00 CC and 3 levels, paid to a crew member with a completed run of the phase.&r"
+	]
+	task.5C03000000000131.title: "Stage: phase 4 open"
+	reward.5C03000000000134.title: "Phase bonus: 100.00 CC"
+	reward.5C03000000000135.title: "Phase bonus: 3 levels"
 
 	chapter.5C04000000000001.chapter_subtitle: ["Days 35 to 50. Mekanism ultimate, chemistry, AE2 autocrafting, the Moon and Mars, IE high voltage, reforging."]
 	chapter.5C04000000000001.title: "Phase 4: Orbital Division"
 
-	quest.5C04000000000010.quest_desc: [
-		"The Refinery held and the rockets flew. The Consortium is now an orbital concern."
-		"Ultimate Mekanism tiers, AE2 autocrafting, the Moon and Mars, high voltage power and reforging are cleared. Desh only exists on the Moon, and every launch burns fuel."
-		"Meet the quota and the Board inaugurates the Consortium station in Earth orbit. The Lunar Outpost opens as soon as the desh line passes 50%."
-	]
-	quest.5C04000000000010.quest_subtitle: "Phase 4 briefing"
 	quest.5C04000000000010.title: "Orbital Division"
-	task.5C04000000000011.title: "Phase 4 clearance granted by the Board"
+	quest.5C04000000000010.quest_subtitle: "Phase 4 clearance"
+	quest.5C04000000000010.quest_desc: [
+		"The Refinery held and the rockets flew. The Consortium is now an orbital concern: ultimate Mekanism tiers, AE2 autocrafting, the Moon and Mars, high voltage and reforging are cleared."
+		""
+		"Desh only exists on the Moon and every launch burns fuel. Meet the quota and the Board inaugurates the Consortium station in orbit."
+	]
+	task.5C04000000000011.title: "Stage: phase 4 clearance granted by the Board"
 
+	quest.5C04000000000020.title: "Phase 4 Quota"
+	quest.5C04000000000020.quest_subtitle: "Orbital deliveries"
 	quest.5C04000000000020.quest_desc: [
-		"The Board expects the following deliveries at the terminal before Phase 5 opens:"
+		"The Board expects the following deliveries at the terminal before phase 5 opens:"
 		"- 1,500 diamonds"
 		"- 2,000 desh ingots"
 		"- 1,000 atomic alloy"
@@ -194,36 +851,244 @@
 		"- 750 engineering processors"
 		"- 400 niotic crystals"
 		"- 300 fuel buckets (rocket fuel, biodiesel or cryo fuel)"
+		"{@pagebreak}"
+		"Progress is on the quota board above the terminal, on the boss bar and in /consortium phase. The phase completes when the average of the lines reaches 90 % and every line stands at 60 % or more."
 		""
-		"Phase progress is shown on the boss bar and with /consortium phase. The phase completes when overall progress reaches 90% and every line is at least 60%."
+		"Fuel buckets compete with the desh trips for oil. The Lunar Outpost, the public Moon base, opens as soon as the desh line passes 50 %."
 		""
-		"Tick this quest once you have read the quota."
+		"&7Briefing bonus: 25 XP.&r"
 	]
-	quest.5C04000000000020.quest_subtitle: "Orbital deliveries"
-	quest.5C04000000000020.title: "Phase 4 Quota"
 	task.5C04000000000021.title: "Quota read"
+	reward.5C04000000000024.title: "Briefing bonus: 25 XP"
 
+	quest.5C04000000000030.title: "Diamond Run"
+	quest.5C04000000000030.quest_subtitle: "Deliver 32 diamonds"
 	quest.5C04000000000030.quest_desc: [
+		"Engineering processors, atomic alloy and niotic crystals all eat diamonds. Deep mining, 4x injection on diamond ore and the badlands trips feed the line; the Board wants 1,500 diamonds."
+		""
+		"Deliver 32 units of the diamond family: diamonds, blocks and diamond dust count."
+		""
+		"Your own deliveries count; a crew mate's do not."
+		""
+		"&7Assignment fee: 30.00 CC, paid to the crew member who delivered it.&r"
+	]
+	task.5C04000000000031.title: "32 diamonds delivered at the terminal"
+	reward.5C04000000000034.title: "Assignment fee: 30.00 CC"
+
+	quest.5C04000000000040.title: "Desh Run"
+	quest.5C04000000000040.quest_subtitle: "Deliver 64 desh"
+	quest.5C04000000000040.quest_desc: [
+		"Desh only exists on the Moon: about nine blobs per chunk under the regolith. It is the metal of every tier 2 rocket, of the space suit and of the station. The Board wants 2,000 ingots."
+		""
+		"Deliver 64 units of the desh family: ingots, blocks, raw desh and nuggets count."
+		""
+		"Your own deliveries count; a crew mate's do not."
+		""
+		"&7Assignment fee: 30.00 CC, paid to the crew member who delivered it.&r"
+	]
+	task.5C04000000000041.title: "64 desh delivered at the terminal"
+	reward.5C04000000000044.title: "Assignment fee: 30.00 CC"
+
+	quest.5C04000000000050.title: "Processor Order"
+	quest.5C04000000000050.quest_subtitle: "Deliver 64 logic processors"
+	quest.5C04000000000050.quest_desc: [
+		"Gold, certus and redstone through the inscriber, with a logic press from a meteorite. Every autocrafting pattern provider and every cell above 1k carries logic processors; the Board wants 2,000 of them."
+		""
+		"Deliver 64 logic processors at the terminal."
+		""
+		"Your own deliveries count; a crew mate's do not."
+		""
+		"&7Assignment fee: 30.00 CC, paid to the crew member who delivered it.&r"
+	]
+	task.5C04000000000051.title: "64 logic processors delivered at the terminal"
+	reward.5C04000000000054.title: "Assignment fee: 30.00 CC"
+
+	quest.5C04000000000060.title: "Fuel Order"
+	quest.5C04000000000060.quest_subtitle: "Deliver 4 fuel buckets"
+	quest.5C04000000000060.quest_desc: [
+		"Oil is finite. Rocket fuel from the Ad Astra refinery, biodiesel from Immersive Engineering and cryo fuel from ice shards are one line: fuel buckets. The Board wants 300 buckets and hands the empty buckets back."
+		""
+		"Deliver 4 buckets of any of the three."
+		""
+		"Your own deliveries count; a crew mate's do not."
+		""
+		"&7Assignment fee: 30.00 CC, paid to the crew member who delivered it.&r"
+	]
+	task.5C04000000000061.title: "4 fuel buckets delivered at the terminal"
+	reward.5C04000000000064.title: "Assignment fee: 30.00 CC"
+
+	quest.5C04000000000070.title: "Ultimate Cube"
+	quest.5C04000000000070.quest_subtitle: "Show one ultimate energy cube"
+	quest.5C04000000000070.quest_desc: [
+		"The ultimate tier: the cube that buffers a fusion reactor and the tier every factory of phase 5 is built in. Atomic alloy and ultimate circuits, or an ultimate tier installer on an elite cube."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 25.00 CC and 125 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C04000000000071.title: "Ultimate energy cube"
+	reward.5C04000000000074.title: "Certification bonus: 25.00 CC"
+	reward.5C04000000000075.title: "Certification bonus: 125 XP"
+
+	quest.5C04000000000080.title: "Reaction Chamber"
+	quest.5C04000000000080.quest_subtitle: "Show one pressurized reaction chamber"
+	quest.5C04000000000080.quest_desc: [
+		"The pressurized reaction chamber makes ethene from bio fuel and hydrogen, and HDPE pellets from ethene and oxygen. The HDPE line of the quota starts here."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 25.00 CC and 125 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C04000000000081.title: "Pressurized reaction chamber"
+	reward.5C04000000000084.title: "Certification bonus: 25.00 CC"
+	reward.5C04000000000085.title: "Certification bonus: 125 XP"
+
+	quest.5C04000000000090.title: "Pattern Provider"
+	quest.5C04000000000090.quest_subtitle: "Show one pattern provider"
+	quest.5C04000000000090.quest_desc: [
 		"The pattern provider is where an ME network stops storing and starts manufacturing: it pushes encoded patterns into machines and collects the output."
 		""
-		"Hold one pattern provider to certify your autocrafting setup. The provider stays yours."
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 25.00 CC and 125 XP, paid to the crew member holding the item.&r"
 	]
-	quest.5C04000000000030.quest_subtitle: "Show a pattern provider"
-	quest.5C04000000000030.title: "Autocrafting Audit"
-	reward.5C04000000000032.title: "Blank patterns"
+	task.5C04000000000091.title: "Pattern provider"
+	reward.5C04000000000094.title: "Certification bonus: 25.00 CC"
+	reward.5C04000000000095.title: "Certification bonus: 125 XP"
 
-	chapter.5C05000000000001.chapter_subtitle: ["Days 51 to 70. Fusion, antimatter, AE2 spatial storage, Venus, Mercury and Glacio."]
+	quest.5C040000000000A0.title: "Tier 1 Rocket"
+	quest.5C040000000000A0.quest_subtitle: "Show one tier 1 rocket"
+	quest.5C040000000000A0.quest_desc: [
+		"The steel-only rocket, the one every crew flew at the First Launch. It reaches the Moon and back on one tank; the NASA workbench builds it from steel."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 25.00 CC and 125 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C040000000000A1.title: "Tier 1 rocket"
+	reward.5C040000000000A4.title: "Certification bonus: 25.00 CC"
+	reward.5C040000000000A5.title: "Certification bonus: 125 XP"
+
+	quest.5C040000000000B0.title: "Moon Landing"
+	quest.5C040000000000B0.quest_subtitle: "Stand on the Moon"
+	quest.5C040000000000B0.quest_desc: [
+		"Land on the Moon. The Lunar Outpost is the public base up there: oxygen, a launch pad and the Board's desh survey. Your own rocket or the public HQ rocket, either way you stand on the regolith."
+		""
+		"&7Certification bonus: 25.00 CC once per crew (a landing is a team fact) and 125 XP per member.&r"
+	]
+	task.5C040000000000B1.title: "Dimension: the Moon"
+	reward.5C040000000000B4.title: "Certification bonus: 25.00 CC"
+	reward.5C040000000000B5.title: "Certification bonus: 125 XP"
+
+	quest.5C040000000000C0.title: "HV Capacitor"
+	quest.5C040000000000C0.quest_subtitle: "Show one HV capacitor"
+	quest.5C040000000000C0.quest_desc: [
+		"High voltage: the arc furnace era. HV wires, the HV capacitor, the excavator and the arc furnace that makes steel by the stack."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 25.00 CC and 125 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C040000000000C1.title: "HV capacitor"
+	reward.5C040000000000C4.title: "Certification bonus: 25.00 CC"
+	reward.5C040000000000C5.title: "Certification bonus: 125 XP"
+
+	quest.5C040000000000D0.title: "Reforging Table"
+	quest.5C040000000000D0.quest_subtitle: "Show one reforging table"
+	quest.5C040000000000D0.quest_desc: [
+		"The Takeover loot was the point: the Apotheosis reforging table rerolls affixes on gear with the materials the invaders dropped. Gems and the salvaging table come with it."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 25.00 CC and 125 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C040000000000D1.title: "Reforging table"
+	reward.5C040000000000D4.title: "Certification bonus: 25.00 CC"
+	reward.5C040000000000D5.title: "Certification bonus: 125 XP"
+
+	quest.5C040000000000E0.title: "Ostrum Clearance"
+	quest.5C040000000000E0.quest_subtitle: "Extraction early access"
+	quest.5C040000000000E0.quest_desc: [
+		"Mars ostrum and the tier 3 rocket are yours one phase early: Venus and Mercury are yours first."
+		""
+		"&7Clearance bonus: 250 XP. Granted automatically to every Extraction team; other charters never see this entry.&r"
+	]
+	task.5C040000000000E1.title: "Extraction early access (charter stage, granted by the Board)"
+	reward.5C040000000000E4.title: "Clearance bonus: 250 XP"
+
+	quest.5C040000000000F0.title: "Fission Clearance"
+	quest.5C040000000000F0.quest_subtitle: "Energy early access"
+	quest.5C040000000000F0.quest_desc: [
+		"The nuclear chain starts now: isotopic centrifuge, solar neutron activator, radioactive waste barrels, hazmat suit."
+		""
+		"Uranium hexafluoride is a thing you breathe only once."
+		""
+		"&7Clearance bonus: 250 XP. Granted automatically to every Energy team; other charters never see this entry.&r"
+	]
+	task.5C040000000000F1.title: "Energy early access (charter stage, granted by the Board)"
+	reward.5C040000000000F4.title: "Clearance bonus: 250 XP"
+
+	quest.5C04000000000100.title: "Energy Licence"
+	quest.5C04000000000100.quest_subtitle: "Licensed: fission and fusion"
+	quest.5C04000000000100.quest_desc: [
+		"The Board issues the Energy licence at phase 4. Both reactor multiblocks are yours all season: fission for polonium and plutonium, fusion for the season project. A charter switch is refused from now on."
+		""
+		"&7Company title: Licensed Engineer, shown after your name. Granted to the licensed team's members automatically. Clearance bonus: 250 XP.&r"
+	]
+	task.5C04000000000101.title: "Stage: Energy licence"
+	reward.5C04000000000104.title: "Company title: Licensed Engineer"
+	reward.5C04000000000105.title: "Clearance bonus: 250 XP"
+
+	quest.5C04000000000110.title: "Logistics Licence"
+	quest.5C04000000000110.quest_subtitle: "Licensed: teleportation, QIO, quantum"
+	quest.5C04000000000110.quest_desc: [
+		"The Board issues the Logistics licence at phase 4. Teleporters, quantum entangloporters, the QIO and the AE2 quantum bridge are yours all season; the Frontier Gate is your season project."
+		""
+		"&7Company title: Licensed Courier, shown after your name. Granted to the licensed team's members automatically. Clearance bonus: 250 XP.&r"
+	]
+	task.5C04000000000111.title: "Stage: Logistics licence"
+	reward.5C04000000000114.title: "Company title: Licensed Courier"
+	reward.5C04000000000115.title: "Clearance bonus: 250 XP"
+
+	quest.5C04000000000120.title: "Orbital Division"
+	quest.5C04000000000120.quest_subtitle: "Inaugurate the station"
+	quest.5C04000000000120.quest_desc: [
+		"When the quota lands, staff assembles the Consortium station in orbit from the delivered plates and desh. The Board convenes aboard for the inauguration."
+		""
+		"Staff records everyone aboard at the ribbon."
+		""
+		"&7Ceremony keepsake: the Station Key, a tripwire hook on a lanyard. No production value, all the bragging rights; handed to a player staff recorded as present.&r"
+	]
+	task.5C04000000000121.title: "Orbital Division: recorded by staff as present"
+	reward.5C04000000000124.title: "Station Key"
+
+	quest.5C04000000000130.title: "Phase 4 Complete"
+	quest.5C04000000000130.quest_subtitle: "The Board approves the season project"
+	quest.5C04000000000130.quest_desc: [
+		"Phase 5 is open: fusion, antimatter, AE2 spatial storage, Venus, Mercury and Glacio. The charters hold the licences; nobody finishes this alone."
+		""
+		"This assignment completes once your team holds phase 5 and you have delivered at least one run of this phase yourself."
+		""
+		"&7Phase bonus: 150.00 CC and 4 levels, paid to a crew member with a completed run of the phase.&r"
+	]
+	task.5C04000000000131.title: "Stage: phase 5 open"
+	reward.5C04000000000134.title: "Phase bonus: 150.00 CC"
+	reward.5C04000000000135.title: "Phase bonus: 4 levels"
+
+	chapter.5C05000000000001.chapter_subtitle: ["Days 51 to 70 plus buffer. Fusion, antimatter, AE2 spatial storage, Venus, Mercury and Glacio, the Liquidator."]
 	chapter.5C05000000000001.title: "Phase 5: Event Horizon"
 
-	quest.5C05000000000010.quest_desc: [
-		"The station is open and the Board has approved the season project: a Fusion Core, a Frontier Gate to Glacio, and one sealed pellet of antimatter."
-		"Fusion, antimatter, AE2 spatial storage, Venus, Mercury and Glacio are cleared. The charters hold the licences; nobody finishes this alone."
-		"When all three projects stand, the Liquidator is summoned on Glacio and Season 1 closes on the announced end date."
-	]
-	quest.5C05000000000010.quest_subtitle: "Phase 5 briefing"
 	quest.5C05000000000010.title: "Event Horizon"
-	task.5C05000000000011.title: "Phase 5 clearance granted by the Board"
+	quest.5C05000000000010.quest_subtitle: "Phase 5 clearance"
+	quest.5C05000000000010.quest_desc: [
+		"The station is open and the Board has approved the season project: a Fusion Core at HQ, a Frontier Gate to Glacio and one sealed pellet of antimatter."
+		""
+		"Fusion, antimatter, spatial storage, Venus, Mercury and Glacio are cleared. The Liquidator, the Board's auditor, arrives on Glacio on the announced end date whatever the state of the project."
+	]
+	task.5C05000000000011.title: "Stage: phase 5 clearance granted by the Board"
 
+	quest.5C05000000000020.title: "Season Project Quota"
+	quest.5C05000000000020.quest_subtitle: "The bill of materials"
 	quest.5C05000000000020.quest_desc: [
 		"The season project's bill of materials. The Board expects the following deliveries at the terminal:"
 		"- 4,000 uranium ingots"
@@ -233,23 +1098,552 @@
 		"- 600 polonium pellets"
 		"- 150 plutonium pellets"
 		"- 80 nitro crystals"
-		"- 32 singularities (count for the quota, pay no credits)"
+		"- 32 singularities (count for the quota, pay nothing)"
 		"- 1 antimatter pellet (the Antimatter Reserve)"
+		"{@pagebreak}"
+		"Progress is on the quota board above the terminal, on the boss bar and in /consortium phase. The phase completes when the average of the lines reaches 90 % and every line stands at 60 % or more."
 		""
-		"Phase progress is shown on the boss bar and with /consortium phase. The phase completes when overall progress reaches 90% and every line is at least 60%."
+		"One polonium pellet is ten uranium ingots through fission. The uranium everyone delivers is issued free to the Energy charter through the Board; the antimatter pellet is the Antimatter Reserve itself."
 		""
-		"Tick this quest once you have read the quota."
+		"&7Briefing bonus: 25 XP.&r"
 	]
-	quest.5C05000000000020.quest_subtitle: "Season project deliveries"
-	quest.5C05000000000020.title: "Phase 5 Quota"
 	task.5C05000000000021.title: "Quota read"
+	reward.5C05000000000024.title: "Briefing bonus: 25 XP"
 
+	quest.5C05000000000030.title: "Uranium Run"
+	quest.5C05000000000030.quest_subtitle: "Deliver 64 uranium"
 	quest.5C05000000000030.quest_desc: [
-		"A tier 4 rocket is the only way to Glacio, where the season ends. It is built at the NASA workbench from calorite, the ore that only Venus yields."
+		"The newcomer line of phase 5: a pickaxe and a furnace deliver it from day one. Uranium ore is deep, and the Board wants 4,000 ingots for the fission chain."
 		""
-		"Hold one tier 4 rocket to be cleared for the final expedition. The rocket stays yours."
+		"Deliver 64 units of the uranium family: ingots, blocks, raw uranium and dust count, Mekanism and Immersive Engineering alike."
+		""
+		"Your own deliveries count; a crew mate's do not."
+		""
+		"&7Assignment fee: 50.00 CC, paid to the crew member who delivered it.&r"
 	]
-	quest.5C05000000000030.quest_subtitle: "Show a tier 4 rocket"
-	quest.5C05000000000030.title: "Glacio Clearance"
-	reward.5C05000000000032.title: "Cryo fuel for the trip"
+	task.5C05000000000031.title: "64 uranium delivered at the terminal"
+	reward.5C05000000000034.title: "Assignment fee: 50.00 CC"
+
+	quest.5C05000000000040.title: "Ostrum Run"
+	quest.5C05000000000040.quest_subtitle: "Deliver 32 ostrum"
+	quest.5C05000000000040.quest_desc: [
+		"Ostrum only exists on Mars. It is the metal of the tier 3 rocket and of the station's next module; the Board wants 1,600 ingots."
+		""
+		"Deliver 32 units of the ostrum family: ingots, blocks, raw ostrum and nuggets count."
+		""
+		"Your own deliveries count; a crew mate's do not."
+		""
+		"&7Assignment fee: 50.00 CC, paid to the crew member who delivered it.&r"
+	]
+	task.5C05000000000041.title: "32 ostrum delivered at the terminal"
+	reward.5C05000000000044.title: "Assignment fee: 50.00 CC"
+
+	quest.5C05000000000050.title: "Ultimate Circuits"
+	quest.5C05000000000050.quest_subtitle: "Deliver 16 ultimate control circuits"
+	quest.5C05000000000050.quest_desc: [
+		"Two atomic alloys around an elite circuit. The ultimate tier of everything carries one; the Board wants 800 of them, and every one of them is a long chain."
+		""
+		"Deliver 16 ultimate control circuits at the terminal."
+		""
+		"Your own deliveries count; a crew mate's do not."
+		""
+		"&7Assignment fee: 50.00 CC, paid to the crew member who delivered it.&r"
+	]
+	task.5C05000000000051.title: "16 ultimate control circuits delivered at the terminal"
+	reward.5C05000000000054.title: "Assignment fee: 50.00 CC"
+
+	quest.5C05000000000060.title: "Pellet Order"
+	quest.5C05000000000060.quest_subtitle: "Deliver 4 polonium pellets"
+	quest.5C05000000000060.quest_desc: [
+		"Fission waste through the solar neutron activator, polonium into pellets: four pellets are forty uranium ingots and a reactor day. The Energy licence holds the reactor; the Board wants 600 pellets."
+		""
+		"Deliver 4 polonium pellets at the terminal."
+		""
+		"Your own deliveries count; a crew mate's do not."
+		""
+		"&7Assignment fee: 50.00 CC, paid to the crew member who delivered it.&r"
+	]
+	task.5C05000000000061.title: "4 polonium pellets delivered at the terminal"
+	reward.5C05000000000064.title: "Assignment fee: 50.00 CC"
+
+	quest.5C05000000000070.title: "Isotopic Centrifuge"
+	quest.5C05000000000070.quest_subtitle: "Show one isotopic centrifuge"
+	quest.5C05000000000070.quest_desc: [
+		"Plutonium from nuclear waste: the isotopic centrifuge is the second branch of the fission chain and the road to the supercritical phase shifter."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 40.00 CC and 150 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C05000000000071.title: "Isotopic centrifuge"
+	reward.5C05000000000074.title: "Certification bonus: 40.00 CC"
+	reward.5C05000000000075.title: "Certification bonus: 150 XP"
+
+	quest.5C05000000000080.title: "Spatial IO"
+	quest.5C05000000000080.quest_subtitle: "Show one spatial IO port"
+	quest.5C05000000000080.quest_desc: [
+		"A base in a cell. The spatial IO port with its pylons moves a region of the world into a spatial storage cell and back: the season's biggest move."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 40.00 CC and 150 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C05000000000081.title: "Spatial IO port"
+	reward.5C05000000000084.title: "Certification bonus: 40.00 CC"
+	reward.5C05000000000085.title: "Certification bonus: 150 XP"
+
+	quest.5C05000000000090.title: "Tier 3 Rocket"
+	quest.5C05000000000090.quest_subtitle: "Show one tier 3 rocket"
+	quest.5C05000000000090.quest_desc: [
+		"The ostrum rocket: Venus and Mercury. 464 degrees at the surface of Venus; bring the suit, bring the fuel, bring calorite home."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 40.00 CC and 150 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C05000000000091.title: "Tier 3 rocket"
+	reward.5C05000000000094.title: "Certification bonus: 40.00 CC"
+	reward.5C05000000000095.title: "Certification bonus: 150 XP"
+
+	quest.5C050000000000A0.title: "Venus Landing"
+	quest.5C050000000000A0.quest_subtitle: "Stand on Venus"
+	quest.5C050000000000A0.quest_desc: [
+		"Land on Venus. Calorite only exists there and the season's last rocket is made of it. The sulphur clouds are not a metaphor."
+		""
+		"&7Certification bonus: 40.00 CC once per crew (a landing is a team fact) and 150 XP per member.&r"
+	]
+	task.5C050000000000A1.title: "Dimension: Venus"
+	reward.5C050000000000A4.title: "Certification bonus: 40.00 CC"
+	reward.5C050000000000A5.title: "Certification bonus: 150 XP"
+
+	quest.5C050000000000B0.title: "Tier 4 Rocket"
+	quest.5C050000000000B0.quest_subtitle: "Show one tier 4 rocket"
+	quest.5C050000000000B0.quest_desc: [
+		"The calorite rocket is the only way to Glacio, where the season ends. The NASA workbench builds it from the ore only Venus yields."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 40.00 CC and 150 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C050000000000B1.title: "Tier 4 rocket"
+	reward.5C050000000000B4.title: "Certification bonus: 40.00 CC"
+	reward.5C050000000000B5.title: "Certification bonus: 150 XP"
+
+	quest.5C050000000000C0.title: "Glacio Landing"
+	quest.5C050000000000C0.quest_subtitle: "Stand on Glacio"
+	quest.5C050000000000C0.quest_desc: [
+		"Land on Glacio, the ice world at the edge of the map and the arena of the final audit. The Frontier Gate will make the trip a click; the first crossing is a rocket."
+		""
+		"&7Certification bonus: 40.00 CC once per crew (a landing is a team fact) and 150 XP per member.&r"
+	]
+	task.5C050000000000C1.title: "Dimension: Glacio"
+	reward.5C050000000000C4.title: "Certification bonus: 40.00 CC"
+	reward.5C050000000000C5.title: "Certification bonus: 150 XP"
+
+	quest.5C050000000000D0.title: "Digital Miner Clearance"
+	quest.5C050000000000D0.quest_subtitle: "Extraction exclusive"
+	quest.5C050000000000D0.quest_desc: [
+		"The Digital Miner and the mining modules are yours alone this season. It still needs a Logistics teleportation core and a Robit: nobody finishes alone."
+		""
+		"&7Clearance bonus: 300 XP. Granted automatically to every Extraction team; other charters never see this entry.&r"
+	]
+	task.5C050000000000D1.title: "Extraction exclusive (charter stage, granted by the Board)"
+	reward.5C050000000000D4.title: "Clearance bonus: 300 XP"
+
+	quest.5C050000000000E0.title: "Charge Distribution Clearance"
+	quest.5C050000000000E0.quest_subtitle: "Energy exclusive"
+	quest.5C050000000000E0.quest_desc: [
+		"The charge distribution, geothermal and solar recharging modules of the MekaSuit are yours alone this season."
+		""
+		"&7Clearance bonus: 300 XP. Granted automatically to every Energy team; other charters never see this entry.&r"
+	]
+	task.5C050000000000E1.title: "Energy exclusive (charter stage, granted by the Board)"
+	reward.5C050000000000E4.title: "Clearance bonus: 300 XP"
+
+	quest.5C050000000000F0.title: "Gravitational Clearance"
+	quest.5C050000000000F0.quest_subtitle: "Logistics exclusive"
+	quest.5C050000000000F0.quest_desc: [
+		"The teleportation, magnetic attraction and gravitational modulating modules are yours alone this season."
+		""
+		"&7Clearance bonus: 300 XP. Granted automatically to every Logistics team; other charters never see this entry.&r"
+	]
+	task.5C050000000000F1.title: "Logistics exclusive (charter stage, granted by the Board)"
+	reward.5C050000000000F4.title: "Clearance bonus: 300 XP"
+
+	quest.5C05000000000100.title: "The Fusion Core"
+	quest.5C05000000000100.quest_subtitle: "Ignition at HQ"
+	quest.5C05000000000100.quest_desc: [
+		"The Energy charter builds the fusion reactor at HQ from the delivered polonium and lights it live with fusion fuel. The Board convenes for the ignition."
+		""
+		"Staff records everyone present at the ignition."
+		""
+		"&7Ceremony keepsake: the Fusion Pin, a lever with the reactor's serial. No production value, all the bragging rights; handed to a player staff recorded as present.&r"
+	]
+	task.5C05000000000101.title: "The Fusion Core: recorded by staff as present"
+	reward.5C05000000000104.title: "Fusion Pin"
+
+	quest.5C05000000000110.title: "The Frontier Gate"
+	quest.5C05000000000110.quest_subtitle: "HQ to Glacio"
+	quest.5C05000000000110.quest_desc: [
+		"The Logistics charter links HQ and Glacio: a quantum bridge for items, a teleporter pair for people. The Board convenes for the first crossing."
+		""
+		"Staff records everyone at the first crossing."
+		""
+		"&7Ceremony keepsake: the Gate Token, an item frame with the gate's coordinates. No production value, all the bragging rights; handed to a player staff recorded as present.&r"
+	]
+	task.5C05000000000111.title: "The Frontier Gate: recorded by staff as present"
+	reward.5C05000000000114.title: "Gate Token"
+
+	quest.5C05000000000120.title: "The Antimatter Reserve"
+	quest.5C05000000000120.quest_subtitle: "One sealed pellet"
+	quest.5C05000000000120.quest_desc: [
+		"The Extraction charter crystallizes the antimatter pellet from the phase shifter's output and seals it in the HQ vault: the last line of the quota. The Board convenes for the sealing."
+		""
+		"Staff records everyone at the sealing."
+		""
+		"&7Ceremony keepsake: the Reserve Seal, a paper seal from the vault door. No production value, all the bragging rights; handed to a player staff recorded as present.&r"
+	]
+	task.5C05000000000121.title: "The Antimatter Reserve: recorded by staff as present"
+	reward.5C05000000000124.title: "Reserve Seal"
+
+	quest.5C05000000000130.title: "The Liquidator"
+	quest.5C05000000000130.quest_subtitle: "Close the season"
+	quest.5C05000000000130.quest_desc: [
+		"The Board's auditor arrives on Glacio on the announced end date, whatever the state of the project. Every crew is expected in the arena; the Liquidator is not a fair fight and is not meant to be."
+		""
+		"Staff records every player in the arena when the boss falls, and Season 2 is announced as it does. This assignment also needs one run of this phase delivered by your own hands."
+		""
+		"&7Closing bonus: 250.00 CC and 5 levels, paid to a crew member recorded in the arena, plus the company title Season 1 Veteran.&r"
+	]
+	task.5C05000000000131.title: "In the arena when the Liquidator fell: recorded by staff"
+	reward.5C05000000000134.title: "Closing bonus: 250.00 CC"
+	reward.5C05000000000135.title: "Company title: Season 1 Veteran"
+	reward.5C05000000000136.title: "Closing bonus: 5 levels"
+
+	chapter.5C06000000000001.chapter_subtitle: ["How the Board pays: prices, caps, the charter modifier, the shop and every money sink."]
+	chapter.5C06000000000001.title: "The Field Office"
+
+	quest.5C06000000000010.title: "Reading the Market"
+	quest.5C06000000000010.quest_subtitle: "/prices list"
+	quest.5C06000000000010.quest_desc: [
+		"Type /prices list. The Board prices by family: three kinds of steel ingot are one entry, an iron block is nine iron. Each line shows the unit price now, the base, the floor and the half volume."
+		""
+		"/prices get <key> shows one family, for example /prices get minecraft:coal. The key is the family's id, not its name."
+		""
+		"&7Reading bonus: 25 XP.&r"
+	]
+	task.5C06000000000011.title: "I read the price list"
+	reward.5C06000000000014.title: "Reading bonus: 25 XP"
+
+	quest.5C06000000000020.title: "Degressive Prices"
+	quest.5C06000000000020.quest_subtitle: "Sell what nobody sells"
+	quest.5C06000000000020.quest_desc: [
+		"Every unit sold lowers that family's price toward its floor, and the price recovers with a half-life over the day. The first seller of the evening gets the base; the last gets about 60 %."
+		""
+		"Every drop and every recovery is announced in chat. The trick is simple: deliver what nobody delivered today."
+		""
+		"&7Reading bonus: 25 XP.&r"
+	]
+	task.5C06000000000021.title: "I understand the price curve"
+	reward.5C06000000000024.title: "Reading bonus: 25 XP"
+
+	quest.5C06000000000030.title: "The Daily Cap"
+	quest.5C06000000000030.quest_subtitle: "2 x r units per line per day"
+	quest.5C06000000000030.quest_desc: [
+		"Credits are paid for at most twice the design rate of a line per player per day, and for at most the daily paycheck cap of the phase across every family: 560, 1,100, 830, 1,130 and 2,750 CC for phases 1 to 5 (placeholders until the beta). The day resets at 06:00 server time."
+		""
+		"Everything above a cap still counts for the quota; it just pays nothing. Cobblestone, stone, gravel, sand and singularities always pay 0: the Board takes them for the count."
+		""
+		"&7Reading bonus: 25 XP.&r"
+	]
+	task.5C06000000000031.title: "I understand the caps"
+	reward.5C06000000000034.title: "Reading bonus: 25 XP"
+
+	quest.5C06000000000040.title: "Charter Bonus"
+	quest.5C06000000000040.quest_subtitle: "Get paid your +15 %"
+	quest.5C06000000000040.quest_desc: [
+		"Deliver a paid unit of your own charter's family and watch the multiplier on the confirmation: x115 % for Extraction on raw materials, for Energy on power items, for Logistics on transport and storage."
+		""
+		"Newcomers add +25 % for seven days and a market event may add more; neither counts here, only the charter line."
+		""
+		"&7Assignment fee: 10.00 CC, paid to the crew member who made the boosted delivery.&r"
+	]
+	task.5C06000000000041.title: "A paid delivery of my own charter family"
+	reward.5C06000000000044.title: "Assignment fee: 10.00 CC"
+
+	quest.5C06000000000050.title: "Company Shop"
+	quest.5C06000000000050.quest_subtitle: "Buy anything"
+	quest.5C06000000000050.quest_desc: [
+		"The Shop button on the terminal screen. The Board sells services and cosmetics, never anything it buys: chunk loaders, claim chunks, the Warp Stone, event tickets, titles and shaders."
+		""
+		"Daily limits reset at 06:00 server time. Buy anything to complete this assignment."
+		""
+		"&7Assignment fee: 10.00 CC, paid to the buyer.&r"
+	]
+	task.5C06000000000051.title: "One purchase at the company shop"
+	reward.5C06000000000054.title: "Assignment fee: 10.00 CC"
+
+	quest.5C06000000000060.title: "Loaded Chunks"
+	quest.5C06000000000060.quest_subtitle: "Buy a chunk loader"
+	quest.5C06000000000060.quest_desc: [
+		"From phase 3 the shop sells the only chunk loading on the server: single, basic and advanced loaders, 25 chunks per player at most, and three days without you before they stop."
+		""
+		"The spawn chunks keep HQ loaded for everyone; your base needs a loader."
+		""
+		"&7Assignment bonus: 100 XP.&r"
+	]
+	task.5C06000000000061.title: "A chunk loader bought"
+	reward.5C06000000000064.title: "Assignment bonus: 100 XP"
+
+	quest.5C06000000000070.title: "More Ground"
+	quest.5C06000000000070.quest_subtitle: "Buy claim chunks"
+	quest.5C06000000000070.quest_desc: [
+		"Ten extra claim chunks per purchase, one purchase per day, stored on you and carried into a party. The hard team limit is 200 chunks."
+		""
+		"&7Assignment bonus: 100 XP.&r"
+	]
+	task.5C06000000000071.title: "Claim chunks bought"
+	reward.5C06000000000074.title: "Assignment bonus: 100 XP"
+
+	quest.5C06000000000080.title: "Fast Travel"
+	quest.5C06000000000080.quest_subtitle: "Buy the Warp Stone"
+	quest.5C06000000000080.quest_desc: [
+		"The one Waystones item whose recipe is removed: the reusable Warp Stone, 128 warps, on sale from phase 2. Every other Waystones item stays craftable and the XP cost per warp stays."
+		""
+		"&7Assignment bonus: 100 XP.&r"
+	]
+	task.5C06000000000081.title: "The Warp Stone bought"
+	reward.5C06000000000084.title: "Assignment bonus: 100 XP"
+
+	quest.5C06000000000090.title: "The Gap Contract"
+	quest.5C06000000000090.quest_subtitle: "Source a stalled line"
+	quest.5C06000000000090.quest_desc: [
+		"Only while a phase has stalled for five days: the Board sources missing deliveries at twice the base price, 10 % of the line per day, announced server-wide. /consortium gap buy <family> <units>."
+		""
+		"Half of the bought units count toward your rank; the credits are burnt."
+		""
+		"&7Assignment bonus: 150 XP.&r"
+	]
+	task.5C06000000000091.title: "A Gap Contract purchase"
+	reward.5C06000000000094.title: "Assignment bonus: 150 XP"
+
+	quest.5C060000000000A0.title: "Season Contribution"
+	quest.5C060000000000A0.quest_subtitle: "Fund the season project"
+	quest.5C060000000000A0.quest_desc: [
+		"Credits burnt into the collective counter on the board. The season fund pays for the ceremonies, and the Board reads the top contributors at the close."
+		""
+		"The Benefactor title is the shop's own reward at 500 CC contributed; this assignment marks the first contribution."
+		""
+		"&7Assignment bonus: 150 XP.&r"
+	]
+	task.5C060000000000A1.title: "A season contribution"
+	reward.5C060000000000A4.title: "Assignment bonus: 150 XP"
+
+	quest.5C060000000000B0.title: "Vacancy Licence"
+	quest.5C060000000000B0.quest_subtitle: "Take over an empty charter"
+	quest.5C060000000000B0.quest_desc: [
+		"Offered only after a charter has been idle for seven days, then seven days of notice: the Board sells the vacant licence to any owner, added to their own charter. Announced server-wide."
+		""
+		"&7Assignment bonus: 200 XP.&r"
+	]
+	task.5C060000000000B1.title: "A vacancy licence bought"
+	reward.5C060000000000B4.title: "Assignment bonus: 200 XP"
+
+	chapter.5C07000000000001.chapter_subtitle: ["Wednesday the contract, Friday the zone, Saturday the event. Random events between."]
+	chapter.5C07000000000001.title: "The Board Calendar"
+
+	quest.5C07000000000010.title: "Board Notice"
+	quest.5C07000000000010.quest_subtitle: "Wednesday, Friday, Saturday"
+	quest.5C07000000000010.quest_desc: [
+		"Wednesday 20:00 server time the Board reads the weekly contract. Friday 20:00 the ticketed Friday Zone with exclusive loot (from phase 2; a free arena event in phase 1). Saturday 20:00 the rotating event."
+		""
+		"Random events land between, announced in chat, on the boss bar and on the board's event line. /consortium event lists what is on."
+		""
+		"&7Reading bonus: 25 XP.&r"
+	]
+	task.5C07000000000011.title: "I read the calendar"
+	reward.5C07000000000014.title: "Reading bonus: 25 XP"
+
+	quest.5C07000000000020.title: "Weekly Contract"
+	quest.5C07000000000020.quest_subtitle: "Fill this week's contract"
+	quest.5C07000000000020.quest_desc: [
+		"One family, a big volume, seven days. Staff reads the contract out on Wednesday and /consortium contract shows it with your own progress."
+		""
+		"Deliver the contract's family at the terminal like any other delivery; only deliveries after the contract was set count, and only yours. Paid once per crew member per contract; the quest cycles until everyone eligible has claimed."
+		""
+		"&7Contract fee: 25.00 CC and 100 XP, paid to a crew member who filled it.&r"
+	]
+	task.5C07000000000021.title: "This week's contract filled (your own deliveries)"
+	reward.5C07000000000024.title: "Contract fee: 25.00 CC and 100 XP"
+
+	quest.5C07000000000030.title: "Friday Shift"
+	quest.5C07000000000030.quest_subtitle: "Take part in the Friday event"
+	quest.5C07000000000030.quest_desc: [
+		"Friday 20:00: the Friday Zone. A paid ticket from the shop (30 CC, taken when the waves start), custom mobs, exclusive loot that exists nowhere else. The ticket is the fee, the loot is the prize."
+		""
+		"Claim before Wednesday 06:00, when unclaimed weekly stamps lapse. Paid once per crew member per week; the quest cycles until everyone eligible has claimed."
+		""
+		"&7Shift bonus: 150 XP.&r"
+	]
+	task.5C07000000000031.title: "Friday event attended this week"
+	reward.5C07000000000034.title: "Shift bonus: 150 XP"
+
+	quest.5C07000000000040.title: "Saturday Roster"
+	quest.5C07000000000040.quest_subtitle: "Attend the Saturday event"
+	quest.5C07000000000040.quest_desc: [
+		"Saturday 20:00: the Board rotates. Resource rush, boss hunt, build contest, arena or auction; Shareholders vote on the pick."
+		""
+		"Claim before Wednesday 06:00, when unclaimed weekly stamps lapse. Paid once per crew member per week; the quest cycles until everyone eligible has claimed."
+		""
+		"&7Shift bonus: 150 XP.&r"
+	]
+	task.5C07000000000041.title: "Saturday event attended this week"
+	reward.5C07000000000044.title: "Shift bonus: 150 XP"
+
+	quest.5C07000000000050.title: "Salvage Crew"
+	quest.5C07000000000050.quest_subtitle: "Open a Supply Drop"
+	quest.5C07000000000050.quest_desc: [
+		"A crate lands at announced coordinates outside every claim. First come, first served; the Board records who opened it."
+		""
+		"&7Salvage fee: 10.00 CC and the Salvage Tag, paid to the player who opened the crate.&r"
+	]
+	task.5C07000000000051.title: "A Supply Drop crate opened"
+	reward.5C07000000000054.title: "Salvage fee: 10.00 CC"
+	reward.5C07000000000055.title: "Salvage Tag"
+
+	quest.5C07000000000060.title: "Bounty Hunter"
+	quest.5C07000000000060.quest_subtitle: "Take part in a Bounty"
+	quest.5C07000000000060.quest_desc: [
+		"An Apothic boss spawns 200 blocks from any claim with a price on its head. Every hunter with a share is paid by the Board, capped by the event budget."
+		""
+		"&7Assignment fee: 20.00 CC, paid to a hunter the Board paid a share.&r"
+	]
+	task.5C07000000000061.title: "Paid a Bounty share"
+	reward.5C07000000000064.title: "Assignment fee: 20.00 CC"
+
+	quest.5C07000000000070.title: "Invasion Veteran"
+	quest.5C07000000000070.quest_subtitle: "Hold the HQ arena"
+	quest.5C07000000000070.quest_desc: [
+		"Waves at the HQ arena for opted-in players (/consortium event join), never at bases. Every kill pays."
+		""
+		"&7Assignment fee: 20.00 CC, paid to a fighter the Board paid for a kill.&r"
+	]
+	task.5C07000000000071.title: "Paid for a wave kill"
+	reward.5C07000000000074.title: "Assignment fee: 20.00 CC"
+
+	quest.5C07000000000080.title: "Night Shift"
+	quest.5C07000000000080.quest_subtitle: "Be online during a Blood Moon"
+	quest.5C07000000000080.quest_desc: [
+		"One night of boosted spawns outside claims. Inside a claim nothing changes, so a Recruit stays home and still clocks in."
+		""
+		"&7Shift bonus: 200 XP.&r"
+	]
+	task.5C07000000000081.title: "Online during a Blood Moon"
+	reward.5C07000000000084.title: "Shift bonus: 200 XP"
+
+	quest.5C07000000000090.title: "Market Timing"
+	quest.5C07000000000090.quest_subtitle: "Sell during a market event"
+	quest.5C07000000000090.quest_desc: [
+		"Ore Rush, Power Surge, Logistics Week, Double Quota Hour and the Crash floor: the Board moves the market for a while and says so. Deliver anything while one runs."
+		""
+		"&7Assignment fee: 10.00 CC, paid to the crew member who delivered during the event.&r"
+	]
+	task.5C07000000000091.title: "A delivery during a market event"
+	reward.5C07000000000094.title: "Assignment fee: 10.00 CC"
+
+	chapter.5C08000000000001.chapter_subtitle: ["Ranks, the Founder cohort, referrals and the season close."]
+	chapter.5C08000000000001.title: "Personnel File"
+
+	quest.5C08000000000010.title: "Recruit"
+	quest.5C08000000000010.quest_subtitle: "Your file is open"
+	quest.5C08000000000010.quest_desc: [
+		"Ranks are earned by credits earned at the terminal, never bought and never delivered in units. Promotions are announced; /credits top is the leaderboard."
+		""
+		"Recruit, Operator, Engineer, Director, Shareholder. The rank shows before your name; titles show after it."
+	]
+	task.5C08000000000011.title: "File opened"
+	reward.5C08000000000014.title: "File opened"
+
+	quest.5C08000000000020.title: "Operator"
+	quest.5C08000000000020.quest_subtitle: "Earned 250 CC"
+	quest.5C08000000000020.quest_desc: [
+		"The first promotion, at 250 CC earned from deliveries (placeholder). The LuckPerms track promotes you and shows [Operator] before your name; this entry marks it."
+		""
+		"&7Promotion bonus: 100 XP.&r"
+	]
+	task.5C08000000000021.title: "Credits earned from deliveries"
+	reward.5C08000000000024.title: "Promotion bonus: 100 XP"
+
+	quest.5C08000000000030.title: "Engineer"
+	quest.5C08000000000030.quest_subtitle: "Earned 2,500 CC"
+	quest.5C08000000000030.quest_desc: [
+		"Engineer, at 2,500 CC earned (placeholder). The free chunk loader of the rank comes with the track, not with this entry."
+		""
+		"&7Promotion bonus: 200 XP.&r"
+	]
+	task.5C08000000000031.title: "Credits earned from deliveries"
+	reward.5C08000000000034.title: "Promotion bonus: 200 XP"
+
+	quest.5C08000000000040.title: "Director"
+	quest.5C08000000000040.quest_subtitle: "Earned 7,500 CC"
+	quest.5C08000000000040.quest_desc: [
+		"Director, at 7,500 CC earned (placeholder). Directors hear the weekly contract two hours early, on Discord."
+		""
+		"&7Promotion bonus: 300 XP.&r"
+	]
+	task.5C08000000000041.title: "Credits earned from deliveries"
+	reward.5C08000000000044.title: "Promotion bonus: 300 XP"
+
+	quest.5C08000000000050.title: "Shareholder"
+	quest.5C08000000000050.quest_subtitle: "Earned 15,000 CC"
+	quest.5C08000000000050.quest_desc: [
+		"Shareholder, at 15,000 CC earned (placeholder), calibrated for week 8 of an always-active player. Shareholders vote on the Saturday pick."
+		""
+		"&7The Share Certificate goes to the crew member whose own credits passed the threshold, plus 500 XP.&r"
+	]
+	task.5C08000000000051.title: "Credits earned from deliveries"
+	reward.5C08000000000054.title: "Share Certificate"
+	reward.5C08000000000055.title: "Promotion bonus: 500 XP"
+
+	quest.5C08000000000060.title: "Founder"
+	quest.5C08000000000060.quest_subtitle: "Present on launch day"
+	quest.5C08000000000060.quest_desc: [
+		"The launch cohort: every account whose first login was on season day 1 or 2. The Founder's Lantern is the ceremony's; this is the file entry."
+		""
+		"&7Company title: Founder. A party member who joined later is not a Founder and gets no title from it.&r"
+	]
+	task.5C08000000000061.title: "First login on season day 1 or 2"
+	reward.5C08000000000064.title: "Company title: Founder"
+
+	quest.5C08000000000070.title: "Recruiter"
+	quest.5C08000000000070.quest_subtitle: "Bring a newcomer"
+	quest.5C08000000000070.quest_desc: [
+		"Onboard a newcomer: walk them through the Field Office and tell staff at the desk. The Board counts who onboarded whom."
+		""
+		"&7Recruiting bonus: 200 XP. The referral pay of the rules comes with the ranks update, not with this entry.&r"
+	]
+	task.5C08000000000071.title: "Referrals recorded by staff"
+	reward.5C08000000000074.title: "Recruiting bonus: 200 XP"
+
+	quest.5C08000000000080.title: "Talent Scout"
+	quest.5C08000000000080.quest_subtitle: "Three referrals"
+	quest.5C08000000000080.quest_desc: [
+		"Three newcomers onboarded. The Board notices."
+		""
+		"&7Company title: Talent Scout, shown after your name.&r"
+	]
+	task.5C08000000000081.title: "Referrals recorded by staff"
+	reward.5C08000000000084.title: "Company title: Talent Scout"
+
+	quest.5C08000000000090.title: "Season 1 Closed"
+	quest.5C08000000000090.quest_subtitle: "The world is archived"
+	quest.5C08000000000090.quest_desc: [
+		"At the close, staff flags every account with a delivery this season. What persists into Season 2 is announced with it."
+		""
+		"&7Closing keepsake: the Season 1 Share, a paper share of the archived world, plus 500 XP.&r"
+	]
+	task.5C08000000000091.title: "Season 1 closed: recorded by staff"
+	reward.5C08000000000094.title: "Season 1 Share"
+	reward.5C08000000000095.title: "Closing bonus: 500 XP"
+
 }

@@ -12,6 +12,8 @@
 //   phases.<n>: { startedAt, completedAt, lastProgressAt, stalledAt (longs), milestone (int),
 //                 stalled (boolean), history.<season day> (int: C x 1000 at that day's 06:00 check),
 //                 progress.<line key> (long) }
+//   money and shop keys (paycheck, newcomer, licences, activity, vacancy, season, events.tickets, perks,
+//   titles, sales, gap, txs): consortium_money.js and consortium_shop.js (SHOP_CATALOGUE 5.1)
 // The delivery terminal calls Consortium.contribute(player, itemId, count). Only items of the
 // current phase quota count. When the rule of section 11 holds (average of the lines >= 90 % and every
 // line >= 60 %) the next phase opens: every FTB team is reconciled (consortium_charters.js), the
@@ -22,7 +24,11 @@
 // 5 minute check reconciles every team, updates the boss bar, posts the daily summary and evaluates
 // the stall rule. Consortium Core (when present) displays the quota board this engine publishes
 // through ConsortiumCore.publishBoard(json) on every Delivery Station screen: the mod keeps no
-// phase state of its own (docs/CONSORTIUM_CORE_V02.md section 2).
+// phase state of its own (docs/CONSORTIUM_CORE_V02.md section 2). Sibling engines are reached through
+// typeof-guarded calls only (CONTENT_BATCH_2_INTERFACES 3): ConsortiumEvents.quotaFactor (Double Quota
+// Hour, applied by Consortium.record unless the units are Board-sourced), ConsortiumEvents.boardObject
+// (the board's event band), ConsortiumEvents.fireworks (phase completion), and the shop script's
+// consortiumShopDaily / consortiumShopCheck (vacancy detection, sale expiry) and season fund line.
 // Inspect the raw state with: /kubejs persistent-data server get consortium
 
 const CONSORTIUM_SEASON_DAYS = 84
@@ -195,8 +201,22 @@ function consortiumLabelCase(label) {
   return s.length ? s.charAt(0).toUpperCase() + s.slice(1) : s
 }
 
+// The board's event band (Consortium Core 0.3.1, EVENTS 8): { name, detail, seconds_left } from the events
+// engine, or null; a 0.3.0 jar ignores the key.
+function consortiumBoardEvent(server) {
+  if (typeof ConsortiumEvents === 'undefined' || typeof ConsortiumEvents.boardObject !== 'function') return null
+  try {
+    let e = ConsortiumEvents.boardObject(server)
+    return e ? e : null
+  } catch (err) {
+    console.error('[Consortium] board event object failed: ' + err)
+    return null
+  }
+}
+
 function consortiumBoardPayload(server) {
-  let n = consortiumState(server).getInt('currentPhase')
+  let st = consortiumState(server)
+  let n = st.getInt('currentPhase')
   let def = consortiumDef(n)
   let tag = consortiumPhaseTag(server, n)
   let prog = consortiumProgress(server, n)
@@ -206,13 +226,23 @@ function consortiumBoardPayload(server) {
     lines.push({ key: l.line.id, label: consortiumLabelCase(l.line.label), icon: consortiumLineIcon(l.line),
       current: Number(l.delivered), target: l.line.amount })
   }
-  return {
+  // Season fund (SHOP_CATALOGUE 5.6): one more line once the first contribution wrote the target; the mod
+  // renders it like a quota line (completion comes from the quota lines only).
+  if (st.contains('season') && st.getCompound('season').getLong('target') > 0) {
+    let season = st.getCompound('season')
+    lines.push({ key: 'season_fund', label: 'Season fund', icon: 'minecraft:gold_ingot',
+      current: Math.floor(season.getLong('fund') / 100), target: Math.floor(season.getLong('target') / 100) })
+  }
+  let payload = {
     phase: n, name: def.name,
     day: consortiumSeasonDay(server), days: CONSORTIUM_SEASON_DAYS,
     completion: Math.round(prog.c * 1000) / 1000,
     complete: tag.getLong('completedAt') > 0,
     lines: lines,
   }
+  let event = consortiumBoardEvent(server)
+  if (event !== null) payload.event = event
+  return payload
 }
 
 // At most one publish per second: the first change goes out at once, later ones inside the same second
@@ -266,8 +296,17 @@ function consortiumDaily(server, force) {
   let prog = consortiumProgress(server, n)
   tag.getCompound('history').putInt(String(day), Math.round(prog.c * 1000))
   let done = tag.getLong('completedAt') > 0
+  let fund = ''
+  if (st.contains('season') && st.getCompound('season').getLong('target') > 0) {
+    let season = st.getCompound('season')
+    fund = ', season fund ' + consortiumPct(season.getLong('fund') / season.getLong('target')) + ' %'
+  }
   consortiumBroadcast(server, 'Day ' + day + ' of ' + CONSORTIUM_SEASON_DAYS + ', Phase ' + n + ': ' + def.name + ', quota ' + consortiumPct(prog.c) + ' %'
-    + (done ? ' (complete)' : '') + '. Lines: ' + consortiumLinePercents(prog) + '.')
+    + (done ? ' (complete)' : '') + '. Lines: ' + consortiumLinePercents(prog) + fund + '.')
+  // Shop-side daily duties (consortium_shop.js, SHOP_CATALOGUE 5.5): vacancy detection, tx pruning.
+  if (typeof consortiumShopDaily === 'function') {
+    try { consortiumShopDaily(server, day) } catch (err) { console.error('[Consortium] shop daily step failed: ' + err) }
+  }
   if (done) return true
   let now = Date.now()
   let old = consortiumSnapshotBefore(tag, day, CONSORTIUM_STALL_DAYS)
@@ -284,9 +323,25 @@ function consortiumDaily(server, force) {
     }
   } else if (!stalled && tag.getBoolean('stalled')) {
     tag.putBoolean('stalled', false)
-    consortiumBroadcast(server, 'Deliveries on Phase ' + n + ' have resumed. The Board stands down.')
+    if (typeof Consortium.onCatchUp === 'function') {
+      consortiumBroadcast(server, 'Deliveries on Phase ' + n + ' have resumed, the Gap Contract is closed.')
+    } else {
+      consortiumBroadcast(server, 'Deliveries on Phase ' + n + ' have resumed. The Board stands down.')
+    }
   }
   return true
+}
+
+// Double Quota Hour (EVENTS 3.5): the events engine's factor on recorded units, 1 without the engine.
+function consortiumQuotaFactor(server) {
+  if (typeof ConsortiumEvents === 'undefined' || typeof ConsortiumEvents.quotaFactor !== 'function') return 1
+  try {
+    let f = Number(ConsortiumEvents.quotaFactor(server))
+    return isFinite(f) && f > 0 ? f : 1
+  } catch (err) {
+    console.error('[Consortium] quota factor failed: ' + err)
+    return 1
+  }
 }
 
 // ---- engine ----------------------------------------------------------------------------------------
@@ -318,20 +373,25 @@ const Consortium = {
   contribute: (player, itemId, count) => Consortium.record(player.server, player.username, itemId, count),
 
   // Same, with an explicit server and a display name (console tests). Announces the section 13 milestones.
-  record: (server, who, itemId, count) => {
+  // "source" (CONTENT_BATCH_2_INTERFACES 3): absent or 'terminal' = the Double Quota Hour factor of the
+  // events engine multiplies the count; 'board' (the Gap Contract) = counted once. Returns the units recorded.
+  record: (server, who, itemId, count, source) => {
     if (count <= 0) return 0
     let n = consortiumState(server).getInt('currentPhase')
     let tag = consortiumPhaseTag(server, n)
     if (tag.getLong('completedAt') > 0) return 0
     let line = Consortium.lineFor(server, itemId)
     if (line === null) return 0
+    let factor = source === 'board' ? 1 : consortiumQuotaFactor(server)
+    let units = Math.max(1, Math.round(count * factor))
     let progress = tag.getCompound('progress')
     let key = consortiumLineKey(line)
-    progress.putLong(key, progress.getLong(key) + count)
+    progress.putLong(key, progress.getLong(key) + units)
     tag.putLong('lastProgressAt', Date.now())
     let after = consortiumProgress(server, n)
-    console.info('[Consortium] ' + who + ' delivered ' + count + ' ' + itemId + ' (phase ' + n + ' quota at ' + consortiumPct(after.c) + '%)')
-    // TODO (economy step): credits, charter modifier, newcomer bonus, daily credit cap, zero-floor family.
+    console.info('[Consortium] ' + who + ' delivered ' + count + ' ' + itemId + (factor !== 1 ? ' (x' + factor + ' quota hour, ' + units + ' units)' : '')
+      + (source === 'board' ? ' (Board-sourced)' : '') + ' (phase ' + n + ' quota at ' + consortiumPct(after.c) + '%)')
+    // Credits, charter modifiers, the newcomer bonus and the daily caps are the mod's and consortium_money.js's.
     let pct = consortiumPct(after.c)
     let reached = 0
     for (let i = 0; i < CONSORTIUM_MILESTONES.length; i++) {
@@ -344,7 +404,7 @@ const Consortium = {
     consortiumUpdateBar(server, false)
     consortiumPublishBoard(server, false)
     if (after.complete) Consortium.completePhase(server)
-    return count
+    return units
   },
 
   // Closes the current phase and opens the next one for every team (section 13 ceremony text).
@@ -376,8 +436,8 @@ const Consortium = {
     consortiumDiscord(server, 'Phase ' + (n + 1) + ' unlocked: ' + next.name)
     consortiumUpdateBar(server, true)
     consortiumPublishBoard(server, true)
-    // TODO (event step, section 13): fireworks at HQ, the moment reminders (minus 60 and minus 5 min) and
-    // the moment title once the HQ position and the event calendar are known.
+    consortiumFireworks(server) // section 13 fireworks at HQ (events engine, no-op until its arena is set)
+    // The moment reminders (minus 60 and minus 5 min) and the moment title are the events engine's (EVENTS 9).
   },
 
   // Reconciles every team: phases, charter and staff stages (consortium_charters.js). Returns the
@@ -398,6 +458,10 @@ const Consortium = {
   // (the season day rolls over within 5 minutes; the first check 100 ticks after load and every
   // /reload, which resets the script-level cache, republish the board).
   check: (server) => {
+    // Shop-side maintenance first (consortium_shop.js: expired sales close), so the resync below strips them.
+    if (typeof consortiumShopCheck === 'function') {
+      try { consortiumShopCheck(server) } catch (err) { console.error('[Consortium] shop check failed: ' + err) }
+    }
     let changes = Consortium.resync(server)
     if (changes > 0) console.info('[Consortium] check: ' + changes + ' team stage change(s)')
     consortiumUpdateBar(server, false)
@@ -455,7 +519,13 @@ const Consortium = {
     consortiumPublishBoard(server, true)
   },
 
-  onCatchUp: null, // set by the Gap Contract script later: (server, phaseNumber) => void
+  onCatchUp: null, // set by consortium_shop.js (the Gap Contract, SHOP_CATALOGUE 5.8): (server, phaseNumber) => void
+}
+
+// Fireworks at HQ through the events engine (EVENTS 9), typeof-guarded: a pack without it does nothing.
+function consortiumFireworks(server) {
+  if (typeof ConsortiumEvents === 'undefined' || typeof ConsortiumEvents.fireworks !== 'function') return
+  try { ConsortiumEvents.fireworks(server) } catch (err) { console.error('[Consortium] fireworks failed: ' + err) }
 }
 
 // ---- events ----------------------------------------------------------------------------------------

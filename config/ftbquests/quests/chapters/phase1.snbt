@@ -1,6 +1,6 @@
-// The Consortium - Phase 1: Groundbreaking (no stage required, the starting phase).
-// Ids: 5C01 + 9 zeros + NNN. 001 chapter, 010 intro quest, 020 objective quest, 030 item quest.
-// Player-facing text lives in ../lang/en_us.snbt.
+// The Consortium - Phase 1: Groundbreaking (no stage required, the starting phase). Design: docs/QUESTS.md 4.2.
+// Ids: 5C01 + nine zeros + QQ + X. Layout: intro x 0, briefing x 2.5, runs x 5, certifications x 7.5 and 10,
+// clearances x 12.5, the ceremony x 15, the closing hexagon x 17.5. Quota amounts in the briefing come from consortium_quotas.js.
 {
 	default_hide_dependency_lines: false
 	default_quest_shape: ""
@@ -19,6 +19,11 @@
 				id: "create:water_wheel"
 			}
 			id: "5C01000000000010"
+			rewards: [{
+				description: "Phase 1 briefing acknowledged. Get rotation going."
+				id: "5C01000000000014"
+				type: "toast"
+			}]
 			shape: "hexagon"
 			size: 1.5d
 			tasks: [{
@@ -34,36 +39,375 @@
 				id: "minecraft:map"
 			}
 			id: "5C01000000000020"
+			rewards: [{
+				id: "5C01000000000024"
+				type: "xp"
+				xp: 25
+			}]
 			tasks: [{
 				id: "5C01000000000021"
 				type: "checkmark"
 			}]
 			x: 2.5d
-			y: -1.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C01000000000020"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "minecraft:iron_ingot"
+			}
+			id: "5C01000000000030"
+			rewards: [{
+				icon: {
+					id: "minecraft:gold_nugget"
+				}
+				id: "5C01000000000034"
+				type: "custom"
+			}]
+			tasks: [{
+				id: "5C01000000000031"
+				type: "custom"
+			}]
+			x: 5.0d
+			y: -3.75d
+		}
+		{
+			dependencies: ["5C01000000000020"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "minecraft:coal"
+			}
+			id: "5C01000000000040"
+			rewards: [{
+				icon: {
+					id: "minecraft:gold_nugget"
+				}
+				id: "5C01000000000044"
+				type: "custom"
+			}]
+			tasks: [{
+				id: "5C01000000000041"
+				type: "custom"
+			}]
+			x: 5.0d
+			y: -1.25d
+		}
+		{
+			dependencies: ["5C01000000000020"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "create:andesite_alloy"
+			}
+			id: "5C01000000000050"
+			rewards: [{
+				icon: {
+					id: "minecraft:gold_nugget"
+				}
+				id: "5C01000000000054"
+				type: "custom"
+			}]
+			tasks: [{
+				id: "5C01000000000051"
+				type: "custom"
+			}]
+			x: 5.0d
+			y: 1.25d
+		}
+		{
+			dependencies: ["5C01000000000020"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "farmersdelight:beef_stew"
+			}
+			id: "5C01000000000060"
+			rewards: [{
+				icon: {
+					id: "minecraft:gold_nugget"
+				}
+				id: "5C01000000000064"
+				type: "custom"
+			}]
+			tasks: [{
+				id: "5C01000000000061"
+				type: "custom"
+			}]
+			x: 5.0d
+			y: 3.75d
 		}
 		{
 			dependencies: ["5C01000000000010"]
-			id: "5C01000000000030"
-			rewards: [{
-				count: 8
-				id: "5C01000000000032"
+			icon: {
+				id: "create:water_wheel"
+			}
+			id: "5C01000000000070"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C01000000000074"
+					type: "custom"
+				}
+				{
+					id: "5C01000000000075"
+					type: "xp"
+					xp: 50
+				}
+			]
+			tasks: [{
+				id: "5C01000000000071"
 				item: {
 					count: 1
-					id: "create:andesite_casing"
+					id: "create:water_wheel"
 				}
 				type: "item"
+			}]
+			x: 7.5d
+			y: -2.5d
+		}
+		{
+			dependencies: ["5C01000000000010"]
+			icon: {
+				id: "create:millstone"
+			}
+			id: "5C01000000000080"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C01000000000084"
+					type: "custom"
+				}
+				{
+					id: "5C01000000000085"
+					type: "xp"
+					xp: 50
+				}
+			]
+			tasks: [{
+				id: "5C01000000000081"
+				item: {
+					count: 1
+					id: "create:millstone"
+				}
+				type: "item"
+			}]
+			x: 7.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C01000000000010"]
+			icon: {
+				id: "create:mechanical_press"
+			}
+			id: "5C01000000000090"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C01000000000094"
+					type: "custom"
+				}
+				{
+					id: "5C01000000000095"
+					type: "xp"
+					xp: 50
+				}
+			]
+			tasks: [{
+				id: "5C01000000000091"
+				item: {
+					count: 1
+					id: "create:mechanical_press"
+				}
+				type: "item"
+			}]
+			x: 7.5d
+			y: 2.5d
+		}
+		{
+			dependencies: ["5C01000000000010"]
+			icon: {
+				id: "farmersdelight:cooking_pot"
+			}
+			id: "5C010000000000A0"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C010000000000A4"
+					type: "custom"
+				}
+				{
+					id: "5C010000000000A5"
+					type: "xp"
+					xp: 50
+				}
+			]
+			tasks: [{
+				id: "5C010000000000A1"
+				item: {
+					count: 1
+					id: "farmersdelight:cooking_pot"
+				}
+				type: "item"
+			}]
+			x: 10.0d
+			y: -1.25d
+		}
+		{
+			dependencies: ["5C01000000000010"]
+			icon: {
+				id: "create:mechanical_mixer"
+			}
+			id: "5C010000000000B0"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C010000000000B4"
+					type: "custom"
+				}
+				{
+					id: "5C010000000000B5"
+					type: "xp"
+					xp: 50
+				}
+			]
+			tasks: [{
+				id: "5C010000000000B1"
+				item: {
+					count: 1
+					id: "create:mechanical_mixer"
+				}
+				type: "item"
+			}]
+			x: 10.0d
+			y: 1.25d
+		}
+		{
+			dependencies: ["5C01000000000010"]
+			icon: {
+				id: "immersiveengineering:blast_furnace"
+			}
+			id: "5C010000000000C0"
+			invisible: true
+			optional: true
+			rewards: [{
+				id: "5C010000000000C4"
+				type: "xp"
+				xp: 100
 			}]
 			tasks: [{
-				count: 64L
-				id: "5C01000000000031"
-				item: {
-					count: 1
-					id: "create:andesite_alloy"
-				}
-				type: "item"
+				id: "5C010000000000C1"
+				stage: "consortium:extraction_p1"
+				team_stage: false
+				type: "gamestage"
 			}]
-			x: 2.5d
-			y: 1.0d
+			x: 12.5d
+			y: -2.5d
+		}
+		{
+			dependencies: ["5C01000000000010"]
+			icon: {
+				id: "create:steam_engine"
+			}
+			id: "5C010000000000D0"
+			invisible: true
+			optional: true
+			rewards: [{
+				id: "5C010000000000D4"
+				type: "xp"
+				xp: 100
+			}]
+			tasks: [{
+				id: "5C010000000000D1"
+				stage: "consortium:energy_p1"
+				team_stage: false
+				type: "gamestage"
+			}]
+			x: 12.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C01000000000010"]
+			icon: {
+				id: "waystones:warp_plate"
+			}
+			id: "5C010000000000E0"
+			invisible: true
+			optional: true
+			rewards: [{
+				id: "5C010000000000E4"
+				type: "xp"
+				xp: 100
+			}]
+			tasks: [{
+				id: "5C010000000000E1"
+				stage: "consortium:logistics_p1"
+				team_stage: false
+				type: "gamestage"
+			}]
+			x: 12.5d
+			y: 2.5d
+		}
+		{
+			dependencies: ["5C01000000000020"]
+			icon: {
+				id: "minecraft:lantern"
+			}
+			id: "5C010000000000F0"
+			optional: true
+			rewards: [{
+				icon: {
+					id: "minecraft:lantern"
+				}
+				id: "5C010000000000F4"
+				type: "custom"
+			}]
+			tasks: [{
+				id: "5C010000000000F1"
+				type: "custom"
+			}]
+			x: 15.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C01000000000030", "5C01000000000040", "5C01000000000050", "5C01000000000060"]
+			icon: {
+				id: "immersiveengineering:ingot_steel"
+			}
+			id: "5C01000000000100"
+			min_required_dependencies: 1
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C01000000000104"
+					type: "custom"
+				}
+				{
+					id: "5C01000000000105"
+					type: "xp_levels"
+					xp_levels: 2
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [{
+				id: "5C01000000000101"
+				stage: "consortium:phase_2"
+				team_stage: false
+				type: "gamestage"
+			}]
+			x: 17.5d
+			y: 0.0d
 		}
 	]
 }

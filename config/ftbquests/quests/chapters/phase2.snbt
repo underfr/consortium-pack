@@ -1,8 +1,7 @@
-// The Consortium - Phase 2: The Foundry.
-// Gated by the Chapters stage consortium:phase_2: the intro quest carries a gamestage task and is invisible
-// until completed, the two other quests hide until the intro is complete, so the chapter only appears once the
-// team holds the stage (FTB Quests 2101.1.35 has no "stage required" field on chapters).
-// Ids: 5C02 + 9 zeros + NNN. 001 chapter, 010 intro quest, 020 objective quest, 030 item quest.
+// The Consortium - Phase 2: The Foundry (gated by the Chapters stage consortium:phase_2). Design: docs/QUESTS.md 4.3.
+// Gate pattern: the intro quest is invisible until its gamestage task completes; every other quest hides until its
+// dependencies complete, so the whole chapter appears only once the team holds the stage (Chapter.isVisible).
+// Ids: 5C02 + nine zeros + QQ + X. Quota amounts in the briefing come from consortium_quotas.js.
 {
 	default_hide_dependency_lines: false
 	default_quest_shape: ""
@@ -27,6 +26,7 @@
 			tasks: [{
 				id: "5C02000000000011"
 				stage: "consortium:phase_2"
+				team_stage: false
 				type: "gamestage"
 			}]
 			x: 0.0d
@@ -39,37 +39,445 @@
 				id: "minecraft:map"
 			}
 			id: "5C02000000000020"
+			rewards: [{
+				id: "5C02000000000024"
+				type: "xp"
+				xp: 25
+			}]
 			tasks: [{
 				id: "5C02000000000021"
 				type: "checkmark"
 			}]
 			x: 2.5d
-			y: -1.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C02000000000020"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "mekanism:ingot_steel"
+			}
+			id: "5C02000000000030"
+			rewards: [{
+				icon: {
+					id: "minecraft:gold_nugget"
+				}
+				id: "5C02000000000034"
+				type: "custom"
+			}]
+			tasks: [{
+				id: "5C02000000000031"
+				type: "custom"
+			}]
+			x: 5.0d
+			y: -3.75d
+		}
+		{
+			dependencies: ["5C02000000000020"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "create:brass_ingot"
+			}
+			id: "5C02000000000040"
+			rewards: [{
+				icon: {
+					id: "minecraft:gold_nugget"
+				}
+				id: "5C02000000000044"
+				type: "custom"
+			}]
+			tasks: [{
+				id: "5C02000000000041"
+				type: "custom"
+			}]
+			x: 5.0d
+			y: -1.25d
+		}
+		{
+			dependencies: ["5C02000000000020"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "immersiveengineering:coal_coke"
+			}
+			id: "5C02000000000050"
+			rewards: [{
+				icon: {
+					id: "minecraft:gold_nugget"
+				}
+				id: "5C02000000000054"
+				type: "custom"
+			}]
+			tasks: [{
+				id: "5C02000000000051"
+				type: "custom"
+			}]
+			x: 5.0d
+			y: 1.25d
+		}
+		{
+			dependencies: ["5C02000000000020"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "mekanism:basic_control_circuit"
+			}
+			id: "5C02000000000060"
+			rewards: [{
+				icon: {
+					id: "minecraft:gold_nugget"
+				}
+				id: "5C02000000000064"
+				type: "custom"
+			}]
+			tasks: [{
+				id: "5C02000000000061"
+				type: "custom"
+			}]
+			x: 5.0d
+			y: 3.75d
 		}
 		{
 			dependencies: ["5C02000000000010"]
 			hide_until_deps_complete: true
-			id: "5C02000000000030"
-			rewards: [{
-				count: 8
-				id: "5C02000000000032"
+			icon: {
+				id: "immersiveengineering:blastbrick"
+			}
+			id: "5C02000000000070"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C02000000000074"
+					type: "custom"
+				}
+				{
+					id: "5C02000000000075"
+					type: "xp"
+					xp: 75
+				}
+			]
+			tasks: [{
+				id: "5C02000000000071"
 				item: {
 					count: 1
-					id: "immersiveengineering:plate_steel"
+					id: "immersiveengineering:blastbrick"
 				}
 				type: "item"
+			}]
+			x: 7.5d
+			y: -3.75d
+		}
+		{
+			dependencies: ["5C02000000000010"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "create:steam_engine"
+			}
+			id: "5C02000000000080"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C02000000000084"
+					type: "custom"
+				}
+				{
+					id: "5C02000000000085"
+					type: "xp"
+					xp: 75
+				}
+			]
+			tasks: [{
+				id: "5C02000000000081"
+				item: {
+					count: 1
+					id: "create:steam_engine"
+				}
+				type: "item"
+			}]
+			x: 7.5d
+			y: -1.25d
+		}
+		{
+			dependencies: ["5C02000000000010"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "mekanism:metallurgic_infuser"
+			}
+			id: "5C02000000000090"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C02000000000094"
+					type: "custom"
+				}
+				{
+					id: "5C02000000000095"
+					type: "xp"
+					xp: 75
+				}
+			]
+			tasks: [{
+				id: "5C02000000000091"
+				item: {
+					count: 1
+					id: "mekanism:metallurgic_infuser"
+				}
+				type: "item"
+			}]
+			x: 7.5d
+			y: 1.25d
+		}
+		{
+			dependencies: ["5C02000000000010"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "mekanism:basic_energy_cube"
+			}
+			id: "5C020000000000A0"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C020000000000A4"
+					type: "custom"
+				}
+				{
+					id: "5C020000000000A5"
+					type: "xp"
+					xp: 75
+				}
+			]
+			tasks: [{
+				id: "5C020000000000A1"
+				item: {
+					count: 1
+					id: "mekanism:basic_energy_cube"
+				}
+				type: "item"
+			}]
+			x: 7.5d
+			y: 3.75d
+		}
+		{
+			dependencies: ["5C02000000000010"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "immersiveengineering:capacitor_lv"
+			}
+			id: "5C020000000000B0"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C020000000000B4"
+					type: "custom"
+				}
+				{
+					id: "5C020000000000B5"
+					type: "xp"
+					xp: 75
+				}
+			]
+			tasks: [{
+				id: "5C020000000000B1"
+				item: {
+					count: 1
+					id: "immersiveengineering:capacitor_lv"
+				}
+				type: "item"
+			}]
+			x: 10.0d
+			y: -2.5d
+		}
+		{
+			dependencies: ["5C02000000000010"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "powah:reactor_starter"
+			}
+			id: "5C020000000000C0"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C020000000000C4"
+					type: "custom"
+				}
+				{
+					id: "5C020000000000C5"
+					type: "xp"
+					xp: 75
+				}
+			]
+			tasks: [{
+				id: "5C020000000000C1"
+				item: {
+					count: 1
+					id: "powah:reactor_starter"
+				}
+				type: "item"
+			}]
+			x: 10.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C02000000000010"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "create:precision_mechanism"
+			}
+			id: "5C020000000000D0"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C020000000000D4"
+					type: "custom"
+				}
+				{
+					id: "5C020000000000D5"
+					type: "xp"
+					xp: 75
+				}
+			]
+			tasks: [{
+				id: "5C020000000000D1"
+				item: {
+					count: 1
+					id: "create:precision_mechanism"
+				}
+				type: "item"
+			}]
+			x: 10.0d
+			y: 2.5d
+		}
+		{
+			dependencies: ["5C02000000000010"]
+			icon: {
+				id: "mekanism:purification_chamber"
+			}
+			id: "5C020000000000E0"
+			invisible: true
+			optional: true
+			rewards: [{
+				id: "5C020000000000E4"
+				type: "xp"
+				xp: 150
 			}]
 			tasks: [{
-				count: 16L
-				id: "5C02000000000031"
-				item: {
-					count: 1
-					id: "immersiveengineering:ingot_steel"
-				}
-				type: "item"
+				id: "5C020000000000E1"
+				stage: "consortium:extraction_p2"
+				team_stage: false
+				type: "gamestage"
 			}]
-			x: 2.5d
-			y: 1.0d
+			x: 12.5d
+			y: -2.5d
+		}
+		{
+			dependencies: ["5C02000000000010"]
+			icon: {
+				id: "powah:steel_energized"
+			}
+			id: "5C020000000000F0"
+			invisible: true
+			optional: true
+			rewards: [{
+				id: "5C020000000000F4"
+				type: "xp"
+				xp: 150
+			}]
+			tasks: [{
+				id: "5C020000000000F1"
+				stage: "consortium:energy_p2"
+				team_stage: false
+				type: "gamestage"
+			}]
+			x: 12.5d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C02000000000010"]
+			icon: {
+				id: "ae2:drive"
+			}
+			id: "5C02000000000100"
+			invisible: true
+			optional: true
+			rewards: [{
+				id: "5C02000000000104"
+				type: "xp"
+				xp: 150
+			}]
+			tasks: [{
+				id: "5C02000000000101"
+				stage: "consortium:logistics_p2"
+				team_stage: false
+				type: "gamestage"
+			}]
+			x: 12.5d
+			y: 2.5d
+		}
+		{
+			dependencies: ["5C02000000000020"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "minecraft:beacon"
+			}
+			id: "5C02000000000110"
+			optional: true
+			rewards: [{
+				icon: {
+					id: "minecraft:glass_pane"
+				}
+				id: "5C02000000000114"
+				type: "custom"
+			}]
+			tasks: [{
+				id: "5C02000000000111"
+				type: "custom"
+			}]
+			x: 15.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C02000000000030", "5C02000000000040", "5C02000000000050", "5C02000000000060"]
+			icon: {
+				id: "mekanism:purification_chamber"
+			}
+			id: "5C02000000000120"
+			min_required_dependencies: 1
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C02000000000124"
+					type: "custom"
+				}
+				{
+					id: "5C02000000000125"
+					type: "xp_levels"
+					xp_levels: 3
+				}
+			]
+			shape: "hexagon"
+			size: 1.5d
+			tasks: [{
+				id: "5C02000000000121"
+				stage: "consortium:phase_3"
+				team_stage: false
+				type: "gamestage"
+			}]
+			x: 17.5d
+			y: 0.0d
 		}
 	]
 }
