@@ -408,6 +408,11 @@ hash = "973d189eb0bb8a514bebc50e78bdbcc5f9e7b3d4869b3a9718ca63ca3afff215"
 metafile = true
 
 [[files]]
+file = "mods/consortium-core.pw.toml"
+hash = "358e0f1a6060443da3092060914df4e991e1992e8457e2d66e3c391979921640"
+metafile = true
+
+[[files]]
 file = "mods/controlling.pw.toml"
 hash = "65c8086d2ec3d39acc7bd36c7a0306ccc43b602b38fa07d13291bc478ef7dfff"
 metafile = true

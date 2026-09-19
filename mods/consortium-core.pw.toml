@@ -1,0 +1,8 @@
+name = "Consortium Core"
+filename = "consortium-0.3.1.jar"
+side = "both"
+
+[download]
+url = "https://github.com/underfr/consortium-core/releases/download/v0.3.1/consortium-0.3.1.jar"
+hash-format = "sha256"
+hash = "65003008816de6dca1bd32a9a8649732443737743aba68eb1329afb9b848491f"
