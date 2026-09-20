@@ -74,7 +74,8 @@ One server-wide phase for everyone, five phases per season. Files:
 | `server_scripts/consortium_quests.js` (priority 30) | The FTB Quests bridge (QUESTS 5): custom task checks (delivery runs, flags, weekly stamps, the weekly contract, counters, ranks, first paycheck, charter, Founder), custom rewards re-validated per claimer (credits, XP, cosmetics, titles), the `DeliveryEvent`, `BalanceChangeEvent` and blood moon listeners that derive quest flags. Exposes `ConsortiumQuests`; see "Quests bridge" below |
 | `server_scripts/consortium_events_lib.js` (priority 45) | Helpers of the events engine: the `Platform.isLoaded` flags (`CONSORTIUM_HAS_INCONTROL`, `CONSORTIUM_HAS_APOTHEOSIS`, `CONSORTIUM_HAS_FTBCHUNKS`, `CONSORTIUM_EVENTS_ON`), every optional Java class behind its flag, the hostile-claim test and the spot finder (FTB Chunks API), the ground finder, tagged spawning, the Apotheosis boss spawner and its whitelist, force-load and cleanup helpers, and the `ConsortiumEvents` shell object the economy scripts call through typeof-guarded wrappers |
 | `server_scripts/consortium_events.js` (priority 20) | The random events engine (see "Events" below): state, the catalogue of 10 events, start and stop, scheduler, boss bar, board event object, payouts and caps, the listeners and the load reconciliation |
-| `server_scripts/consortium_hq.js` (priority 20) | The HQ spawn generator (BADGES_AND_HQ part 2, see "HQ generator" below): `/consortium hq build` places `data/consortium/consortium_hq/<layout>.json` around an anchor for one of the four facings through a tick queue (snapshot, ground, clear, layers, finish), `hq clear` restores the snapshot, `hq status`, `hq spawnpoint [arena]` and `hq forget` are the bookkeeping; state under its own root key `consortium_hq` |
+| `server_scripts/consortium_hq.js` (priority 20) | The HQ site generator (BADGES_AND_HQ part 2 and HQ_SITE.md, see "HQ generator" below): `/consortium hq build` places `data/consortium/consortium_hq/<layout>.json` (format 1 or 2) around an anchor for one of the four facings through a tick queue (snapshot, ground, clear, layers, finish), `hq clear` restores the snapshot, `hq status`, `hq spawnpoint [arena]` and `hq forget` are the bookkeeping; state under its own root key `consortium_hq`, the arena trap cells under `consortium_hq_traps` |
+| `server_scripts/consortium_traps.js` (priority 25) | The arena traps engine (HQ_SITE.md 4): pitfalls (trapdoor covers that open under a player), fire vents (a smoke warning, then fire) and arrow slits (a volley at a player in the zone), driven from the tick over the cells `hq build` recorded; mode `off`, `on` or `events` (live only during an invasion, a Friday Zone or an arena bounty) through `/consortium hq traps`; no item is ever created |
 | `server_scripts/consortium_ranks.js` (priority 30) | Ranks (RANKS_AND_CONTRACTS 1): `CONSORTIUM_RANK_THRESHOLDS` (the one tier table, published to Consortium Core 0.4.0 through `publishRankTiers` at load and from every 5-minute check; the mod promotes through the LuckPerms track and announces), the perk reconcile at login + 60 ticks, on `RankPromoteEvent` and every 5 minutes (FTB Chunks allowance refresh, one perk line per tier, the Engineer chunk loader once the team holds phase 3), the texts of `/consortium ranks` and `/consortium leaderboard`, and the shared probes `consortiumCoreHas`, `consortiumCcFmt`; see "Ranks" below |
 | `server_scripts/consortium_contracts.js` (priority 30) | Daily contracts (RANKS_AND_CONTRACTS 2): the pick at the 06:00 boundary, the flat premium per paid unit read by `consortium_money.js`, the consumption on `DeliveryEvent`, the board lines, the compact `contracts` string, the summary line of the daily step; exposes `Consortium.contracts`; see "Daily contracts" below |
 | `server_scripts/consortium_onboarding.js` (priority 30) | Onboarding (RANKS_AND_CONTRACTS 3): the starter kit at the first `GRANTED` login (with the rulebook), `/consortium kit`, the referral flow and its milestone payouts, the engine-side first-credit stopwatch; exposes `Consortium.kit` and `Consortium.referrals`; see "Onboarding" below |
@@ -210,7 +211,8 @@ Commands (`/consortium ...`):
 | `hq status` (also `hq info`) | op 4 | not built / snapshot / building / built / interrupted, the layout, anchor, facing and box, the five marks in world coordinates, the arena check against the events record and the claim, then the post-build commands with the real numbers |
 | `hq clear` | op 4 | kills the tagged entities, restores the snapshot (terminals and waystone first, then the bulk) and drops the record; a build that never wrote is simply dropped, an unreadable record falls back to a wipe with a red warning |
 | `hq spawnpoint [arena [<player>]]` | op 4 | `setworldspawn` on the plinth and `spawnRadius 0`; with `arena`, writes the events arena record (centre = the arena mark, radius 3, ring 6..10, pit 12 from the layout) for the party of the player, refused when the team is not a party |
-| `hq forget` | op 4 | drops the record and the box without touching a block (after the production build is approved; `hq clear` is then impossible) |
+| `hq forget` | op 4 | drops the record and the box without touching a block (after the production build is approved; `hq clear` is then impossible; the trap cells stay) |
+| `hq traps [status|on|off|events|test|reset]` | op 4 | the arena traps of the built layout: the counts and the mode, the mode change (persisted, default `events`), a test that fires every group once, a reset that closes the pits and puts the vents out |
 
 `/rules`, `/rules <section>` and `/rules book` are a top-level literal of `consortium_rules.js` (anyone; the book once per player per day).
 
@@ -398,11 +400,13 @@ Commands (`/consortium event ...`, the events block of `consortium_commands.js`;
 
 ## HQ generator (`consortium_hq.js`, priority 20, docs/BADGES_AND_HQ.md part 2)
 
-- **Layout**: `data/consortium/consortium_hq/hq.json`, generated by `node tools/hq/build-layout.mjs` (walls, bays, sawtooth
-  roof, light grids and rooms as code; the JSON is the shipped artifact) and checked by `node tools/hq/check-layout.mjs
-  <file> [--anchor x y z]` (row lengths, palette keys, state strings, marks, the arena spawn-ring shelf rule, entity
-  supports, the no-loot rule 4.1, the price table; `--anchor` writes `tools/hq/out/expected-marks.json`). One
-  printable character per cell, `.` and space are empty; palette entries are a state string or an object with `state`,
+- **Layout**: `data/consortium/consortium_hq/hq.json`, generated by `node tools/hq/build-layout.mjs` (the works, the
+  plaza, the avenue and the arena as code; the JSON is the shipped artifact) and checked by `node tools/hq/check-layout.mjs
+  <file> [--anchor x y z]` (row lengths, palette keys, state strings and properties, block ids, marks, the arena spawn-ring
+  shelf rule, entity and block supports, the no-loot rule 4.1, the price table, the trap groups; `--anchor` writes
+  `tools/hq/out/expected-marks.json`). Format 2: `cell_width` (2) printable characters per cell, `..` and spaces are
+  empty, up to 4,096 palette keys; format 1 (one character, 92 keys) is still read. `foundation` (default 2) sets the fill
+  layers under the floor; `traps` lists the trap groups the traps engine drives. Palette entries are a state string or an object with `state`,
   `connect` (shape pass after the bulk pass: fences, bars, walls, stairs, girders), `last` (placed in the finish pass:
   the Delivery Terminals after their panels), `sign` (four lines plus `color`, composed into the waxed `front_text`
   NBT), `nbt` (an SNBT string loaded in the same tick as the placement), `states` (one state per facing) or `api:

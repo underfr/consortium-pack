@@ -16,6 +16,11 @@
   "news": [
     {
       "date": "2026-09-20",
+      "title": "Pack 0.10.0: the HQ site, revision 2",
+      "text": "The headquarters is a full industrial site now: the delivery hall with its copper roof and clock tower, a boiler house with two chimneys, a glass-vaulted workshop, the water tower and the rail yard, the plaza with the spawn podium and the banner masts, and a real amphitheatre east of it: four gates, three tiers, a copper canopy, corner towers, hazards on the floor and traps that arm during arena events (pitfalls, fire vents, arrow slits)."
+    },
+    {
+      "date": "2026-09-20",
       "title": "Pack 0.9.0: badges and the HQ",
       "text": "Ranks, titles, staff roles and charters now show as pixel badges before player names in chat and in the tab list (the active title replaces the rank badge). The player list is lighter: two header lines and two footer lines. Staff can raise the industrial headquarters with the delivery station, the shop counter, the charter desk, the plaza waystone and the event arena in one command."
     },

@@ -33,10 +33,12 @@
 // Rhino note: `const` only at file top level or as the first statements of a function; `let` in blocks.
 
 const CONSORTIUM_HQ_ROOT = 'consortium_hq'
+const CONSORTIUM_HQ_TRAPS_ROOT = 'consortium_hq_traps'   // the arena traps of the built layout in world coordinates (consortium_traps.js reads it; hq forget keeps it)
+const CONSORTIUM_HQ_TRAP_KINDS = ['pitfall', 'vent', 'arrows']
 const CONSORTIUM_HQ_TAG = 'consortium_hq'
 const CONSORTIUM_HQ_DATA = 'kubejs/data/consortium/consortium_hq/'
 const CONSORTIUM_HQ_FACINGS = ['south', 'west', 'north', 'east'] // clockwise steps from the authored south
-const CONSORTIUM_HQ_FOUNDATION = 2              // fill layers under the floor (-2 and -1)
+const CONSORTIUM_HQ_FOUNDATION = 2              // default fill layers under the floor (-2 and -1); a layout's "foundation" (1..16) overrides it, the deeper layers fill only air, water and soft blocks
 const CONSORTIUM_HQ_PER_TICK = 800              // placements per tick (measured: 1000 stone per tick = 14 ms worst, no client)
 const CONSORTIUM_HQ_SCAN_PER_TICK = 4000        // examined or snapshotted positions per tick (8,000 read 38 to 48 ms per tick in Rhino on the harness)
 const CONSORTIUM_HQ_SLOW_MS = 25                // a step above this halves the next budget
@@ -45,7 +47,16 @@ const CONSORTIUM_HQ_QUIET_STEPS = 5             // quiet steps before the budget
 const CONSORTIUM_HQ_FLAG_BULK = 18              // UPDATE_CLIENTS | UPDATE_KNOWN_SHAPE
 const CONSORTIUM_HQ_FLAG_CLIENTS = 2
 const CONSORTIUM_HQ_AUDIT_MAX = 20              // offenders printed by the survival audit
-const CONSORTIUM_HQ_STAFF_CLAIM = 80            // claim_as radius in blocks: 11 x 11 chunks (BADGES_AND_HQ 2.8)
+const CONSORTIUM_HQ_STAFF_CLAIM_BUFFER = 1      // chunks of buffer around the box in the claim_as advice of hq status (BADGES_AND_HQ 2.8, HQ_SITE 5)
+
+// The staff claim that covers the recorded box: centre (block coordinates), radius in blocks (a chunk multiple
+// covering the half-size plus the buffer) and the chunk count of the square claim_as makes of it.
+function consortiumHqClaimOf(box) {
+  let cx = Math.floor((box.x1 + box.x2) / 2), cz = Math.floor((box.z1 + box.z2) / 2)
+  let half = Math.max(box.x2 - box.x1 + 1, box.z2 - box.z1 + 1) / 2
+  let chunks = Math.ceil(half / 16) + CONSORTIUM_HQ_STAFF_CLAIM_BUFFER
+  return { x: cx, z: cz, radius: chunks * 16, count: (2 * chunks + 1) * (2 * chunks + 1) }
+}
 
 const CONSORTIUM_HQ_PARSER = Java.loadClass('net.minecraft.commands.arguments.blocks.BlockStateParser')
 const CONSORTIUM_HQ_REGISTRIES = Java.loadClass('net.minecraft.core.registries.Registries')
@@ -261,7 +272,10 @@ function consortiumHqDirIndex(name) {
 function consortiumHqCompile(level, raw, name, X, Y, Z, facing) {
   let steps = CONSORTIUM_HQ_FACINGS.indexOf(facing)
   if (steps < 0) return { ok: false, reason: 'Facing must be south, west, north or east.' }
-  if (consortiumHqInt(raw, 'format', 0) !== 1) return { ok: false, reason: 'Layout format must be 1.' }
+  let format = consortiumHqInt(raw, 'format', 0)
+  if (format !== 1 && format !== 2) return { ok: false, reason: 'Layout format must be 1 or 2.' }
+  // Format 2: cell_width characters per cell (1 or 2) and up to 4096 palette keys; an all-dot or all-space cell is empty.
+  let cellWidth = format === 2 && consortiumHqInt(raw, 'cell_width', 1) === 2 ? 2 : 1
   let size = consortiumHqInts(consortiumHqGet(raw, 'size'))
   if (size.length !== 2 || size[0] < 1 || size[0] > 255 || size[1] < 1 || size[1] > 255) return { ok: false, reason: 'size must be [columns 1..255, rows 1..255].' }
   let anchor = consortiumHqInts(consortiumHqGet(raw, 'anchor'))
@@ -269,13 +283,14 @@ function consortiumHqCompile(level, raw, name, X, Y, Z, facing) {
   let c = {
     name: name, X: X, Y: Y, Z: Z, facing: facing, steps: steps, sizeX: size[0], sizeZ: size[1], ax: anchor[0], az: anchor[1],
     apron: Math.max(0, consortiumHqInt(raw, 'apron', 3)), clearTop: consortiumHqInt(raw, 'clear_top', 24),
-    palette: {}, cells: [], entities: [], marks: {}, layer0: [],
+    palette: {}, cells: [], entities: [], marks: {}, layer0: [], cellWidth: cellWidth, traps: [],
+    foundation: Math.max(1, Math.min(16, consortiumHqInt(raw, 'foundation', CONSORTIUM_HQ_FOUNDATION))),
   }
   if (c.clearTop < 1 || c.clearTop > 255) return { ok: false, reason: 'clear_top must be 1..255.' }
   // Every write of a build must lie inside the snapshot box (layers -foundation..clear_top): a cell outside it
   // would be placed but never snapshotted, so hq clear could not restore it (the record's packed offsets cannot
   // even represent it). One message for the three refusals below.
-  let boxLayers = 'the snapshot box holds layers -' + CONSORTIUM_HQ_FOUNDATION + '..' + c.clearTop + ' (clear_top): hq clear could never restore it.'
+  let boxLayers = 'the snapshot box holds layers -' + c.foundation + '..' + c.clearTop + ' (clear_top): hq clear could never restore it.'
   try {
     c.fill = consortiumHqParseState(level, consortiumHqStr(raw, 'fill', 'minecraft:cobbled_deepslate'))
     c.ground = consortiumHqParseState(level, consortiumHqStr(raw, 'ground', 'minecraft:grass_block'))
@@ -287,10 +302,11 @@ function consortiumHqCompile(level, raw, name, X, Y, Z, facing) {
   // Palette: one parsed and rotated state per key (170 ms for 32k blocks against 771 ms when parsed per block).
   let palette = consortiumHqGet(raw, 'palette')
   let keys = consortiumHqKeys(palette)
-  if (keys.length === 0 || keys.length > 92) return { ok: false, reason: 'The palette holds ' + keys.length + ' keys (1..92).' }
+  let maxKeys = format === 2 ? 4096 : 92
+  if (keys.length === 0 || keys.length > maxKeys) return { ok: false, reason: 'The palette holds ' + keys.length + ' keys (1..' + maxKeys + ').' }
   for (let i = 0; i < keys.length; i++) {
     let k = keys[i]
-    if (k.length !== 1 || k === '.' || k === ' ') return { ok: false, reason: 'Palette key "' + k + '" is not one printable character.' }
+    if (k.length !== cellWidth || /^[. ]+$/.test(k)) return { ok: false, reason: 'Palette key "' + k + '" is not ' + cellWidth + ' printable character(s).' }
     let def = consortiumHqGet(palette, k)
     let entry = { key: k, connect: false, last: false, api: '', nbt: null, state: null, def: def }
     // A Java String from the map is typeof 'object' in this Rhino: a plain entry is anything that is not a map.
@@ -339,7 +355,7 @@ function consortiumHqCompile(level, raw, name, X, Y, Z, facing) {
   for (let i = 0; i < layers.length; i++) {
     let y = consortiumHqInt(layers[i], 'y', null)
     if (y === null) return { ok: false, reason: 'Layer ' + i + ' has no y.' }
-    if (y < -CONSORTIUM_HQ_FOUNDATION || y > c.clearTop) return { ok: false, reason: 'Layer ' + y + ' lies outside the box: ' + boxLayers }
+    if (y < -c.foundation || y > c.clearTop) return { ok: false, reason: 'Layer ' + y + ' lies outside the box: ' + boxLayers }
     if (byY[y] !== undefined) return { ok: false, reason: 'Layer ' + y + ' appears twice.' }
     byY[y] = layers[i]
     order.push(y)
@@ -361,11 +377,11 @@ function consortiumHqCompile(level, raw, name, X, Y, Z, facing) {
     if (rows.length !== c.sizeZ) return { ok: false, reason: 'Layer ' + y + ' has ' + rows.length + ' rows, expected ' + c.sizeZ + '.' }
     for (let z = 0; z < rows.length; z++) {
       let row = String(rows[z])
-      if (row.length !== c.sizeX) return { ok: false, reason: 'Layer ' + y + ' row ' + z + ' has ' + row.length + ' characters, expected ' + c.sizeX + '.' }
+      if (row.length !== c.sizeX * cellWidth) return { ok: false, reason: 'Layer ' + y + ' row ' + z + ' has ' + row.length + ' characters, expected ' + (c.sizeX * cellWidth) + '.' }
       if (y === 0) c.layer0.push(row)
-      for (let x = 0; x < row.length; x++) {
-        let ch = row.charAt(x)
-        if (ch === '.' || ch === ' ') continue
+      for (let x = 0; x < c.sizeX; x++) {
+        let ch = cellWidth === 1 ? row.charAt(x) : row.substring(x * cellWidth, (x + 1) * cellWidth)
+        if (ch === '.' || ch === ' ' || ch === '..' || ch === '  ') continue
         if (c.palette[ch] === undefined) return { ok: false, reason: 'Layer ' + y + ' row ' + z + ' column ' + x + ': key "' + ch + '" is not in the palette.' }
         // An api cell (the waystone) owns the cell above it too: both halves must stay inside the box.
         if (c.palette[ch].api !== '' && y + 1 > c.clearTop) return { ok: false, reason: 'Layer ' + y + ' row ' + z + ' column ' + x + ': the ' + c.palette[ch].api + ' cell "' + ch + '" needs its upper half at layer ' + (y + 1) + ', outside the box: ' + boxLayers }
@@ -383,10 +399,28 @@ function consortiumHqCompile(level, raw, name, X, Y, Z, facing) {
     if (at.length !== 3 || dir < 0 || !/^[a-z0-9_.-]+:[a-z0-9_./-]+$/.test(summon)) return { ok: false, reason: 'Entity ' + i + ' needs at [x,y,z], a horizontal facing and a summon id.' }
     // Inside the rectangle (the checker's rule) and inside the box layers: hq clear kills the tagged entities of the box only.
     if (at[0] < 0 || at[0] >= c.sizeX || at[2] < 0 || at[2] >= c.sizeZ) return { ok: false, reason: 'Entity ' + i + ' at ' + at.join(' ') + ' lies outside the layout rectangle (x 0..' + (c.sizeX - 1) + ', z 0..' + (c.sizeZ - 1) + ').' }
-    if (at[1] < -CONSORTIUM_HQ_FOUNDATION || at[1] > c.clearTop) return { ok: false, reason: 'Entity ' + i + ' at ' + at.join(' ') + ' lies outside the box: ' + boxLayers }
+    if (at[1] < -c.foundation || at[1] > c.clearTop) return { ok: false, reason: 'Entity ' + i + ' at ' + at.join(' ') + ' lies outside the box: ' + boxLayers }
     let nbt = consortiumHqStr(ents[i], 'nbt', '')
     if (/LootTable/i.test(nbt)) return { ok: false, reason: 'Entity ' + i + ': a LootTable is refused (rule 4.1).' }
     c.entities.push({ lx: at[0], ly: at[1], lz: at[2], dir: dir, summon: summon, nbt: nbt })
+  }
+  // Traps (layout format 2): { kind, cells [[x,y,z]], trigger [[x,y,z]] }, every cell inside the box.
+  let trapsRaw = consortiumHqList(consortiumHqGet(raw, 'traps'))
+  for (let i = 0; i < trapsRaw.length; i++) {
+    let kind = consortiumHqStr(trapsRaw[i], 'kind', '')
+    if (CONSORTIUM_HQ_TRAP_KINDS.indexOf(kind) < 0) return { ok: false, reason: 'Trap ' + i + ': unknown kind "' + kind + '" (pitfall, vent or arrows).' }
+    let group = { kind: kind, cells: [], trigger: [] }
+    for (let part of ['cells', 'trigger']) {
+      let list = consortiumHqList(consortiumHqGet(trapsRaw[i], part))
+      for (let j = 0; j < list.length; j++) {
+        let xyz = consortiumHqInts(list[j])
+        if (xyz.length !== 3) return { ok: false, reason: 'Trap ' + i + ' ' + part + ' ' + j + ' must be [x, y, z].' }
+        if (xyz[0] < 0 || xyz[0] >= c.sizeX || xyz[2] < 0 || xyz[2] >= c.sizeZ || xyz[1] < -c.foundation || xyz[1] > c.clearTop) return { ok: false, reason: 'Trap ' + i + ' ' + part + ' ' + j + ' at ' + xyz.join(' ') + ' lies outside the layout box.' }
+        group[part].push(xyz)
+      }
+    }
+    if (group.cells.length === 0) return { ok: false, reason: 'Trap ' + i + ' has no cells.' }
+    c.traps.push(group)
   }
   let marks = consortiumHqGet(raw, 'marks')
   let markNames = consortiumHqKeys(marks)
@@ -400,7 +434,7 @@ function consortiumHqCompile(level, raw, name, X, Y, Z, facing) {
   }
   // The world box: the rectangle plus the apron, layers -foundation..clear_top, rotated.
   let corners = [[-c.apron, -c.apron], [c.sizeX - 1 + c.apron, -c.apron], [-c.apron, c.sizeZ - 1 + c.apron], [c.sizeX - 1 + c.apron, c.sizeZ - 1 + c.apron]]
-  let box = { x1: 1e9, z1: 1e9, x2: -1e9, z2: -1e9, y1: Y - CONSORTIUM_HQ_FOUNDATION, y2: Y + c.clearTop }
+  let box = { x1: 1e9, z1: 1e9, x2: -1e9, z2: -1e9, y1: Y - c.foundation, y2: Y + c.clearTop }
   for (let i = 0; i < corners.length; i++) {
     let p = consortiumHqWorld(c, corners[i][0], 0, corners[i][1])
     box.x1 = Math.min(box.x1, p.getX()); box.x2 = Math.max(box.x2, p.getX())
@@ -496,6 +530,31 @@ function consortiumHqBuild(server, level, X, Y, Z, facing, layoutName, by) {
     if (e.api === 'waystone') special.add(NBT.intTag(consortiumHqPack(box, p.getX(), p.getY() + 1, p.getZ())))
   }
   root.put('special', special)
+  // The traps root: world coordinates for consortium_traps.js; the mode survives a rebuild (off, on or events).
+  let pd = server.persistentData
+  let oldMode = pd.contains(CONSORTIUM_HQ_TRAPS_ROOT) ? String(pd.getCompound(CONSORTIUM_HQ_TRAPS_ROOT).getString('mode')) : ''
+  let trapsRoot = NBT.compoundTag()
+  trapsRoot.putString('dim', String(level.dimension))
+  trapsRoot.putString('layout', c.name)
+  trapsRoot.putString('mode', oldMode || 'events')
+  let am = consortiumHqWorld(c, c.marks.arena[0], c.marks.arena[1], c.marks.arena[2])
+  trapsRoot.put('arena', consortiumHqXyz(NBT.compoundTag(), am.getX(), am.getY(), am.getZ()))
+  let trapList = NBT.listTag()
+  for (let i = 0; i < c.traps.length; i++) {
+    let t = NBT.compoundTag()
+    t.putString('kind', c.traps[i].kind)
+    for (let part of ['cells', 'trigger']) {
+      let flat = NBT.listTag()
+      for (let j = 0; j < c.traps[i][part].length; j++) {
+        let w = consortiumHqWorld(c, c.traps[i][part][j][0], c.traps[i][part][j][1], c.traps[i][part][j][2])
+        flat.add(NBT.intTag(w.getX())); flat.add(NBT.intTag(w.getY())); flat.add(NBT.intTag(w.getZ()))
+      }
+      t.put(part, flat)
+    }
+    trapList.add(t)
+  }
+  trapsRoot.put('traps', trapList)
+  pd.put(CONSORTIUM_HQ_TRAPS_ROOT, trapsRoot)
   root.putBoolean('forceloaded', true)
   root.putBoolean('written', false)
   root.putBoolean('built', false)
@@ -616,15 +675,20 @@ function consortiumHqGroundStep(q) {
   let end = Math.min(q.todo, q.i + Math.floor(q.scanBudget / 24)) // three reads and up to three writes per column into terrain or water: the light engine makes this the slowest write (50 ms per 333 columns measured)
   for (; q.i < end; q.i++) {
     let col = q.columns[q.i]
-    for (let f = 1; f <= CONSORTIUM_HQ_FOUNDATION; f++) {
+    for (let f = 1; f <= c.foundation; f++) {
       let pos = BlockPos.containing(col.x, c.Y - f, col.z)
-      if (level.getBlockState(pos) !== c.fill) consortiumHqPlace(q, pos, c.fill, CONSORTIUM_HQ_FLAG_BULK)
+      let st = level.getBlockState(pos)
+      if (st === c.fill) continue
+      // the two layers under the floor are always the fill; deeper layers only replace air, fluids and soft blocks
+      if (f > CONSORTIUM_HQ_FOUNDATION && !st.isAir() && st.isSolid() && st.getFluidState().isEmpty()) continue
+      consortiumHqPlace(q, pos, c.fill, CONSORTIUM_HQ_FLAG_BULK)
     }
     let empty = col.local === null
     if (!empty) {
       let row = c.layer0[col.local.lz]
-      let ch = col.local.lx < row.length ? row.charAt(col.local.lx) : '.'
-      empty = ch === '.' || ch === ' '
+      let w = c.cellWidth
+      let ch = (col.local.lx + 1) * w <= row.length ? row.substring(col.local.lx * w, (col.local.lx + 1) * w) : '.'
+      empty = ch === '.' || ch === ' ' || ch === '..' || ch === '  '
     }
     if (empty) {
       let pos = BlockPos.containing(col.x, c.Y, col.z)
@@ -921,9 +985,10 @@ function consortiumHqClearStepRun(q) {
     q.phase = 'release'
     return false
   }
-  // release: the ticket, the record, the box and the marks go; the world is saved.
+  // release: the ticket, the record, the box, the marks and the traps go; the world is saved.
   consortiumHqForce(level, box, false)
   server.persistentData.remove(CONSORTIUM_HQ_ROOT)
+  server.persistentData.remove(CONSORTIUM_HQ_TRAPS_ROOT)
   server.runCommandSilent('save-all')
   let ticks = server.tickCount - q.startTick
   consortiumHqNotify(server, q.by, 'cleared: ' + consortiumFmt(q.placements) + ' blocks restored in ' + ticks + ' ticks, worst tick ' + q.worst + ' ms (' + consortiumHqWorstText(q) + ')' + (q.wipe ? ' (wipe fallback)' : '') + consortiumHqOutsideText(q) + '; the record, the box and the marks are dropped.', q.wipe || q.outside > 0)
@@ -1044,8 +1109,13 @@ function consortiumHqStatus(server) {
     if (t !== null) parts.push(name + ' ' + t)
   }
   lines.push('marks: ' + parts.join(', '))
+  if (server.persistentData.contains(CONSORTIUM_HQ_TRAPS_ROOT)) {
+    let tr = server.persistentData.getCompound(CONSORTIUM_HQ_TRAPS_ROOT)
+    lines.push('traps: ' + tr.getList('traps', 10).size() + ' group(s), mode ' + tr.getString('mode') + (typeof consortiumTrapsLive === 'function' ? (consortiumTrapsLive(server) ? ', live now' : ', idle') : '') + ' (/consortium hq traps).')
+  }
   let ring = root.getCompound('arena')
   let arenaMark = consortiumHqMark(root, 'arena')
+  let claimAdvice = consortiumHqClaimOf(box)
   if (typeof consortiumArena === 'function' && arenaMark !== null) {
     let arena = consortiumArena(server)
     if (arena === null) {
@@ -1058,14 +1128,14 @@ function consortiumHqStatus(server) {
         let mgr = consortiumClaimManager()
         let level = consortiumHqLevelOf(server, root.getString('dim'))
         let claim = mgr === null ? null : consortiumClaimAt(mgr, level, arenaMark)
-        if (claim === null) issues.push('the arena mark is unclaimed: run ftbchunks admin claim_as <staff party> ' + CONSORTIUM_HQ_STAFF_CLAIM + ' ' + a.getInt('x') + ' ' + a.getInt('z') + ' ' + root.getString('dim'))
+        if (claim === null) issues.push('the arena mark is unclaimed: run ftbchunks admin claim_as <staff party> ' + claimAdvice.radius + ' ' + claimAdvice.x + ' ' + claimAdvice.z + ' ' + root.getString('dim'))
         else if (consortiumClaimTeamId(claim) !== arena.team) issues.push('the claim at the arena mark belongs to ' + consortiumClaimTeamId(claim) + ', not to the arena team ' + arena.team)
       }
       if (issues.length === 0) lines.push('arena: OK (centre, ring ' + arena.ringMin + '..' + arena.ringMax + ', pit ' + arena.pit + ', team ' + arena.team + ').')
       else for (let i = 0; i < issues.length; i++) lines.push('arena: ' + issues[i])
     }
   }
-  lines.push('After the build, in this order: /ftbteams party create staff (in game), ftbchunks admin extra_claim_chunks <member> add 120, ftbchunks admin claim_as staff ' + CONSORTIUM_HQ_STAFF_CLAIM + ' ' + a.getInt('x') + ' ' + a.getInt('z') + ' ' + root.getString('dim') + ' (121 chunks), consortium hq spawnpoint arena <member>, ftbteams settings_for staff ftbchunks:block_interact_mode public.')
+  lines.push('After the build, in this order: /ftbteams party create staff (in game), ftbchunks admin extra_claim_chunks <member> add ' + claimAdvice.count + ', ftbchunks admin claim_as staff ' + claimAdvice.radius + ' ' + claimAdvice.x + ' ' + claimAdvice.z + ' ' + root.getString('dim') + ' (' + claimAdvice.count + ' chunks: the box plus a ' + CONSORTIUM_HQ_STAFF_CLAIM_BUFFER + '-chunk buffer), consortium hq spawnpoint arena <member>, ftbteams settings_for staff ftbchunks:block_interact_mode public.')
   return lines
 }
 

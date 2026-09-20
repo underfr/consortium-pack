@@ -1288,6 +1288,7 @@ ServerEvents.commandRegistry((event) => {
 //   /consortium hq clear                                                restores the snapshot (entities, terminals and waystone first, then the bulk) and drops the record
 //   /consortium hq spawnpoint [arena [<player>]]                        setworldspawn on the plinth and spawnRadius 0; with arena, the events arena record from the layout ring and pit (the player's team must be a party)
 //   /consortium hq forget                                               drops the record and the box without touching a block
+//   /consortium hq traps [status|on|off|events|test|reset]                the arena traps of the built layout (consortium_traps.js): mode and a test volley
 
 ServerEvents.commandRegistry((event) => {
   const { commands: Commands, arguments: Arguments } = event
@@ -1345,6 +1346,14 @@ ServerEvents.commandRegistry((event) => {
     posNode = posNode.then(Commands.literal(facing).executes(build(facing, false))
       .then(Commands.argument('layout', Arguments.WORD.create(event)).executes(build(facing, true))))
   }
+  let traps = (verb) => (ctx) => {
+    if (typeof consortiumTrapsCommand !== 'function') return fail(ctx, 'The traps script is not loaded (consortium_traps.js).')
+    let r
+    try { r = consortiumTrapsCommand(ctx.source.server, verb, byName(ctx)) } catch (err) { console.error('[Consortium] hq traps ' + verb + ' failed: ' + err + (err.stack ? ' | ' + err.stack : '')); return fail(ctx, 'hq traps ' + verb + ' failed: ' + err) }
+    return r.ok ? ok(ctx, r.text) : fail(ctx, r.reason)
+  }
+  let trapsNode = Commands.literal('traps').executes(traps('status'))
+  for (let verb of ['status', 'on', 'off', 'events', 'test', 'reset']) trapsNode = trapsNode.then(Commands.literal(verb).executes(traps(verb)))
   let hqNode = Commands.literal('hq').requires(op(4))
     .executes(status)
     .then(Commands.literal('build').then(posNode))
@@ -1367,6 +1376,7 @@ ServerEvents.commandRegistry((event) => {
       console.info('[Consortium] ' + byName(ctx) + ' hq forget')
       return ok(ctx, r.text)
     }))
+    .then(trapsNode)
 
   event.register(Commands.literal('consortium').then(hqNode))
 })
