@@ -389,7 +389,8 @@ const ConsortiumQuests = {
   },
 
   contract: {
-    current: (server) => consortiumQuestContractOpen(server),
+    // The open record plus paidCount = the contract_paid stamps equal to its id (BATCH_3_INTERFACES 4: the Wednesday guard and the minus 24 h line of consortium_calendar.js).
+    current: (server) => { let c = consortiumQuestContractOpen(server); if (c === null) return null; let st = consortiumQuestState(server); let paid = st.contains('contract_paid') ? st.getCompound('contract_paid') : null; let n = 0; if (paid !== null) { for (let k of paid.getAllKeys()) { if (paid.getInt(k) === c.id) n++ } } c.paidCount = n; return c },
 
     // Opens a new contract (the previous one is superseded). Returns a refusal string or null.
     set: (server, familyKey, units, days, byName) => {

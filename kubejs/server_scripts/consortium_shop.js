@@ -60,7 +60,7 @@ const CONSORTIUM_PLAQUE_TIERS = [
 
 // Titles (SHOP 5.11): the four sold or engine-granted keys with their suffix text; the quests script passes
 // its own text for its six keys. Rule 4.3: grey text only, one suffix at priority 60 (staff suffixes 100, 110).
-const CONSORTIUM_TITLES = { foundry: 'of the Foundry', orbital: 'Orbital', horizon: 'of the Event Horizon', benefactor: 'Benefactor' }
+const CONSORTIUM_TITLES = { foundry: 'of the Foundry', orbital: 'Orbital', horizon: 'of the Event Horizon', benefactor: 'Benefactor', bug_hunter: 'Bug Hunter' } // bug_hunter: the staff charter's thanks for a bug report (DISCORD 8.6), tx staff:bug:<date>:<uuid>
 const CONSORTIUM_TITLE_PRIORITY = 60
 
 // Perks (SHOP 5.10): home slots set the LuckPerms meta ftbessentials.home.max to the number of slots held;

@@ -9,7 +9,8 @@
 // up to once per tick per open terminal, and again at confirm): the handler below is pure, never logs
 // per call, and multiplies EVERY factor into ONE setMultiplier call per line (a second call overwrites
 // the first). Modifiers touch credits only, never the quota count the engine records. Factor order
-// (CONTENT_BATCH_2_INTERFACES 3): charter x newcomer x event x paycheck scale.
+// (CONTENT_BATCH_2_INTERFACES 3, BATCH_3_INTERFACES 4): charter x newcomer x event, plus the additive
+// daily contract premium, then the paycheck scale.
 //
 //   charter (9.1):  the effective charter is the OWNER's record of the player's current FTB team (a
 //                   party uses its owner's charter), else the player's own record; +15 % on the charter's
@@ -27,6 +28,13 @@
 //                   events engine, looked up at quote time, never at load time. The engine clips a boost to
 //                   the player's remaining event room (EVENTS 4) from the line's cents after charter x
 //                   newcomer, sharing the room across the receipt's boosted lines in order.
+//   contract (RANKS_AND_CONTRACTS 2.3): consortiumContractBonus, a typeof-guarded wrapper over
+//                   Consortium.contracts.quoteBonus (consortium_contracts.js): the daily contract premium of a
+//                   line in cents, floor(min(room, paidUnits) x premium) for an Operator or above while a
+//                   contract on the family is open, 0 otherwise. Added to the multiplier as bonus / cents (the
+//                   premium is a flat amount per paid unit at the datapack base, never a factor on the paid
+//                   credits, so it stays inside its pot whatever the other factors), read-only at quote time:
+//                   the contracts script consumes the units from its own DeliveryEvent listener.
 //   paycheck (PRICE_TABLE 1.4, DECISIONS 2026-09-17): per player and per season day (06:00 server time)
 //                   the terminal pays at most DAILY_PAYCHECK_CAP[phase] credits; consortium.paycheck.<uuid>
 //                   { day, cents } is fed by the DeliveryEvent listener, and at quote time every line factor
@@ -122,6 +130,20 @@ function consortiumLineMultiplier(table, charterFamily, newcomer) {
   return charter * newcomer
 }
 
+// Daily contract premium of one line in cents (RANKS_AND_CONTRACTS 2.3): 0 without the contracts script, without an
+// open contract on the family, below Operator or on any failure. Read-only (the quote event repeats); the contracts
+// script stashes the answer per player and family and consumes it after the commit.
+function consortiumContractBonus(server, uuid, family, paidUnits) {
+  if (typeof Consortium.contracts === 'undefined' || !Consortium.contracts || typeof Consortium.contracts.quoteBonus !== 'function') return 0
+  try {
+    let b = Number(Consortium.contracts.quoteBonus(server, uuid, family, paidUnits))
+    return isFinite(b) && b > 0 ? Math.floor(b) : 0
+  } catch (err) {
+    console.error('[Consortium] contract quote bonus failed: ' + err)
+    return 0
+  }
+}
+
 if (typeof ConsortiumCore !== 'undefined') {
   NativeEvents.onEvent('org.consortium.core.api.event.DeliveryQuoteEvent', (e) => {
     try {
@@ -135,10 +157,16 @@ if (typeof ConsortiumCore !== 'undefined') {
       let projected = 0
       let quote = { used: 0 } // event bonus cents already reserved by earlier lines of this quote
       for (let line of e.lines) {
+        let cents = Number(line.cents)
         let own = consortiumLineMultiplier(table, line.charterFamily, newcomer)
-        let m = own * consortiumEventFactor(server, player.uuid, line.family, line.charterFamily, Number(line.cents) * own, quote)
+        let m = own * consortiumEventFactor(server, player.uuid, line.family, line.charterFamily, cents * own, quote)
+        // Daily contract premium, additive (RANKS 2.3): the mod pays floorToCents(integral x m) = cents x own x
+        // f_event + bonus, exact to one cent; called for every line so a stale stash is cleared when the paid units
+        // drop to 0, added only when the line pays something.
+        let bonus = consortiumContractBonus(server, uuid, line.family, Number(line.paidUnits))
+        if (bonus > 0 && cents > 0) m += bonus / cents
         factors[line.index] = m
-        projected += line.cents * m
+        projected += cents * m
       }
       // Daily paycheck cap (PRICE_TABLE 1.4): scale every line so the receipt stops at the cap.
       let scale = 1
@@ -184,7 +212,7 @@ if (typeof ConsortiumCore !== 'undefined') {
       console.error('[Consortium] delivery bookkeeping failed: ' + err)
     }
   })
-  console.info('[Consortium] money modifiers registered (charter families, newcomer bonus and cap, event factor, daily paycheck cap)')
+  console.info('[Consortium] money modifiers registered (charter families, newcomer bonus and cap, event factor, daily contract premium, daily paycheck cap)')
 } else {
   console.info('[Consortium] Consortium Core absent: money modifiers off')
 }

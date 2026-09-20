@@ -5,7 +5,7 @@
     "name": "The Consortium",
     "address": ""
   },
-  "motd": "Season 1 is in preparation. Pack 0.7.0: the full quest set, the shop catalogue, random events and the complete price table are live for testing.",
+  "motd": "Season 1 is in preparation. Pack 0.8.0: ranks, daily contracts, starter kit and referrals, the rulebook and the calendar are live for testing.",
   "lowPresetDisables": [
     "mods/iris.pw.toml"
   ],
@@ -14,6 +14,11 @@
     "shaderpacks/makeup-ultra-fast-shaders.pw.toml": "mods/iris.pw.toml"
   },
   "news": [
+    {
+      "date": "2026-09-20",
+      "title": "Pack 0.8.0: ranks, daily contracts, onboarding",
+      "text": "Progression ranks promote you automatically as you deliver (Operator, Engineer, Director, Shareholder) with a public leaderboard, three daily contracts pay a premium on the first units delivered, newcomers get a starter kit and can name a recruiter, /rules and the Rulebook are in game, and the calendar reminds everyone of the Wednesday contract and the weekend events."
+    },
     {
       "date": "2026-09-17",
       "title": "Pack 0.7.0: quests, shop, events and prices",

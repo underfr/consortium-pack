@@ -20,8 +20,10 @@
 //   /consortium debug clearprogress         op 4: wipe the delivery progress of the current phase
 // The economy block at the end of this file (a second commandRegistry listener, CONTENT_BATCH_2_INTERFACES 2)
 // adds licence, season, event ticket, perk, title, sale, gap, debug vacancy, quest and contract; the events
-// block of the events engine adds the other children of "event". Brigadier merges the literals.
-// Announcements still go to every player and to Discord, so test on the local server, not live.
+// block of the events engine adds the other children of "event"; the ranks block (BATCH_3_INTERFACES 3) adds
+// ranks, leaderboard, contracts, referral and kit; the discord block adds calendar, discord, rules and border.
+// Brigadier merges the literals. Announcements still go to every player and to Discord, so test on the local
+// server, not live.
 
 ServerEvents.commandRegistry((event) => {
   const { commands: Commands, arguments: Arguments } = event
@@ -873,3 +875,366 @@ ServerEvents.commandRegistry((event) => {
   event.register(Commands.literal('consortium').then(eventNode))
 })
 // ==== END EVENTS BLOCK ====
+
+// ==== RANKS BLOCK (owner: engine implementer; RANKS_AND_CONTRACTS 1.4, 2.4, 3.1, 3.2; BATCH_3_INTERFACES 3) ====
+// A fourth commandRegistry listener: Brigadier merges the `consortium` literal with the blocks above. Thin wrappers over
+// Consortium.ranks (consortium_ranks.js), Consortium.contracts (consortium_contracts.js), Consortium.referrals and
+// Consortium.kit (consortium_onboarding.js); every object is looked up at call time, so a missing script answers a
+// message instead of an error. The mod registers no /consortium literal; LuckPerms injects command.consortium.<literal>.
+//
+//   /consortium ranks [player]                     anyone: rank by threshold, credits earned at the terminal, position, the next tier
+//   /consortium leaderboard [n]                    anyone: "Top n by credits earned:" (1..25, default 10) in the mod's one entry format
+//   /consortium contracts                          anyone: today's daily contracts, taken units, your eligibility (Operator and above)
+//   /consortium contracts set <family> [units]     op 4: replace today's list with one contract on that family (units default to the computed N)
+//   /consortium contracts reroll                   op 4: a new pick for today, announced (never a family of the previous list)
+//   /consortium contracts clear                    op 4: no contract until tomorrow or a reroll
+//   /consortium referral <name>                    player: name your recruiter during your first 7 days (guards of RANKS 3.2)
+//   /consortium referral list                      op 2: every record
+//   /consortium referral status <player>           op 2: a player's record and recruits
+//   /consortium referral approve <newcomer>        op 2: a pending record (connection unknown) becomes active
+//   /consortium referral clear <newcomer>          op 2: deletes the record (the payout reversal is /credits take)
+//   /consortium kit                                player: the starter kit again, once (GRANTED accounts only)
+//   /consortium kit reset <player>                 op 2: clears the kit stamps (the next login gives it again)
+
+ServerEvents.commandRegistry((event) => {
+  const { commands: Commands, arguments: Arguments } = event
+  let reply = (ctx, text) => ctx.source.sendSystemMessage(text)
+  let op = (level) => (source) => source.hasPermission(level)
+  let ok = (ctx, text) => { reply(ctx, Text.of(text).green()); return 1 }
+  let fail = (ctx, text) => { reply(ctx, Text.of(text).red()); return 0 }
+  let byName = (ctx) => ctx.source.isPlayer() ? String(ctx.source.player.username) : 'console'
+  let ranks = () => (typeof Consortium.ranks !== 'undefined' && Consortium.ranks ? Consortium.ranks : null)
+  let contracts = () => (typeof Consortium.contracts !== 'undefined' && Consortium.contracts ? Consortium.contracts : null)
+  let referrals = () => (typeof Consortium.referrals !== 'undefined' && Consortium.referrals ? Consortium.referrals : null)
+  let kit = () => (typeof Consortium.kit !== 'undefined' && Consortium.kit ? Consortium.kit : null)
+  let missing = (ctx, what) => fail(ctx, 'The ' + what + ' script is not loaded.')
+
+  // Resolves a typed name through the mod's account index when present, else FTB Teams' known players.
+  let resolve = (ctx, arg) => {
+    let text = Arguments.WORD.getResult(ctx, arg)
+    let r = ranks()
+    let who = r !== null && typeof r.resolve === 'function' ? r.resolve(ctx.source.server, text) : consortiumResolvePlayer(ctx.source.server, text)
+    if (who === null) reply(ctx, Text.of('Unknown player "' + text + '": use the name of a player who has joined before, or a UUID.').red())
+    return who
+  }
+  let self = (ctx) => (ctx.source.isPlayer() ? { id: String(ctx.source.player.uuid).toLowerCase(), name: String(ctx.source.player.username) } : null)
+  let say = (ctx, lines) => { for (let i = 0; i < lines.length; i++) reply(ctx, lines[i]); return 1 }
+
+  // ---- ranks and leaderboard ----
+  let ranksNode = Commands.literal('ranks')
+    .executes((ctx) => {
+      let r = ranks()
+      if (r === null) return missing(ctx, 'ranks')
+      let me = self(ctx)
+      if (me === null) return fail(ctx, 'Name a player: /consortium ranks <player> (the console has no account).')
+      return say(ctx, r.status(ctx.source.server, me, true))
+    })
+    .then(Commands.argument('player', Arguments.WORD.create(event)).executes((ctx) => {
+      let r = ranks()
+      if (r === null) return missing(ctx, 'ranks')
+      let who = resolve(ctx, 'player')
+      if (who === null) return 0
+      let me = self(ctx)
+      return say(ctx, r.status(ctx.source.server, who, me !== null && me.id === who.id))
+    }))
+  let leaderboard = (ctx, n) => {
+    let r = ranks()
+    if (r === null) return missing(ctx, 'ranks')
+    if (n < 1 || n > 25) return fail(ctx, 'n must be 1 to 25.')
+    let me = self(ctx)
+    return say(ctx, r.leaderboard(ctx.source.server, n, me === null ? null : me.id))
+  }
+  let leaderboardNode = Commands.literal('leaderboard')
+    .executes((ctx) => leaderboard(ctx, 10))
+    .then(Commands.argument('n', Arguments.INTEGER.create(event)).executes((ctx) => leaderboard(ctx, Arguments.INTEGER.getResult(ctx, 'n'))))
+
+  // ---- daily contracts ----
+  let contractSet = (hasUnits) => (ctx) => {
+    let c = contracts()
+    if (c === null) return missing(ctx, 'contracts')
+    let family = String(Arguments.RESOURCE_LOCATION.getResult(ctx, 'family'))
+    let units = hasUnits ? Arguments.INTEGER.getResult(ctx, 'units') : 0
+    if (hasUnits && units < 1) return fail(ctx, 'Units must be positive (omit them for the computed size).')
+    let refusal = c.set(ctx.source.server, family, units, byName(ctx))
+    if (refusal) return fail(ctx, String(refusal))
+    return ok(ctx, 'Daily contract set on ' + family + (units > 0 ? ' for ' + units + ' units' : ' (computed size)') + '; see /consortium contracts.')
+  }
+  let contractsNode = Commands.literal('contracts')
+    .executes((ctx) => {
+      let c = contracts()
+      if (c === null) return missing(ctx, 'contracts')
+      let me = self(ctx)
+      return say(ctx, c.status(ctx.source.server, me === null ? null : me.id))
+    })
+    .then(Commands.literal('set').requires(op(4))
+      .then(Commands.argument('family', Arguments.RESOURCE_LOCATION.create(event)).executes(contractSet(false))
+        .then(Commands.argument('units', Arguments.INTEGER.create(event)).executes(contractSet(true)))))
+    .then(Commands.literal('reroll').requires(op(4)).executes((ctx) => {
+      let c = contracts()
+      if (c === null) return missing(ctx, 'contracts')
+      return ok(ctx, String(c.reroll(ctx.source.server, byName(ctx))))
+    }))
+    .then(Commands.literal('clear').requires(op(4)).executes((ctx) => {
+      let c = contracts()
+      if (c === null) return missing(ctx, 'contracts')
+      let had = c.clear(ctx.source.server, byName(ctx))
+      return ok(ctx, 'Daily contracts cleared (' + had + ' removed); nothing until tomorrow 06:00 or a reroll.')
+    }))
+
+  // ---- referrals ----
+  let referralNode = Commands.literal('referral')
+    .then(Commands.literal('list').requires(op(2)).executes((ctx) => {
+      let r = referrals()
+      if (r === null) return missing(ctx, 'onboarding')
+      let list = r.list(ctx.source.server)
+      for (let i = 0; i < list.length; i++) {
+        let e = list[i]
+        reply(ctx, Text.of('  ' + e.newcomerName + ' (' + e.newcomer + ') recruited by ' + e.referrerName + ': ' + e.status + ', day ' + Math.max(1, consortiumSeasonDayAt(ctx.source.server, e.at))
+          + ', stage 1 ' + (e.stage1PaidAt > 0 ? 'paid' : e.stage1Skipped > 0 ? 'skipped (weekly cap)' : 'open') + ', stage 2 ' + (e.stage2PaidAt > 0 ? 'paid' : 'open')).gray())
+      }
+      return ok(ctx, list.length + ' referral record(s).')
+    }))
+    .then(Commands.literal('status').requires(op(2))
+      .then(Commands.argument('player', Arguments.WORD.create(event)).executes((ctx) => {
+        let r = referrals()
+        if (r === null) return missing(ctx, 'onboarding')
+        let who = resolve(ctx, 'player')
+        if (who === null) return 0
+        reply(ctx, Text.of(who.name + ': ' + r.status(ctx.source.server, who.id)).gray())
+        return 1
+      })))
+    .then(Commands.literal('approve').requires(op(2))
+      .then(Commands.argument('newcomer', Arguments.WORD.create(event)).executes((ctx) => {
+        let r = referrals()
+        if (r === null) return missing(ctx, 'onboarding')
+        let who = resolve(ctx, 'newcomer')
+        if (who === null) return 0
+        let refusal = r.approve(ctx.source.server, who.id)
+        if (refusal) return fail(ctx, String(refusal))
+        return ok(ctx, 'Referral of ' + who.name + ' approved: active, milestones polled.')
+      })))
+    .then(Commands.literal('clear').requires(op(2))
+      .then(Commands.argument('newcomer', Arguments.WORD.create(event)).executes((ctx) => {
+        let r = referrals()
+        if (r === null) return missing(ctx, 'onboarding')
+        let who = resolve(ctx, 'newcomer')
+        if (who === null) return 0
+        if (!r.clear(ctx.source.server, who.id)) return fail(ctx, who.name + ' has no referral record.')
+        return ok(ctx, 'Referral record of ' + who.name + ' cleared (reverse a payout with /credits take <recruiter> <amount> <reason>).')
+      })))
+    .then(Commands.argument('name', Arguments.WORD.create(event)).executes((ctx) => {
+      let r = referrals()
+      if (r === null) return missing(ctx, 'onboarding')
+      if (!ctx.source.isPlayer()) return fail(ctx, 'Only a player can name a recruiter.')
+      let name = String(Arguments.WORD.getResult(ctx, 'name'))
+      let refusal = r.declare(ctx.source.server, ctx.source.player, name)
+      if (refusal) return fail(ctx, String(refusal))
+      let rec = r.recordOf(ctx.source.server, String(ctx.source.player.uuid).toLowerCase())
+      if (rec !== null && rec.status === 'pending') return ok(ctx, 'Recorded, pending a moderator\'s approval.')
+      return ok(ctx, 'Recorded: ' + (rec !== null ? rec.referrerName : name) + ' recruited you. They get paid when you reach Operator and again at Engineer.')
+    }))
+
+  // ---- starter kit ----
+  let kitNode = Commands.literal('kit')
+    .executes((ctx) => {
+      let k = kit()
+      if (k === null) return missing(ctx, 'onboarding')
+      if (!ctx.source.isPlayer()) return fail(ctx, 'Only a player can claim the kit; staff use /consortium kit reset <player>.')
+      let r = k.claim(ctx.source.server, ctx.source.player)
+      return r.ok ? ok(ctx, r.text) : fail(ctx, r.text)
+    })
+    .then(Commands.literal('reset').requires(op(2))
+      .then(Commands.argument('player', Arguments.WORD.create(event)).executes((ctx) => {
+        let k = kit()
+        if (k === null) return missing(ctx, 'onboarding')
+        let who = resolve(ctx, 'player')
+        if (who === null) return 0
+        let had = k.reset(ctx.source.server, who.id)
+        return ok(ctx, 'Kit stamps of ' + who.name + ' cleared' + (had ? '' : ' (none were set)') + ': the next login gives the kit again.')
+      })))
+
+  event.register(Commands.literal('consortium')
+    .then(ranksNode)
+    .then(leaderboardNode)
+    .then(contractsNode)
+    .then(referralNode)
+    .then(kitNode))
+})
+// ==== END RANKS BLOCK ====
+
+// ==== DISCORD BLOCK (owner: engine implementer; DISCORD 5, 6, 7, 10; BATCH_3_INTERFACES 3) ====
+// A fifth commandRegistry listener over ConsortiumEvents.calendar and ConsortiumEvents.queue (consortium_calendar.js),
+// the digest (consortium_discord.js), the rulebook helpers (consortium_rules.js) and the Nether fence
+// (consortium_border.js); every object is looked up at call time. /rules itself is a top-level literal of
+// consortium_rules.js. Dates are YYYY-MM-DD in server time; an offset is +3h, +10m or -5m.
+//
+//   /consortium calendar                                              op 2: next slot, its source, the rendered reward tokens, the stamps, staff-set dates
+//   /consortium calendar reload                                       op 2: re-reads consortium_calendar/season1.json
+//   /consortium calendar set <date> <event> [args]                    op 2: the programme of a date (a late set inside the 24 h window posts its line at once)
+//   /consortium calendar title <date> <text>                          op 2: the public title of a date
+//   /consortium calendar cancel <date> [reason]                       op 2: no event that day (the cancellation line at minus 24 h, or at once when late)
+//   /consortium calendar clear <date>                                 op 2: forgets the staff-set entry (the JSON applies again)
+//   /consortium calendar debug <24h|1h|cancel|queue|wednesday|clear> [date] [+offset]   op 2: forces a line, the auto-queue or the guard; "+3h" evaluates the
+//                                                                     reminder as if now were 3 hours past its instant, "clear" wipes the stamps of a date
+//   /consortium discord digest                                        op 2: prints the daily digest and posts it (announcements lane)
+//   /consortium rules give <player> | spec | reset <player>           op 2: a rulebook copy to an online player, the book spec, the daily /rules book stamp
+//   /consortium border                                                op 2: the Nether fence centre and radius (from the overworld border)
+
+ServerEvents.commandRegistry((event) => {
+  const { commands: Commands, arguments: Arguments } = event
+  let reply = (ctx, text) => ctx.source.sendSystemMessage(text)
+  let op = (level) => (source) => source.hasPermission(level)
+  let ok = (ctx, text) => { reply(ctx, Text.of(text).green()); return 1 }
+  let fail = (ctx, text) => { reply(ctx, Text.of(text).red()); return 0 }
+  let say = (ctx, lines) => { for (let i = 0; i < lines.length; i++) reply(ctx, lines[i]); return 1 }
+  let calendar = () => (typeof ConsortiumEvents !== 'undefined' && ConsortiumEvents.calendar ? ConsortiumEvents.calendar : null)
+  let greedy = (ctx, name) => {
+    let raw = ''
+    try { raw = String(Arguments.GREEDY_STRING.getResult(ctx, name)) } catch (err) { raw = '' }
+    return raw.split(/\s+/).filter((a) => a.length > 0)
+  }
+  let dateArg = (ctx) => String(Arguments.WORD.getResult(ctx, 'date'))
+  let resolveOnline = (ctx) => {
+    let text = String(Arguments.WORD.getResult(ctx, 'player'))
+    for (let p of ctx.source.server.players) {
+      if (String(p.username).toLowerCase() === text.toLowerCase()) return p
+    }
+    reply(ctx, Text.of(text + ' is not online.').red())
+    return null
+  }
+  let resolveAny = (ctx) => {
+    let text = Arguments.WORD.getResult(ctx, 'player')
+    let who = consortiumResolvePlayer(ctx.source.server, text)
+    if (who === null) reply(ctx, Text.of('Unknown player "' + text + '": use the name of a player who has joined before, or a UUID.').red())
+    return who
+  }
+  // "+3h", "+10m", "-5m" -> ms, or null.
+  let offsetOf = (token) => {
+    let m = /^([+-])(\d+)([hm])$/.exec(String(token))
+    if (m === null) return null
+    return (m[1] === '-' ? -1 : 1) * parseInt(m[2], 10) * (m[3] === 'h' ? 3600000 : 60000)
+  }
+
+  // ---- calendar ----
+  let calendarNode = Commands.literal('calendar').requires(op(2))
+    .executes((ctx) => {
+      let c = calendar()
+      if (c === null) return fail(ctx, 'The calendar script is not loaded (consortium_calendar.js).')
+      return say(ctx, c.status(ctx.source.server))
+    })
+    .then(Commands.literal('reload').executes((ctx) => {
+      let c = calendar()
+      if (c === null) return fail(ctx, 'The calendar script is not loaded (consortium_calendar.js).')
+      return c.reload(ctx.source.server) ? ok(ctx, 'Calendar reloaded.') : fail(ctx, 'Calendar JSON missing or invalid (see the log).')
+    }))
+    .then(Commands.literal('set')
+      .then(Commands.argument('date', Arguments.WORD.create(event))
+        .then(Commands.argument('event', Arguments.WORD.create(event))
+          .executes((ctx) => {
+            let c = calendar()
+            if (c === null) return fail(ctx, 'The calendar script is not loaded (consortium_calendar.js).')
+            let refusal = c.set(ctx.source.server, dateArg(ctx), String(Arguments.WORD.getResult(ctx, 'event')), [])
+            return refusal ? fail(ctx, String(refusal)) : ok(ctx, 'Programme of ' + dateArg(ctx) + ' set.')
+          })
+          .then(Commands.argument('args', Arguments.GREEDY_STRING.create(event)).executes((ctx) => {
+            let c = calendar()
+            if (c === null) return fail(ctx, 'The calendar script is not loaded (consortium_calendar.js).')
+            let refusal = c.set(ctx.source.server, dateArg(ctx), String(Arguments.WORD.getResult(ctx, 'event')), greedy(ctx, 'args'))
+            return refusal ? fail(ctx, String(refusal)) : ok(ctx, 'Programme of ' + dateArg(ctx) + ' set.')
+          })))))
+    .then(Commands.literal('title')
+      .then(Commands.argument('date', Arguments.WORD.create(event))
+        .then(Commands.argument('text', Arguments.GREEDY_STRING.create(event)).executes((ctx) => {
+          let c = calendar()
+          if (c === null) return fail(ctx, 'The calendar script is not loaded (consortium_calendar.js).')
+          let refusal = c.title(ctx.source.server, dateArg(ctx), String(Arguments.GREEDY_STRING.getResult(ctx, 'text')))
+          return refusal ? fail(ctx, String(refusal)) : ok(ctx, 'Title of ' + dateArg(ctx) + ' set.')
+        }))))
+    .then(Commands.literal('cancel')
+      .then(Commands.argument('date', Arguments.WORD.create(event))
+        .executes((ctx) => {
+          let c = calendar()
+          if (c === null) return fail(ctx, 'The calendar script is not loaded (consortium_calendar.js).')
+          let refusal = c.cancel(ctx.source.server, dateArg(ctx), '')
+          return refusal ? fail(ctx, String(refusal)) : ok(ctx, dateArg(ctx) + ' cancelled.')
+        })
+        .then(Commands.argument('reason', Arguments.GREEDY_STRING.create(event)).executes((ctx) => {
+          let c = calendar()
+          if (c === null) return fail(ctx, 'The calendar script is not loaded (consortium_calendar.js).')
+          let refusal = c.cancel(ctx.source.server, dateArg(ctx), String(Arguments.GREEDY_STRING.getResult(ctx, 'reason')))
+          return refusal ? fail(ctx, String(refusal)) : ok(ctx, dateArg(ctx) + ' cancelled.')
+        }))))
+    .then(Commands.literal('clear')
+      .then(Commands.argument('date', Arguments.WORD.create(event)).executes((ctx) => {
+        let c = calendar()
+        if (c === null) return fail(ctx, 'The calendar script is not loaded (consortium_calendar.js).')
+        return c.clear(ctx.source.server, dateArg(ctx)) ? ok(ctx, 'Staff entry of ' + dateArg(ctx) + ' cleared.') : fail(ctx, 'No staff entry for ' + dateArg(ctx) + '.')
+      })))
+    .then(Commands.literal('debug')
+      .then(Commands.argument('what', Arguments.WORD.create(event))
+        .executes((ctx) => {
+          let c = calendar()
+          if (c === null) return fail(ctx, 'The calendar script is not loaded (consortium_calendar.js).')
+          return ok(ctx, String(c.debug(ctx.source.server, String(Arguments.WORD.getResult(ctx, 'what')), null, null)))
+        })
+        .then(Commands.argument('rest', Arguments.GREEDY_STRING.create(event)).executes((ctx) => {
+          let c = calendar()
+          if (c === null) return fail(ctx, 'The calendar script is not loaded (consortium_calendar.js).')
+          let tokens = greedy(ctx, 'rest')
+          let date = null
+          let offset = null
+          for (let i = 0; i < tokens.length; i++) {
+            if (/^\d{4}-\d{2}-\d{2}$/.test(tokens[i])) date = tokens[i]
+            else if (offsetOf(tokens[i]) !== null) offset = offsetOf(tokens[i])
+            else return fail(ctx, 'Unknown token "' + tokens[i] + '": a date is YYYY-MM-DD, an offset is +3h, +10m or -5m.')
+          }
+          return ok(ctx, String(c.debug(ctx.source.server, String(Arguments.WORD.getResult(ctx, 'what')), date, offset)))
+        }))))
+
+  // ---- discord digest ----
+  let discordNode = Commands.literal('discord').requires(op(2))
+    .then(Commands.literal('digest').executes((ctx) => {
+      if (typeof consortiumDigestCommand !== 'function') return fail(ctx, 'The digest script is not loaded (consortium_discord.js).')
+      let r = consortiumDigestCommand(ctx.source.server)
+      for (let i = 0; i < r.lines.length; i++) reply(ctx, Text.of(r.lines[i]).gray())
+      return ok(ctx, 'Digest ' + r.result + ' (' + r.lines.join('\n').length + ' chars).')
+    }))
+
+  // ---- rulebook helpers ----
+  let rulesNode = Commands.literal('rules').requires(op(2))
+    .then(Commands.literal('give')
+      .then(Commands.argument('player', Arguments.WORD.create(event)).executes((ctx) => {
+        if (typeof consortiumRulebookGive !== 'function') return fail(ctx, 'The rules script is not loaded (consortium_rules.js).')
+        let p = resolveOnline(ctx)
+        if (p === null) return 0
+        return consortiumRulebookGive(p) ? ok(ctx, 'Rulebook given to ' + p.username + '.') : fail(ctx, 'No rulebook could be built (see the log).')
+      })))
+    .then(Commands.literal('spec').executes((ctx) => {
+      if (typeof consortiumRulebookSpec !== 'function') return fail(ctx, 'The rules script is not loaded (consortium_rules.js).')
+      let spec = String(consortiumRulebookSpec())
+      if (!spec.length) return fail(ctx, 'No rulebook: the JSON is missing or invalid.')
+      reply(ctx, Text.of(spec).gray())
+      return ok(ctx, 'Rulebook spec: ' + spec.length + ' chars, cover plus ' + (typeof consortiumRulebookPageCount === 'function' ? consortiumRulebookPageCount() : '?') + ' pages.')
+    }))
+    .then(Commands.literal('reset')
+      .then(Commands.argument('player', Arguments.WORD.create(event)).executes((ctx) => {
+        if (typeof consortiumRulesResetStamp !== 'function') return fail(ctx, 'The rules script is not loaded (consortium_rules.js).')
+        let who = resolveAny(ctx)
+        if (who === null) return 0
+        return ok(ctx, 'Daily book stamp of ' + who.name + (consortiumRulesResetStamp(ctx.source.server, who.id) ? ' cleared.' : ' was not set.'))
+      })))
+
+  // ---- border ----
+  let borderNode = Commands.literal('border').requires(op(2)).executes((ctx) => {
+    if (typeof consortiumBorderText !== 'function') return fail(ctx, 'The border script is not loaded (consortium_border.js).')
+    reply(ctx, Text.of(consortiumBorderText(ctx.source.server)).gray())
+    return 1
+  })
+
+  event.register(Commands.literal('consortium')
+    .then(calendarNode)
+    .then(discordNode)
+    .then(rulesNode)
+    .then(borderNode))
+})
+// ==== END DISCORD BLOCK ====

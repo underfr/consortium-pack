@@ -14,6 +14,9 @@
 //                 progress.<line key> (long) }
 //   money and shop keys (paycheck, newcomer, licences, activity, vacancy, season, events.tickets, perks,
 //   titles, sales, gap, txs): consortium_money.js and consortium_shop.js (SHOP_CATALOGUE 5.1)
+//   batch 3 keys (ranks, contracts, referrals, referrals_week, onboarding, rules, discord, events.calendar):
+//   consortium_ranks.js, consortium_contracts.js, consortium_onboarding.js, consortium_rules.js,
+//   consortium_discord.js and consortium_calendar.js (BATCH_3_INTERFACES 6)
 // The delivery terminal calls Consortium.contribute(player, itemId, count). Only items of the
 // current phase quota count. When the rule of section 11 holds (average of the lines >= 90 % and every
 // line >= 60 %) the next phase opens: every FTB team is reconciled (consortium_charters.js), the
@@ -37,6 +40,10 @@ const CONSORTIUM_STALL_DAYS = 5 // section 11: C(d) - C(d-5) < 0.05 while C(d) <
 const CONSORTIUM_STALL_GAIN = 0.05
 // Season days roll over at this hour (startedAt is normalised to it), so the daily snapshot and summary
 // happen at the first check after 06:00 server time whatever the hour the season was started (review G3).
+// The season day keys the paycheck cap, the Gap counters and the daily contracts; the mod's [market]
+// day_boundary_hour (family caps, shop daily limits) is a second constant nobody reads against this one:
+// both are 06:00 and never change alone (RANKS_AND_CONTRACTS 2.1, CONFIG_DECISIONS; consortium_contracts.js
+// warns once at boot when they differ).
 const CONSORTIUM_DAILY_HOUR = 6
 const CONSORTIUM_MILESTONES = [25, 50, 75, 90] // section 13: quota announcements at these percents of C
 const CONSORTIUM_BAR = 'consortium:phase'
@@ -214,6 +221,32 @@ function consortiumBoardEvent(server) {
   }
 }
 
+// Daily contracts (RANKS_AND_CONTRACTS 2, consortium_contracts.js): typeof-guarded wrappers, [] / '' / no-op
+// without the script. The board lines sit next to season_fund, the compact text feeds the payload's `contracts`
+// field (the {contracts} tab token of Consortium Core 0.4.0, ignored by 0.3.x) and the daily hook runs the pick
+// and the summary line right after the shop's daily duties.
+function consortiumContractBoardLines(server) {
+  if (typeof Consortium.contracts === 'undefined' || !Consortium.contracts || typeof Consortium.contracts.boardLines !== 'function') return []
+  try { return Consortium.contracts.boardLines(server) } catch (err) { console.error('[Consortium] contract board lines failed: ' + err); return [] }
+}
+
+function consortiumContractBoardText(server) {
+  if (typeof Consortium.contracts === 'undefined' || !Consortium.contracts || typeof Consortium.contracts.text !== 'function') return ''
+  try { return String(Consortium.contracts.text(server)) } catch (err) { console.error('[Consortium] contract text failed: ' + err); return '' }
+}
+
+function consortiumContractsDaily(server, day) {
+  if (typeof Consortium.contracts === 'undefined' || !Consortium.contracts || typeof Consortium.contracts.daily !== 'function') return false
+  try { Consortium.contracts.daily(server, day); return true } catch (err) { console.error('[Consortium] contracts daily step failed: ' + err); return false }
+}
+
+// Rank tiers (RANKS_AND_CONTRACTS 1.2, consortium_ranks.js): published to Consortium Core 0.4.0 at load and from
+// every 5 minute check (the mod dedups identical tables); a no-op without the script or the API.
+function consortiumRankTiersPublish(server) {
+  if (typeof consortiumRankPublish !== 'function') return false
+  try { return consortiumRankPublish(server) } catch (err) { console.error('[Consortium] rank tiers publish failed: ' + err); return false }
+}
+
 function consortiumBoardPayload(server) {
   let st = consortiumState(server)
   let n = st.getInt('currentPhase')
@@ -233,6 +266,9 @@ function consortiumBoardPayload(server) {
     lines.push({ key: 'season_fund', label: 'Season fund', icon: 'minecraft:gold_ingot',
       current: Math.floor(season.getLong('fund') / 100), target: Math.floor(season.getLong('target') / 100) })
   }
+  // Daily contracts (RANKS 2.4): one line per contract, rendered like a quota line (a filled one shows as done).
+  let contracts = consortiumContractBoardLines(server)
+  for (let i = 0; i < contracts.length; i++) lines.push(contracts[i])
   let payload = {
     phase: n, name: def.name,
     day: consortiumSeasonDay(server), days: CONSORTIUM_SEASON_DAYS,
@@ -242,6 +278,8 @@ function consortiumBoardPayload(server) {
   }
   let event = consortiumBoardEvent(server)
   if (event !== null) payload.event = event
+  let contractText = consortiumContractBoardText(server)
+  if (contractText.length) payload.contracts = contractText
   return payload
 }
 
@@ -307,6 +345,8 @@ function consortiumDaily(server, force) {
   if (typeof consortiumShopDaily === 'function') {
     try { consortiumShopDaily(server, day) } catch (err) { console.error('[Consortium] shop daily step failed: ' + err) }
   }
+  // Daily contracts (consortium_contracts.js, RANKS_AND_CONTRACTS 2.1): the pick of the day and its summary line.
+  consortiumContractsDaily(server, day)
   if (done) return true
   let now = Date.now()
   let old = consortiumSnapshotBefore(tag, day, CONSORTIUM_STALL_DAYS)
@@ -466,6 +506,7 @@ const Consortium = {
     if (changes > 0) console.info('[Consortium] check: ' + changes + ' team stage change(s)')
     consortiumUpdateBar(server, false)
     consortiumDaily(server, false)
+    consortiumRankTiersPublish(server) // Consortium Core 0.4.0 dedups the table (RANKS 1.2)
     consortiumPublishBoard(server, false)
   },
 
@@ -534,6 +575,9 @@ ServerEvents.loaded((event) => {
   let server = event.server
   consortiumState(server)
   consortiumUpdateBar(server, true)
+  // Rank tiers (RANKS 1.2): published here when the mod's runtime is already up (a /reload), else by the first
+  // check below; the mod keeps the last table in consortium_ranks.dat, so a boot-time delivery already promotes.
+  consortiumRankTiersPublish(server)
   // The team manager is loaded by now but give FTB Teams a moment before the first sweep. The first
   // quota board publish happens in that check too (Consortium Core's runtime does not exist yet here).
   server.scheduleInTicks(100, () => {

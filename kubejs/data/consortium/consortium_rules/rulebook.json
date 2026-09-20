@@ -1,0 +1,67 @@
+{
+  "title": "Consortium Rulebook",
+  "author": "The Board",
+  "sections": [
+    {
+      "id": "conduct",
+      "title": "Conduct",
+      "lines": [
+        "English in chat and on Discord. Be civil. Staff decisions are final; appeal in #support.",
+        "Chat and commands are logged for moderation and kept for the season; the log is deleted with the season world. Chat is also mirrored to Discord #minecraft-chat and stays there.",
+        "A bought nickname never imitates a player, staff or the Board; staff reset it."
+      ]
+    },
+    {
+      "id": "accounts",
+      "title": "Accounts",
+      "lines": [
+        "One account per player. A second account on the same connection gets no starting capital.",
+        "Two accounts farming credits, contracts or referrals is an exploit: three-day ban at least, payouts reversed.",
+        "The Board keeps a salted fingerprint of your first-login connection for the season (starting capital and referral checks); it is deleted with the season world."
+      ]
+    },
+    {
+      "id": "economy",
+      "title": "Economy and exploits",
+      "lines": [
+        "Credits are paid by the Board only: deliveries, quests, events and referrals. They are never traded, sold or bought.",
+        "No dupes. Found a bug? Do not use it, report it in #support. The Board thanks reporters with a cosmetic title, never with credits.",
+        "No automated mob farms and no resource made from nothing.",
+        "Every transaction is logged."
+      ]
+    },
+    {
+      "id": "world",
+      "title": "World and claims",
+      "lines": [
+        "The world border is 3,000 blocks from the centre and may grow later. The Nether is fenced at 375 blocks.",
+        "Claim your chunks. No theft, no grief, and no pipe, hopper or machine reaching into another crew's claim.",
+        "Chunk loading only through the Board's paid loaders. No portal chunk loading."
+      ]
+    },
+    {
+      "id": "pvp",
+      "title": "PvP and events",
+      "lines": [
+        "PvP only in the HQ arena during events (Friday Zone, invasions). No camping at HQ.",
+        "Graves keep every item. Death costs 95 % of your XP and waystones charge XP: sleep, set a waystone."
+      ]
+    },
+    {
+      "id": "staff",
+      "title": "Staff",
+      "lines": [
+        "Only the owner uses creative mode. Support ranks are cosmetic only.",
+        "Staff may look at inventories and logs, never take. The ban ladder is in the staff charter."
+      ]
+    },
+    {
+      "id": "season",
+      "title": "Season",
+      "lines": [
+        "84 days. The end date is public from day 1.",
+        "What carries over to Season 2 is announced early."
+      ]
+    }
+  ]
+}

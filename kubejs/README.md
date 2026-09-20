@@ -12,7 +12,7 @@ generates on first run:
 | `startup_scripts/` | once at game start, both sides | registrations (items, blocks, fluids), things that need `StartupEvents` |
 | `server_scripts/` | on every server resource reload (`/reload`), dedicated server and the client's integrated server | recipes, tags, loot, `ServerEvents`, `PlayerEvents`, economy and rank logic |
 | `client_scripts/` | client only | JEI events, tooltips, client UI |
-| `data/` | acts as a datapack on the server | Chapters stage definitions (`data/consortium/chapters/stages/*.json`), the Consortium Core price table (`data/consortium/consortium_prices/*.json`) and shop catalogue (`data/consortium/consortium_shop/*.json`), custom tags |
+| `data/` | acts as a datapack on the server | Chapters stage definitions (`data/consortium/chapters/stages/*.json`), the Consortium Core price table (`data/consortium/consortium_prices/*.json`) and shop catalogue (`data/consortium/consortium_shop/*.json`), the season calendar (`data/consortium/consortium_calendar/season1.json`) and the rulebook (`data/consortium/consortium_rules/rulebook.json`, both read by the scripts through `JsonIO`), custom tags |
 | `assets/` | acts as a resource pack on the client | lang files, textures for custom items |
 
 `startup_scripts/` and `client_scripts/` still hold a comments-only `00_placeholder.js` that keeps the
@@ -29,9 +29,16 @@ and the progression engine described below.
 
 - English everywhere (comments, chat messages, item names). No em dashes.
 - One file per concern. Load order comes from a `// priority: N` first line (higher loads first; the
-  engine uses 100 for helpers, 90 for data, 60 for charters, 50 for logic, 45 for the events library, 40 for the money modifiers, 30 for the shop
-  and the quests, 20 for the events engine, 0 for commands); all server scripts share one
+  engine uses 100 for helpers, 90 for data, 60 for charters, 50 for logic, 45 for the events library, 40 for the money modifiers, 30 for the shop,
+  the quests, the ranks, the daily contracts and the onboarding, 20 for the events engine, 15 for its calendar, 10 for the rulebook, the digest
+  and the Nether fence, 0 for commands; two files of the same priority load in path order, so `consortium_contracts.js` and
+  `consortium_onboarding.js` load before `consortium_ranks.js` and read its constants at call time only); all server scripts share one
   scope, so top-level names must be unique across files (prefix them, e.g. `consortium...`).
+- Consortium Core 0.4.0 API members (`publishRankTiers`, `leaderboard`, `leaderboardText`, `rankOf`, `rankGroup`, `rankPosition`, `uuidOf`,
+  `sameConnection`, `discordAnnounce`, `discordStaff`) are probed at call time through `consortiumCoreHas(name)` (`consortium_ranks.js`): a
+  missing member of a Java class binding throws in Rhino, so `typeof ConsortiumCore.foo` alone is not safe. The 0.4.0 event classes
+  (`RankPromoteEvent`, `ReportEvent`) are probed with `Java.tryLoadClass` before `NativeEvents.onEvent`. A 0.3.x jar runs every script of
+  batch 3 with the ranks features degraded (tiers by threshold, no promotion, no leaderboard, Discord posts logged instead of sent).
 - KubeJS Rhino quirks: `const` only at file top level or as the first statements of a function, `let`
   inside blocks (a `const` inside a try or for block throws "redeclaration of var"); server scripts
   cannot assign to `global`.
@@ -65,7 +72,14 @@ One server-wide phase for everyone, five phases per season. Files:
 | `server_scripts/consortium_quests.js` (priority 30) | The FTB Quests bridge (QUESTS 5): custom task checks (delivery runs, flags, weekly stamps, the weekly contract, counters, ranks, first paycheck, charter, Founder), custom rewards re-validated per claimer (credits, XP, cosmetics, titles), the `DeliveryEvent`, `BalanceChangeEvent` and blood moon listeners that derive quest flags. Exposes `ConsortiumQuests`; see "Quests bridge" below |
 | `server_scripts/consortium_events_lib.js` (priority 45) | Helpers of the events engine: the `Platform.isLoaded` flags (`CONSORTIUM_HAS_INCONTROL`, `CONSORTIUM_HAS_APOTHEOSIS`, `CONSORTIUM_HAS_FTBCHUNKS`, `CONSORTIUM_EVENTS_ON`), every optional Java class behind its flag, the hostile-claim test and the spot finder (FTB Chunks API), the ground finder, tagged spawning, the Apotheosis boss spawner and its whitelist, force-load and cleanup helpers, and the `ConsortiumEvents` shell object the economy scripts call through typeof-guarded wrappers |
 | `server_scripts/consortium_events.js` (priority 20) | The random events engine (see "Events" below): state, the catalogue of 10 events, start and stop, scheduler, boss bar, board event object, payouts and caps, the listeners and the load reconciliation |
-| `server_scripts/consortium_commands.js` (priority 0) | The `/consortium` commands: the base tree, then the delimited **economy block** (licence, season, event ticket, perk, title, sale, gap, debug vacancy, quest, contract) and the events engine's **events block**, each a separate `commandRegistry` listener whose `consortium`, `event` and `debug` literals Brigadier merges |
+| `server_scripts/consortium_ranks.js` (priority 30) | Ranks (RANKS_AND_CONTRACTS 1): `CONSORTIUM_RANK_THRESHOLDS` (the one tier table, published to Consortium Core 0.4.0 through `publishRankTiers` at load and from every 5-minute check; the mod promotes through the LuckPerms track and announces), the perk reconcile at login + 60 ticks, on `RankPromoteEvent` and every 5 minutes (FTB Chunks allowance refresh, one perk line per tier, the Engineer chunk loader once the team holds phase 3), the texts of `/consortium ranks` and `/consortium leaderboard`, and the shared probes `consortiumCoreHas`, `consortiumCcFmt`; see "Ranks" below |
+| `server_scripts/consortium_contracts.js` (priority 30) | Daily contracts (RANKS_AND_CONTRACTS 2): the pick at the 06:00 boundary, the flat premium per paid unit read by `consortium_money.js`, the consumption on `DeliveryEvent`, the board lines, the compact `contracts` string, the summary line of the daily step; exposes `Consortium.contracts`; see "Daily contracts" below |
+| `server_scripts/consortium_onboarding.js` (priority 30) | Onboarding (RANKS_AND_CONTRACTS 3): the starter kit at the first `GRANTED` login (with the rulebook), `/consortium kit`, the referral flow and its milestone payouts, the engine-side first-credit stopwatch; exposes `Consortium.kit` and `Consortium.referrals`; see "Onboarding" below |
+| `server_scripts/consortium_calendar.js` (priority 15) | The events engine's calendar (DISCORD_AND_COMMUNITY 6): `season1.json` plus staff-set dates, the 24 h and 1 h reminders, the 06:00 auto-queue of the Friday and Saturday events, the Wednesday contract guard; exposes `ConsortiumEvents.calendar` and `ConsortiumEvents.queue`; see "Calendar and reminders" below |
+| `server_scripts/consortium_rules.js` (priority 10) | The rulebook in game (DISCORD_AND_COMMUNITY 7): `/rules`, `/rules <section>`, `/rules book`, the written book built from `rulebook.json` with the page model of `tools/rulebook-md.mjs`; exports `consortiumRulebookStack()` and `consortiumRulebookGive(player)`; see "Rulebook" below |
+| `server_scripts/consortium_discord.js` (priority 10) | The daily Discord digest (DISCORD_AND_COMMUNITY 5), one post per season day through `ConsortiumCore.discordAnnounce`; see "Discord digest" below |
+| `server_scripts/consortium_border.js` (priority 10) | The Nether fence (DISCORD_AND_COMMUNITY 10): players beyond the overworld border / 8 in the Nether are teleported back to their last in-bounds position; see "Nether fence" below |
+| `server_scripts/consortium_commands.js` (priority 0) | The `/consortium` commands: the base tree, then the delimited **economy block** (licence, season, event ticket, perk, title, sale, gap, debug vacancy, quest, contract), the events engine's **events block**, the **ranks block** (ranks, leaderboard, contracts, referral, kit) and the **discord block** (calendar, discord digest, rules helpers, border), each a separate `commandRegistry` listener whose `consortium`, `event` and `debug` literals Brigadier merges |
 
 How it works:
 
@@ -175,6 +189,21 @@ Commands (`/consortium ...`):
 | `debug vacancy <charter> [clear]` | op 4 | backdates the charter's activity and the phase by 15 days (then `debug daily` prints the idle notice and opens the sale in one pass); `clear` stamps a delivery now |
 | `quest flag\|unflag <players> <key>`, `quest count <players> <key> <n>` | op 2 | wrappers over `ConsortiumQuests` (selectors allowed; a key without a namespace such as `referral` keeps no `minecraft:` prefix) |
 | `contract`, `contract set <family> <units> [days]`, `contract clear` | anyone / op 2 / op 2 | wrappers over `ConsortiumQuests.contract` (the weekly contract lives in `consortium_quests.js`) |
+| `ranks [player]` | anyone | rank by threshold, credits earned at the terminal, position (0.4.0) and the next tier; an offline name resolves through `ConsortiumCore.uuidOf` (0.4.0) or FTB Teams |
+| `leaderboard [n]` | anyone | `Top n by credits earned:` (1..25, default 10) in the mod's one entry format `1. underfr (Engineer) 2,512.00 CC`, then `You are #7 with ...` |
+| `contracts` | anyone | today's daily contracts (`Iron +0.25 CC per unit: 40 of 136 units taken, until 06:00.`) and the caller's eligibility |
+| `contracts set <family> [units]`, `contracts reroll`, `contracts clear` | op 4 | one contract on a family (units default to the computed N), a new pick for today (announced, never a family of the previous list), no contract until tomorrow |
+| `referral <name>` | player | names the caller's recruiter during the first 7 days (refusal texts of RANKS_AND_CONTRACTS 3.2; `pending` when the connection check cannot answer) |
+| `referral list`, `referral status <player>`, `referral approve <newcomer>`, `referral clear <newcomer>` | op 2 | the records; a pending record becomes active and is polled at once; a record is deleted (the payout reversal is `/credits take`) |
+| `kit`, `kit reset <player>` | player / op 2 | the starter kit again, once (`GRANTED` accounts only; a `DENIED` alt gets the login refusal text); clears both stamps |
+| `calendar`, `calendar reload` | op 2 | the next slot, its source, the rendered reward tokens, the stamps and the staff-set dates; re-read the JSON |
+| `calendar set <date> <event> [args]`, `calendar title <date> <text>`, `calendar cancel <date> [reason]`, `calendar clear <date>` | op 2 | the programme of a date (`YYYY-MM-DD`, server time; a late `set` or `cancel` inside the 24 h window posts its line at once), its public title, a cancellation, or forget the staff entry |
+| `calendar debug <24h\|1h\|cancel\|queue\|wednesday\|clear> [date] [+offset]` | op 2 | force a reminder line, the cancellation line, the auto-queue or the Wednesday guard; `+3h` or `+10m` evaluates the reminder as if now were that far past its instant (`missed:` stamp or the line); `clear` wipes the stamps of a date |
+| `discord digest` | op 2 | prints the daily digest and posts it on the announcements lane |
+| `rules give <player>`, `rules spec`, `rules reset <player>` | op 2 | a rulebook copy to an online player, the written book spec, the daily `/rules book` stamp |
+| `border` | op 2 | the Nether fence centre and radius derived from the overworld border |
+
+`/rules`, `/rules <section>` and `/rules book` are a top-level literal of `consortium_rules.js` (anyone; the book once per player per day).
 
 Simple Discord Link: with `broadcastCommands = true` every command the engine runs (`bossbar`, `title`,
 `playsound`) is posted to the Discord events channel as "Server executed command"; the server overlay's
@@ -375,11 +404,147 @@ Commands (`/consortium event ...`, the events block of `consortium_commands.js`;
 - `tools/pricing/shop-budget.mjs`: the sink budget of SHOP_CATALOGUE 2 from the simulation medians and the catalogue,
   and the realised spend per key from ledger files (`node tools/pricing/shop-budget.mjs [ledger folder]`).
 
-## Planned scripts (not written yet)
+## Ranks (`consortium_ranks.js`, docs/RANKS_AND_CONTRACTS.md 1, docs/BATCH_3_INTERFACES.md)
 
-- `server_scripts/20_ranks.js`: LuckPerms track promotion and server-wide announcement (rule 4.3).
-- `phase_guards.js` is **not** coming: the placement guard, the instant inventory audit and the party-creation stage
-  copy live in the Consortium Core mod (v0.2, DECISIONS.md 2026-09-16).
+- **Metric**: `rank_credit` only, fed by the mod (delivery receipts, every multiplier included, plus Gap Contract units at
+  50 % through `addRankCredit`); quest, event, shop and referral credits go through `ConsortiumCore.credit` and never count
+  (rule 4.3). No command adds rank credit anywhere.
+- **Tiers** `CONSORTIUM_RANK_THRESHOLDS = { operator: 25000, engineer: 250000, director: 750000, shareholder: 1500000 }` cents
+  (PLACEHOLDER `[S]`, PRICE_TABLE 6) with `CONSORTIUM_RANK_ORDER` and `CONSORTIUM_RANK_NAMES`: the one table, read by
+  `consortium_quests.js` (rank tasks; its fallback is dead), `consortium_contracts.js` (the Operator gate) and
+  `consortium_onboarding.js` (the referral milestones), and handed to Consortium Core 0.4.0 as
+  `{"track":"progression","tiers":[{"group":"operator","name":"Operator","credits":25000}, ...]}` through `publishRankTiers`
+  at `ServerEvents.loaded` (when the runtime is ready) and from every 5-minute `Consortium.check` (the mod dedups and
+  persists it in `consortium_ranks.dat`). The **promotion** is the mod's (`RankService`, one `Track.promote` per check,
+  never a demotion, announced by `Notifier.announcement` on the announcements lane); the engine never announces a rank.
+- **Perks are a login reconcile** (`Consortium.ranks.reconcile`, login + 60 ticks, `RankPromoteEvent` with a player, every
+  5 minutes for online players): the held progression group (`ConsortiumCore.rankGroup`, else the tier by threshold) is
+  compared with `ranks.<uuid>.tier`; each tier crossed refreshes the FTB Chunks allowance (`ftbchunks admin
+  extra_claim_chunks <name> add 0`, the allowance is cached until a relog) and tells one line of `CONSORTIUM_RANK_PERKS`
+  (PLACEHOLDER texts); at Engineer or above `loaderDue` is stamped and exactly one `chunkloaders:single_chunk_loader` is
+  given once the team holds `consortium:phase_3` (`loaderAt`; before that the player is told once that it unlocks with
+  phase 3). Nothing is ever taken back.
+- **State**: `ranks.<uuid> { tier, loaderDue, loaderAt, loaderTold }`. Harness lever (RANKS 8): lower the thresholds in
+  the srvdev copy only (`{ operator: 2000, engineer: 4000, director: 6000, shareholder: 8000 }`).
+
+## Daily contracts (`consortium_contracts.js`, docs/RANKS_AND_CONTRACTS.md 2)
+
+- **Pick**: once per season day (06:00 server time, `Consortium.seasonDay`, the same clock as the paycheck cap and the Gap
+  counters; the mod's `[market] day_boundary_hour` is the same 06:00 and never changes alone, a boot check warns when it
+  differs), three draws without replacement among the open quota lines of the phase (ratio < 1, priced, not quota-only,
+  not a family of the previous list), weighted by the shortfall `1 - ratio`. Fewer candidates = fewer contracts, never a
+  repeat (the summary says `yesterday's lines rest` or `every open line is on target`). The pick runs from the daily step
+  (`consortiumContractsDaily`, right after the shop's duties) and lazily from every read whose stored day differs.
+- **Sizing**: `premium_i = round(0.25 x baseCents_i)` per paid unit (`PriceView.baseCents`, the datapack base, never the
+  degressive unit price) on the first `N_i = min(half_volume_i, floor(pot / premium_i))` paid units server-wide (N floored
+  to a multiple of 8 from 32 up), `CONSORTIUM_CONTRACT_POT = { 1: 35, 2: 75, 3: 55, 4: 70, 5: 70 }` CC and
+  `CONSORTIUM_CONTRACT_PREMIUM = 0.25` (PLACEHOLDER). A contract pays at most `N x premium <= pot` whatever the
+  saturation, charter, newcomer or event factor; three contracts stay under 10 % of the design daily income (RANKS 2.2).
+  Every player text says `+0.25 CC per unit`, the compact forms `+0.25 CC/unit`, never "+25 %".
+- **Quote and consumption**: `consortium_money.js` adds `consortiumContractBonus` (a typeof-guarded wrapper over
+  `Consortium.contracts.quoteBonus`: `floor(min(room, paidUnits) x premium)` for an Operator or above while a contract on
+  the family is open) to its single multiplier as `m += bonus / cents` before the paycheck scale, read-only at quote time
+  (the quote event repeats); the answer is stashed per `uuid|family` and the `DeliveryEvent` listener of the contracts
+  script consumes the stashed units only when a bonus was priced (a delivery that crosses the Operator threshold at commit
+  consumes nothing), closes a filled contract with `Contract filled: Iron +0.25 CC per unit (136 units), last units by
+  <name>.` (`consortiumSay`) and republishes the board. The mod's 5 % quote tolerance turns a lost race into "Prices
+  moved, please check again" (first come, first served). The premium counts toward `rank_credit` like a charter bonus and is
+  invisible to the mod's weekly report by type: `paidCents`, `seasonCents` and `history` are the engine's journal.
+- **Display**: the daily summary is followed by `Daily contracts until 06:00: Iron +0.25 CC per unit on the first 136
+  units, Coal ... (Operator rank and above, /consortium contracts).` (say relay); the board gets one line per contract
+  (`contract_<family>`, label `Contract: Iron +0.25 CC/unit`, current = taken, target = N) next to `season_fund` and the
+  payload field `contracts` (`Iron +0.25 CC/unit 40/136, ...`, at most 140 characters, the `{contracts}` tab token of
+  Consortium Core 0.4.0 and the digest's `Contracts today:` line, empty without a contract).
+- **State**: `contracts { day, reason, previous, list [{ family, line, label, icon, premiumCents, units, filled, paidCents,
+  closedAt, closedBy, setBy }], seasonCents, history.<season day> { count, filled, paidCents } }`. `ReportEvent` (0.4.0)
+  gains `Contracts (7 d): F of C filled, X CC of premiums`.
+
+## Onboarding (`consortium_onboarding.js`, docs/RANKS_AND_CONTRACTS.md 3)
+
+- **Starter kit**: at login + 40 ticks a `GRANTED` account (starting capital paid, the same-connection check passed) with
+  no `kitAt` stamp receives `CONSORTIUM_STARTER_KIT` (PLACEHOLDER: a named stone pickaxe, a stone axe and shovel, 16 bread,
+  32 torches, a white bed) plus the Consortium Rulebook (`consortiumRulebookStack()`, typeof-guarded) and one chat line;
+  `DENIED` alts get nothing, `NONE` retries at the next login. `/consortium kit` re-claims the items once (no second book:
+  `/rules book`), `/consortium kit reset <player>` clears both stamps. No kit item has a price. FTB Essentials kits stay
+  off (world data, autogrant ignores the identity check).
+- **Referral**: `/consortium referral <name>` inside the caller's first 7 days, guards in order: the window, the launch
+  cohort (`The launch crew was recruited by the Board itself.`), the grant state, one record per newcomer, the recruiter
+  (must have joined, not the caller, not the caller's own recruit, launch crew or 7 days older than the caller), then
+  `ConsortiumCore.sameConnection`: `SAME` refused and reported on the staff lane, `UNKNOWN` (or a 0.3.x jar) recorded
+  `pending` for `/consortium referral approve`, `DIFFERENT` `active`. Payouts by `Consortium.referrals.poll` (every 5
+  minutes and after each delivery of the newcomer): stage 1 at the Operator threshold (100 CC PLACEHOLDER,
+  `referral:stage1:<uuid>`, at most `weeklyCap = 2` stage-1 payments per recruiter per season week, beyond it
+  `stage1Skipped`), stage 2 at Engineer (250 CC, `referral:stage2:<uuid>`, uncapped); `ConsortiumCore.credit` only
+  (never rank credit), stamped on `SUCCESS` only, `ConsortiumQuests.count(recruiter, 'referral', 1)` advances Recruiter and
+  Talent Scout, one `say` line per payout. `CONSORTIUM_REFERRAL = { windowDays: 7, stage1PayCents: 10000, stage2PayCents:
+  25000, weeklyCap: 2 }` (PLACEHOLDER; harness lever `weeklyCap = 1`).
+- **First credit**: the mod owns the canonical stopwatch from 0.4.0 (`firstCreditAt`, `firstCreditPlayMinutes`, the weekly
+  report's `Newcomers (7 d)` line); the engine keeps its own copy in `onboarding.<uuid>` (`playMs` before the first
+  credit, `firstCreditAt`, `firstCreditPlayMinutes`, `firstCreditWallMinutes`) and logs `[Consortium] first credit: <name>
+  after N min of play` once, so the figure exists on a 0.3.1 jar too.
+- **State**: `onboarding.<uuid> { kitAt, reclaimAt, playMs, firstCreditAt, firstCreditPlayMinutes, firstCreditWallMinutes }`,
+  `referrals.<newcomer uuid> { referrer, referrerName, newcomerName, at, status, stage1PaidAt, stage2PaidAt,
+  stage1Skipped }`, `referrals_week.<referrer uuid>.<season week>`. `ReportEvent` (0.4.0) gains `Referrals (7 d): R
+  recorded, P stage payments, X CC`.
+
+## Calendar and reminders (`consortium_calendar.js`, docs/DISCORD_AND_COMMUNITY.md 6)
+
+- **Source**: `data/consortium/consortium_calendar/season1.json` (`role_mention`, weekly `slots` by weekday, pre-planned
+  `dates`; the two dates shipped are PLACEHOLDER examples) plus staff-set dates in `consortium.events.calendar.dates`
+  (state wins over the file, so a weekly Saturday programme survives the packwiz re-sync). Every slot is at 20:00 server
+  time (`CONSORTIUM_SLOT_HOUR`). Reward tokens `{kill} {max} {bounty} {share}` are filled from the events engine's own
+  constants for the current phase (without them the Rewards sentence is dropped).
+- **Reminders** (its own 5 s step): the 24 h line at slot minus 24 h and the 1 h line at slot minus 1 h, posted once
+  inside a 30-minute window (PLACEHOLDER) and stamped `reminded24` / `reminded1h` = `<date>:<kind>`; an instant first seen
+  past its window is stamped `missed:<date>:<kind>` and logged. Texts per DISCORD 6: the Discord line (`**Tomorrow at 20:00
+  server time** (<t:...:R>): **Boss Hunt** at the HQ arena. Rewards: ... Ticket: none. Be at HQ five minutes early.`)
+  goes through `ConsortiumCore.discordAnnounce` (logged without the 0.4.0 API), the game line through the say relay; the 1 h
+  line is Discord-only for Friday and Saturday (the queued event says `starts in 60 minutes` in game) and both for
+  Wednesday (`In one hour (20:00 server time): new weekly contract in the quest book and /consortium contract.`). A
+  cancelled date posts `**Saturday 10/10, 20:00**: no event this week (reason). Next slot: ...` at minus 24 h; a Saturday
+  without a programme posts `No Saturday programme set for <date> (/consortium calendar set).` to the staff lane only.
+- **Auto-queue**: at the first step after the engine's daily step (`lastDailyDay === day`, once per date) today's Friday or
+  Saturday event is queued at 20:00 through `ConsortiumEvents.queue` (refuses a past instant or an existing queue: a staff
+  queue is never overwritten); the phase 1 Friday falls back to the slot's `phase1_event` (`invasion`) with the `phase1_*`
+  texts when `consortiumEventEligibility` answers a phase reason; an ineligible or cancelled day is reported on the staff
+  lane; a daily step after 20:00 skips with one log line.
+- **Wednesday guard**: Wednesday 19:00, once per season week, `ConsortiumQuests.contract.current` (now with `paidCount`)
+  absent, ending before 21:00 tonight or set more than 6 days ago posts `No weekly contract set for tonight (/consortium
+  contract set).` to the staff lane.
+- **State**: `events.calendar { reminded24, reminded1h, queuedDate, wednesdayGuardWeek, dates.<date> { event, args, title,
+  cancelled, reason } }`; `events.queued` is written by `ConsortiumEvents.queue` and the events block only.
+
+## Discord digest (`consortium_discord.js`, docs/DISCORD_AND_COMMUNITY.md 5)
+
+One post per season day, one 5 s step after the engine's daily summary (stamp `discord.digestDay`): the day line, the
+quota lines (12 at most), `Contracts today: <Consortium.contracts.text> (Operator and above)`, `Event:` from
+`ConsortiumEvents.boardObject`, `Top 3 by credits earned:` from `ConsortiumCore.leaderboardText(3)` (0.4.0), `Next slot:`
+from `ConsortiumEvents.calendar.next` with a `<t:...:R>` token (the lib's `consortiumNextSlot` as the fallback) and the
+season fund line; under 1,900 characters, posted through `ConsortiumCore.discordAnnounce` (logged without the API).
+`/consortium discord digest` prints and posts it on demand.
+
+## Rulebook (`consortium_rules.js`, docs/DISCORD_AND_COMMUNITY.md 7)
+
+One source, `data/consortium/consortium_rules/rulebook.json` (the words belong to the docs-and-server implementer;
+`tools/rulebook-md.mjs` renders `server/docs/RULEBOOK.md` and checks the book budget from the same file). `/rules` prints
+the clickable index (plus `Discord: [join the server]` where SDLink runs), `/rules <section>` a section with `[index]` and
+`[next: ...]` links, `/rules book` a fresh written book once per player per day (`rules.book.<uuid>`, refusal `You already
+got a copy today; /rules shows it in chat at any time.`). The book follows the page model of `tools/rulebook-md.mjs`
+(greedy wrap at 18 characters, 14 lines per page, 12 under a section title, a cover with `change_page` links; the wrap is
+PLACEHOLDER until the owner reads every page in game). The starter kit gives `consortiumRulebookStack()` once at the first
+login; this script has no login handler of its own.
+
+## Nether fence (`consortium_border.js`, docs/DISCORD_AND_COMMUNITY.md 10)
+
+Vanilla has one world border shared by every dimension, so the Nether radius is a KubeJS fence (beta-gated, ChunkyBorder
+is the tested alternative): every 20 ticks a Nether player farther than `overworld border size / 16` from `centre / 8` is
+teleported back to their last in-bounds position (or the overworld spawn when none is recorded, never a clamped point)
+with an action bar line at most once per 10 s. Inactive while the overworld border keeps its default size.
+
+## Not coming
+
+- `phase_guards.js`: the placement guard, the instant inventory audit and the party-creation stage copy live in the
+  Consortium Core mod (v0.2, DECISIONS.md 2026-09-16).
 
 After editing anything here run `packwiz refresh` in the pack root and commit; players and the
 server pick the change up on their next launch or restart.

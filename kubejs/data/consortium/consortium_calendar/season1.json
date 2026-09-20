@@ -1,0 +1,22 @@
+{
+  "_comment": "Season 1 calendar (docs/DISCORD_AND_COMMUNITY.md 6), read by consortium_calendar.js at ServerEvents.loaded. Every slot is at 20:00 server time (CONSORTIUM_SLOT_HOUR, never moved here). slots: the weekly Wednesday, Friday and Saturday slots by weekday; dates: pre-planned dates (a date entry overrides the slot of its weekday; staff-set dates in persistent state win over this file). Reward tokens {kill} {max} {bounty} {share} are filled at post time from the events engine's constants for the current phase. The two dates below are PLACEHOLDER examples (a Saturday programme and a cancelled Saturday) that the maintainer replaces with the real launch calendar; role_mention is an optional Discord role id rendered as <@&id> (rendering through the SDLink API is UNVERIFIED).",
+  "role_mention": "",
+  "slots": {
+    "wednesday": { "kind": "contract", "title": "Weekly contract", "where": "the quest book and /consortium contract" },
+    "friday": {
+      "kind": "friday_zone", "event": "friday_zone", "phase1_event": "invasion",
+      "title": "Friday Zone", "where": "the HQ arena", "ticket": "30 CC at the HQ shop",
+      "rewards": "{kill} per kill, {max} max, then the auditor bounty ({bounty}) and the Board's crate",
+      "phase1_title": "Friday arena invasion", "phase1_ticket": "none", "phase1_rewards": "{kill} per kill, {max} max"
+    },
+    "saturday": { "kind": "staff", "title": "Saturday event", "where": "HQ" }
+  },
+  "dates": {
+    "2026-10-03": {
+      "event": "bounty", "args": ["apotheosis:overworld/zombie", "apotheosis:rare"],
+      "title": "Boss Hunt", "where": "the HQ arena",
+      "rewards": "{bounty} bounty shared by damage, {share} max per hunter", "ticket": "none"
+    },
+    "2026-10-10": { "cancelled": true, "reason": "maintenance window" }
+  }
+}

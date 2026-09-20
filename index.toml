@@ -62,7 +62,7 @@ hash = "e8155a4b5cec798b503dad78189bd9659b8efe80b523dfd8b20c17f08b54d3bf"
 
 [[files]]
 file = "config/ftbquests/quests/lang/en_us.snbt"
-hash = "230fe845924a57e7ad75507602b9ef5f164c7c40ac3f972628b79ba28a910fda"
+hash = "5b800ce1b8bc151bb6cb20919da791b4b0b1bec887769c7db18b9f74b04ba653"
 
 [[files]]
 file = "config/ftbteams-server.snbt"
@@ -222,8 +222,16 @@ file = "kubejs/data/consortium/chapters/stages/vacancy_logistics.json"
 hash = "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
 
 [[files]]
+file = "kubejs/data/consortium/consortium_calendar/season1.json"
+hash = "419e0b3b620642c8dedd8947456dd9f1a5f84a6bfc301b93ab94936d9316abca"
+
+[[files]]
 file = "kubejs/data/consortium/consortium_prices/starter.json"
 hash = "8c64b87d2cd3c16e8a4c6a1d1b7afab9b28a18b1c1b2b36951c4ab2f7a76038d"
+
+[[files]]
+file = "kubejs/data/consortium/consortium_rules/rulebook.json"
+hash = "25ef332c5537c506688c9026f91f9f030061d9d8bd0b25fc30daec0f56f78af8"
 
 [[files]]
 file = "kubejs/data/consortium/consortium_shop/catalogue.json"
@@ -242,12 +250,28 @@ file = "kubejs/server_scripts/00_placeholder.js"
 hash = "0629692b9bd78377d36f221b12a6a8bb3dc717f3dae80fb3a13d71932c1892b8"
 
 [[files]]
+file = "kubejs/server_scripts/consortium_border.js"
+hash = "6991f51c22046afaae5ba722a6512ec97bf7f24fc94bae5f489a1ad909ec4274"
+
+[[files]]
+file = "kubejs/server_scripts/consortium_calendar.js"
+hash = "11d2094c51d98d5141864ede38bb1b6f6134a9a2e36f35a9ea90eec7aeb71f0e"
+
+[[files]]
 file = "kubejs/server_scripts/consortium_charters.js"
 hash = "6d4088e96903e06d8af1182af5601af00b7f0bc2cafc927657f6282bf215c56c"
 
 [[files]]
 file = "kubejs/server_scripts/consortium_commands.js"
-hash = "2259731dcb9acc7013ef0e46349edde2080455ca77cb28e7d37a67eeba7c11f7"
+hash = "b93510f77e8a8de2ca01cb9d9087a991591b543b256984b3053f5a935befc767"
+
+[[files]]
+file = "kubejs/server_scripts/consortium_contracts.js"
+hash = "61940fde791831e16cea8e2a6a1eee3b40a05174f253fb6ef3a9ec7a7477e007"
+
+[[files]]
+file = "kubejs/server_scripts/consortium_discord.js"
+hash = "902e1a23fd302ec43433f40c71657307a9c7d109921f8beb0711403f684b3334"
 
 [[files]]
 file = "kubejs/server_scripts/consortium_events.js"
@@ -263,23 +287,35 @@ hash = "5b97b51f91832bcfe3f56a6399e5ecbc71b76d7c424d3500e64d08d843ca1334"
 
 [[files]]
 file = "kubejs/server_scripts/consortium_money.js"
-hash = "f3d98fc44edea40a5897beec54d2633d23b4b367596b7177e75e2de66a9f842c"
+hash = "7f9d9661708914bc1de51f211db41dd14967b8945b0c33927469849c70e9d3a6"
+
+[[files]]
+file = "kubejs/server_scripts/consortium_onboarding.js"
+hash = "6c524041eb0d0512f3299f930d296fdfb3e0005708a44f45e5f020a42b1072d5"
 
 [[files]]
 file = "kubejs/server_scripts/consortium_phases.js"
-hash = "410d84e4eba85842757bca6475d70c9342a6d654d8952be98f753c3b7891cc1f"
+hash = "e31e3e29fbf895ed0219499dda47a63249f791cb1617f22ddf83a2039e2d6078"
 
 [[files]]
 file = "kubejs/server_scripts/consortium_quests.js"
-hash = "e1df6ff224d3596832880a55a68c2c6c7de54c228e50d4809ba065a5d7945be3"
+hash = "20d7a6e71359b0ac6fe6e17d68536f7a44b8610be751a4b54660348994e05ec7"
 
 [[files]]
 file = "kubejs/server_scripts/consortium_quotas.js"
 hash = "b10a63319af8baafe9c1d674403135a62525ed781d4a78cef9fa96d34f7b0c86"
 
 [[files]]
+file = "kubejs/server_scripts/consortium_ranks.js"
+hash = "003cf19c27e191549246142b060f09e970f08fbbed09c44075757759249e3cbb"
+
+[[files]]
+file = "kubejs/server_scripts/consortium_rules.js"
+hash = "6a7f03b1613437944ebf849bd3748a927ef045ddd1e116da2e4e71039ed799fe"
+
+[[files]]
 file = "kubejs/server_scripts/consortium_shop.js"
-hash = "aafc28fce11476d265d529e6441f65828cb5c641b756dea36bedd6f15a786712"
+hash = "9fd9d43d554c38efe96f38a79067e90dbcff756f992ba24a3420f190f68c2de9"
 
 [[files]]
 file = "kubejs/server_scripts/economy_locks.js"
@@ -409,7 +445,7 @@ metafile = true
 
 [[files]]
 file = "mods/consortium-core.pw.toml"
-hash = "358e0f1a6060443da3092060914df4e991e1992e8457e2d66e3c391979921640"
+hash = "a0e639e4d4460c8414aa173df82b684d7b15a9682850230753beea5e906fed6a"
 metafile = true
 
 [[files]]

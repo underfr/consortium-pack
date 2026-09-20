@@ -15,7 +15,8 @@
 	quest.5C00000000000010.quest_desc: [
 		"Welcome aboard. The Board hired you to rebuild industry from the ground up, one delivery at a time. Everything you make can be sold at the Field Office; everything the Board sells is a service, never a resource."
 		""
-		"The rules are short. Chat and commands are logged for moderation, on the server and on the Discord bridge. The world border is 3,000 blocks. No portal chunk loading, no second account. The full text is on the Discord notice board."
+		"The rules are short. Chat and commands are logged for moderation, on the server and on the Discord bridge. The world border is 3,000 blocks. No portal chunk loading, no second account."
+		"{\"text\":\"The full text is one click away: \",\"color\":\"gray\",\"extra\":[{\"text\":\"/rules\",\"color\":\"aqua\",\"underlined\":true,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/rules\"}}]}"
 		""
 		"&7Tick this assignment once you have read them. No fee: reading is part of the job.&r"
 	]
