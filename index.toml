@@ -227,7 +227,7 @@ hash = "419e0b3b620642c8dedd8947456dd9f1a5f84a6bfc301b93ab94936d9316abca"
 
 [[files]]
 file = "kubejs/data/consortium/consortium_hq/hq.json"
-hash = "48bc5a8bca8f73c6367809d80cab9d2bb7a069215ea1b85af462620bf71bdd07"
+hash = "339da6e386a9d335f55cc21b0129039b15c19f5d68ca530d123dd808e4e679c8"
 
 [[files]]
 file = "kubejs/data/consortium/consortium_prices/starter.json"
@@ -271,7 +271,7 @@ hash = "dc2ef811de0c456f3eac614fe492220751cffe29e63ecaea71073ec2ca18d544"
 
 [[files]]
 file = "kubejs/server_scripts/consortium_commands.js"
-hash = "a84b85947b0e6763baaae44cc828c2350916bd2fcaccbd27cefc75f6964d9f85"
+hash = "b76c25075150134b7ea33932a1bf97593cb338bd25db437c5e547d4c1dc3a2c7"
 
 [[files]]
 file = "kubejs/server_scripts/consortium_contracts.js"
@@ -331,7 +331,7 @@ hash = "400e7689cfe5d754750ade5dc42f3b7760c9b50b6996f9e96b33190b84888797"
 
 [[files]]
 file = "kubejs/server_scripts/consortium_traps.js"
-hash = "0c577f9deea009a02ed31247f07737ca67406eedb96529e9bca8be7069eee86f"
+hash = "4e9fa80da192a0c3db3a9c778a571f810f20a7bb65b57ab9045a6d825725ea96"
 
 [[files]]
 file = "kubejs/server_scripts/economy_locks.js"
