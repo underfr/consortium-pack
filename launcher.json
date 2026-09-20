@@ -5,7 +5,7 @@
     "name": "The Consortium",
     "address": ""
   },
-  "motd": "Season 1 is in preparation. Pack 0.8.0: ranks, daily contracts, starter kit and referrals, the rulebook and the calendar are live for testing.",
+  "motd": "Season 1 is in preparation. Pack 0.9.0: pixel badges in chat and tab, a lean player list and the industrial HQ generator are live for testing.",
   "lowPresetDisables": [
     "mods/iris.pw.toml"
   ],
@@ -14,6 +14,11 @@
     "shaderpacks/makeup-ultra-fast-shaders.pw.toml": "mods/iris.pw.toml"
   },
   "news": [
+    {
+      "date": "2026-09-20",
+      "title": "Pack 0.9.0: badges and the HQ",
+      "text": "Ranks, titles, staff roles and charters now show as pixel badges before player names in chat and in the tab list (the active title replaces the rank badge). The player list is lighter: two header lines and two footer lines. Staff can raise the industrial headquarters with the delivery station, the shop counter, the charter desk, the plaza waystone and the event arena in one command."
+    },
     {
       "date": "2026-09-20",
       "title": "Pack 0.8.0: ranks, daily contracts, onboarding",

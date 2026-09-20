@@ -12,7 +12,7 @@ generates on first run:
 | `startup_scripts/` | once at game start, both sides | registrations (items, blocks, fluids), things that need `StartupEvents` |
 | `server_scripts/` | on every server resource reload (`/reload`), dedicated server and the client's integrated server | recipes, tags, loot, `ServerEvents`, `PlayerEvents`, economy and rank logic |
 | `client_scripts/` | client only | JEI events, tooltips, client UI |
-| `data/` | acts as a datapack on the server | Chapters stage definitions (`data/consortium/chapters/stages/*.json`), the Consortium Core price table (`data/consortium/consortium_prices/*.json`) and shop catalogue (`data/consortium/consortium_shop/*.json`), the season calendar (`data/consortium/consortium_calendar/season1.json`) and the rulebook (`data/consortium/consortium_rules/rulebook.json`, both read by the scripts through `JsonIO`), custom tags |
+| `data/` | acts as a datapack on the server | Chapters stage definitions (`data/consortium/chapters/stages/*.json`), the Consortium Core price table (`data/consortium/consortium_prices/*.json`) and shop catalogue (`data/consortium/consortium_shop/*.json`), the season calendar (`data/consortium/consortium_calendar/season1.json`), the rulebook (`data/consortium/consortium_rules/rulebook.json`) and the HQ layout (`data/consortium/consortium_hq/hq.json`, all three read by the scripts through `JsonIO`), custom tags |
 | `assets/` | acts as a resource pack on the client | lang files, textures for custom items |
 
 `startup_scripts/` and `client_scripts/` still hold a comments-only `00_placeholder.js` that keeps the
@@ -24,6 +24,8 @@ guarded by `Platform.isLoaded('lootjs')`: removes the Apotheosis `affix_loot_inj
 `minecraft:chests/*` and the Terralith, Structory and YUNG's structure tables only; nothing of `@minecraft`
 is removed and `consortium:*` event tables stay outside, see `docs/WORLD_VISUALS_ADMIN_PRESENCE.md` section 2)
 and the progression engine described below.
+
+- `data/minecraft/chat_type/chat.json`: the chat decoration `%s: %s` (no angle brackets around the badges and the name). The client applies it from the synced registry; the signed body is untouched. Deleting the file restores the vanilla layout after a restart.
 
 ## Conventions
 
@@ -63,8 +65,8 @@ One server-wide phase for everyone, five phases per season. Files:
 |---|---|
 | `data/consortium/chapters/stages/phase_1.json` .. `phase_5.json` | Chapters stage definitions (stage ids `consortium:phase_1` .. `consortium:phase_5`). Each file lists what the phase **opens**; an item is usable once the team holds any stage that mentions it, so the five files are disjoint. `phase_1.json` is the empty `{}` marker (phase 1 opens nothing that is locked) |
 | `.../stages/staff.json`, `licence_extraction.json`, `licence_energy.json`, `licence_logistics.json`, `extraction_p1..p5.json`, `energy_p1..p5.json`, `logistics_p1..p5.json` | Staff-only items (PROGRESSION.md section 10), the three charter licences and the charter early-access bundles (section 9.2). Licence, `*_p5` and staff ids are in **no** phase file (exclusive all season); `*_p1..p4` repeat ids of the next phase file on purpose (early access). All 24 files are generated from the registry dump by `scratchpad/gen_stages.mjs`, which asserts every id, the disjointness and the exclusivity; never hand-edit one file without re-running it |
-| `server_scripts/consortium_charters.js` (priority 60) | Charter records per player UUID, the staff list, and the team reconciliation (`consortiumApplyTeam`): what every team should hold (phases, its owner's charter stages, or everything for an all-staff team) versus what it holds, grants and strips |
-| `server_scripts/consortium_lib.js` (priority 100) | Shared helpers: number formatting, the next event slot, announcements (`tellraw @a` plus `say`, the two commands Simple Discord Link relays; `server.tell()` is never relayed), FTB Teams access and the safe stage writers |
+| `server_scripts/consortium_charters.js` (priority 60) | Charter records per player UUID, the staff list, and the team reconciliation (`consortiumApplyTeam`): what every team should hold (phases, its owner's charter stages, or everything for an all-staff team) versus what it holds, grants and strips; `consortiumCharterPublish` writes the player's own record to the LuckPerms meta key `consortium.charter` (the charter badge of Consortium Core 0.5.0, BADGES_AND_HQ 1.4) at every record write and at every login |
+| `server_scripts/consortium_lib.js` (priority 100) | Shared helpers: number formatting, the next event slot, announcements (`tellraw @a` plus `say`, the two commands Simple Discord Link relays; `server.tell()` is never relayed), FTB Teams access and the safe stage writers, and the LuckPerms console path `consortiumLp` / `consortiumLpMeta` with the meta key names `CONSORTIUM_META_TITLE` and `CONSORTIUM_META_CHARTER` |
 | `server_scripts/consortium_quotas.js` (priority 90) | The `CONSORTIUM_PHASES` table: phase names, stage ids, quest chapter ids, headline text and the delivery quotas (`Q = D x 10 x r x 0.7`). The economy step edits the amounts here |
 | `server_scripts/consortium_phases.js` (priority 50) | The engine: persistent state, deliveries, milestones, phase completion, the sweeps, boss bar, daily summary, stall rule, login welcome |
 | `server_scripts/consortium_money.js` (priority 40) | The delivery modifiers applied to Consortium Core deliveries through its `DeliveryQuoteEvent`, multiplied into one `setMultiplier` per line in the order charter x newcomer x event x paycheck scale: the charter price table of PROGRESSION 9.1 (+15 % own family, -5 % the two others, read from the `charter_family` of each price family), the newcomer +25 % of PROGRESSION 12 (7 days from the first login, `GRANTED` accounts, launch cohort excluded, stopped by `NEWCOMER_BONUS_CAP`), the market event factor of the events engine (`consortiumEventFactor`, a typeof-guarded wrapper over `ConsortiumEvents.quoteFactor`) and the daily paycheck cap `DAILY_PAYCHECK_CAP` of PRICE_TABLE 1.4 (see "Money caps" below). Off when the mod is absent |
@@ -72,6 +74,7 @@ One server-wide phase for everyone, five phases per season. Files:
 | `server_scripts/consortium_quests.js` (priority 30) | The FTB Quests bridge (QUESTS 5): custom task checks (delivery runs, flags, weekly stamps, the weekly contract, counters, ranks, first paycheck, charter, Founder), custom rewards re-validated per claimer (credits, XP, cosmetics, titles), the `DeliveryEvent`, `BalanceChangeEvent` and blood moon listeners that derive quest flags. Exposes `ConsortiumQuests`; see "Quests bridge" below |
 | `server_scripts/consortium_events_lib.js` (priority 45) | Helpers of the events engine: the `Platform.isLoaded` flags (`CONSORTIUM_HAS_INCONTROL`, `CONSORTIUM_HAS_APOTHEOSIS`, `CONSORTIUM_HAS_FTBCHUNKS`, `CONSORTIUM_EVENTS_ON`), every optional Java class behind its flag, the hostile-claim test and the spot finder (FTB Chunks API), the ground finder, tagged spawning, the Apotheosis boss spawner and its whitelist, force-load and cleanup helpers, and the `ConsortiumEvents` shell object the economy scripts call through typeof-guarded wrappers |
 | `server_scripts/consortium_events.js` (priority 20) | The random events engine (see "Events" below): state, the catalogue of 10 events, start and stop, scheduler, boss bar, board event object, payouts and caps, the listeners and the load reconciliation |
+| `server_scripts/consortium_hq.js` (priority 20) | The HQ spawn generator (BADGES_AND_HQ part 2, see "HQ generator" below): `/consortium hq build` places `data/consortium/consortium_hq/<layout>.json` around an anchor for one of the four facings through a tick queue (snapshot, ground, clear, layers, finish), `hq clear` restores the snapshot, `hq status`, `hq spawnpoint [arena]` and `hq forget` are the bookkeeping; state under its own root key `consortium_hq` |
 | `server_scripts/consortium_ranks.js` (priority 30) | Ranks (RANKS_AND_CONTRACTS 1): `CONSORTIUM_RANK_THRESHOLDS` (the one tier table, published to Consortium Core 0.4.0 through `publishRankTiers` at load and from every 5-minute check; the mod promotes through the LuckPerms track and announces), the perk reconcile at login + 60 ticks, on `RankPromoteEvent` and every 5 minutes (FTB Chunks allowance refresh, one perk line per tier, the Engineer chunk loader once the team holds phase 3), the texts of `/consortium ranks` and `/consortium leaderboard`, and the shared probes `consortiumCoreHas`, `consortiumCcFmt`; see "Ranks" below |
 | `server_scripts/consortium_contracts.js` (priority 30) | Daily contracts (RANKS_AND_CONTRACTS 2): the pick at the 06:00 boundary, the flat premium per paid unit read by `consortium_money.js`, the consumption on `DeliveryEvent`, the board lines, the compact `contracts` string, the summary line of the daily step; exposes `Consortium.contracts`; see "Daily contracts" below |
 | `server_scripts/consortium_onboarding.js` (priority 30) | Onboarding (RANKS_AND_CONTRACTS 3): the starter kit at the first `GRANTED` login (with the rulebook), `/consortium kit`, the referral flow and its milestone payouts, the engine-side first-credit stopwatch; exposes `Consortium.kit` and `Consortium.referrals`; see "Onboarding" below |
@@ -79,7 +82,7 @@ One server-wide phase for everyone, five phases per season. Files:
 | `server_scripts/consortium_rules.js` (priority 10) | The rulebook in game (DISCORD_AND_COMMUNITY 7): `/rules`, `/rules <section>`, `/rules book`, the written book built from `rulebook.json` with the page model of `tools/rulebook-md.mjs`; exports `consortiumRulebookStack()` and `consortiumRulebookGive(player)`; see "Rulebook" below |
 | `server_scripts/consortium_discord.js` (priority 10) | The daily Discord digest (DISCORD_AND_COMMUNITY 5), one post per season day through `ConsortiumCore.discordAnnounce`; see "Discord digest" below |
 | `server_scripts/consortium_border.js` (priority 10) | The Nether fence (DISCORD_AND_COMMUNITY 10): players beyond the overworld border / 8 in the Nether are teleported back to their last in-bounds position; see "Nether fence" below |
-| `server_scripts/consortium_commands.js` (priority 0) | The `/consortium` commands: the base tree, then the delimited **economy block** (licence, season, event ticket, perk, title, sale, gap, debug vacancy, quest, contract), the events engine's **events block**, the **ranks block** (ranks, leaderboard, contracts, referral, kit) and the **discord block** (calendar, discord digest, rules helpers, border), each a separate `commandRegistry` listener whose `consortium`, `event` and `debug` literals Brigadier merges |
+| `server_scripts/consortium_commands.js` (priority 0) | The `/consortium` commands: the base tree, then the delimited **economy block** (licence, season, event ticket, perk, meta, title, sale, gap, debug vacancy, quest, contract), the events engine's **events block**, the **ranks block** (ranks, leaderboard, contracts, referral, kit), the **discord block** (calendar, discord digest, rules helpers, border) and the **HQ block** (hq build, status, clear, spawnpoint, forget), each a separate `commandRegistry` listener whose `consortium`, `event` and `debug` literals Brigadier merges |
 
 How it works:
 
@@ -180,10 +183,11 @@ Commands (`/consortium ...`):
 | `season target <credits>` | op 4 | sets the fund target (announced) |
 | `event ticket <player> add <n> [tx]`, `event ticket take <player> <n>` | op 2 | Friday Zone tickets (`n` 1..9, idempotent on `tx`; `take` refunds or consumes by hand, floor 0) |
 | `event ticket get [player]` | anyone for self, op 2 for others | unused tickets |
-| `perk grant <player> <perk> [tx]`, `perk revoke <player> <perk>`, `perk resync <player>` | op 2 | `home_slot_1..3`, `warp_pass`, `nickname`: the record plus the LuckPerms line through the console (`resync` re-issues them and the active title) |
+| `perk grant <player> <perk> [tx]`, `perk revoke <player> <perk>`, `perk resync <player>` | op 2 | `home_slot_1..3`, `warp_pass`, `nickname`: the record plus the LuckPerms line through the console (`resync` re-issues them, the active title's suffix and `consortium.title`, and `consortium.charter`) |
 | `perk list [player]` | anyone for self, op 2 for others | held perks |
+| `meta resync [player]` | op 2 | re-issues every LuckPerms value the engine owns (perks, the title suffix and meta key, the charter meta key) for one player, or for **every known player** without one (FTB Teams' known players plus every title, perk or charter record): the repair lever after a LuckPerms wipe or a hand-set key (BADGES_AND_HQ 1.4) |
 | `title <key>`, `title none`, `title list [player]` | anyone (list of others: op 2) | puts a held title on, hides the suffix, lists what is held |
-| `title grant <player> <key> [tx]`, `title revoke <player> <key>` | op 2 | `foundry`, `orbital`, `horizon`, `benefactor` (the quests script passes its own keys and texts through the API) |
+| `title grant <player> <key> [tx]`, `title revoke <player> <key>` | op 2 | `foundry`, `orbital`, `horizon`, `benefactor`, `bug_hunter` (the quests script passes its own keys and texts through the API) |
 | `sale open <stage> [hours]`, `sale close <stage>`, `sale list` | op 2 | sale stages every team holds while open (the vacancy licences use `consortium:vacancy_<charter>`) |
 | `gap`, `gap buy <item> <units>` | anyone / player | the Gap Contract: status, and a purchase at `units x max(1 CC, 2 x base)` with every refusal before the debit |
 | `debug vacancy <charter> [clear]` | op 4 | backdates the charter's activity and the phase by 15 days (then `debug daily` prints the idle notice and opens the sale in one pass); `clear` stamps a delivery now |
@@ -202,6 +206,11 @@ Commands (`/consortium ...`):
 | `discord digest` | op 2 | prints the daily digest and posts it on the announcements lane |
 | `rules give <player>`, `rules spec`, `rules reset <player>` | op 2 | a rulebook copy to an online player, the written book spec, the daily `/rules book` stamp |
 | `border` | op 2 | the Nether fence centre and radius derived from the overworld border |
+| `hq build <x> <y> <z> <south\|west\|north\|east> [<layout>]` | op 4 | generates the HQ around the anchor (`y` = the floor block level, `x z` = the spawn plinth centre) from `consortium_hq/<layout>.json` (default `hq`): snapshot of the box first, then the passes; refused while a build or a clear runs or a box is recorded |
+| `hq status` (also `hq info`) | op 4 | not built / snapshot / building / built / interrupted, the layout, anchor, facing and box, the five marks in world coordinates, the arena check against the events record and the claim, then the post-build commands with the real numbers |
+| `hq clear` | op 4 | kills the tagged entities, restores the snapshot (terminals and waystone first, then the bulk) and drops the record; a build that never wrote is simply dropped, an unreadable record falls back to a wipe with a red warning |
+| `hq spawnpoint [arena [<player>]]` | op 4 | `setworldspawn` on the plinth and `spawnRadius 0`; with `arena`, writes the events arena record (centre = the arena mark, radius 3, ring 6..10, pit 12 from the layout) for the party of the player, refused when the team is not a party |
+| `hq forget` | op 4 | drops the record and the box without touching a block (after the production build is approved; `hq clear` is then impossible) |
 
 `/rules`, `/rules <section>` and `/rules book` are a top-level literal of `consortium_rules.js` (anyone; the book once per player per day).
 
@@ -250,6 +259,13 @@ Simple Discord Link: with `broadcastCommands = true` every command the engine ru
   `server.runCommandSilent` (the shop's own command source is refused by LuckPerms): home slots set
   `ftbessentials.home.max` to the number of slots held, the pass and the nickname set `command.warp` and
   `command.nickname`. Both are re-issued at login (LuckPerms runs asynchronously and always reports success).
+- **Badge meta keys** (BADGES_AND_HQ 1.4, read by Consortium Core 0.5.0): every `Consortium.titles` mutator and the
+  login resync also write `lp user <uuid> meta set consortium.title <active key>` (or `meta unset` when no title is
+  active; the resync runs this half record or no record, so a hand-set key does not survive a login), and
+  `consortiumCharterPublish` (consortium_charters.js) writes `consortium.charter = extraction | energy | logistics`
+  from the player's own record at every choice, switch, staff set or clear and at every login. The suffix stays as it
+  was for servers with badges off; a `meta set` of an unchanged value is a LuckPerms no-op, so the login costs nothing
+  for an unchanged player. `/consortium meta resync` re-issues everything for every known player.
 - **Gap Contract** (PROGRESSION 11): open while the phase is stalled; `/consortium gap buy <item> <units>` at
   `max(1 CC, 2 x base)` per unit with the base read from `ConsortiumCore.price(family).baseCents()` (never the degressive
   unit price), packs of 10 on lines with a quota of at least 500, caps of 10 % of the line per day, 30 % per phase and
@@ -376,9 +392,45 @@ Commands (`/consortium event ...`, the events block of `consortium_commands.js`;
 | `event start <id> [args]` | op 2 | forced start (cuts a random event short; refused while a staff event runs). Args: `market_crash <family>`, `bounty [<boss id> <rarity>] [arena]`, `supply_drop [meteor]` |
 | `event stop` | op 2 | ends the active event now |
 | `event next` / `next <id> <hour> <minute> [args]` / `next clear` | op 2 | the queue for today at that server time, with reminders at minus 60 and minus 5 minutes |
-| `event arena here [<radius>]` / `set <x> <y> <z>` / `team <player>` / `show` | op 2 | the HQ arena record (centre, FTB team id, radius in chunks, default 3) |
+| `event arena here [<radius>]` / `set <x> <y> <z>` / `team <player>` / `ring <min> <max> [<pit>]` / `show` | op 2 | the HQ arena record (centre, FTB team id, radius in chunks, default 3, plus the wave ring in blocks and the pit square: `ring` sets them, `here` carries them over from a record within 16 blocks, `show` prints `ring 6..10 blocks, pit 12 blocks` or `ring 8..40 blocks (default), pit none (chunk rule)`); with a pit, every "inside the arena" test is the block square around the centre and a wave mob farther than pit + 4 (Chebyshev) is discarded (BADGES_AND_HQ 2.7) |
 | `event pause` / `resume` | op 2 | the random scheduler (paused by default) |
 | `event debug roll [<id>]` / `muster` / `stage` / `paid <player> <cents>` / `wednesday` / `clear` | op 4 | one roll now ignoring the window and caps; end the muster or move the Friday stage; set today's event credits; run the Wednesday duties; wipe the events state (arena and tickets kept) |
+
+## HQ generator (`consortium_hq.js`, priority 20, docs/BADGES_AND_HQ.md part 2)
+
+- **Layout**: `data/consortium/consortium_hq/hq.json`, generated by `node tools/hq/build-layout.mjs` (walls, bays, sawtooth
+  roof, light grids and rooms as code; the JSON is the shipped artifact) and checked by `node tools/hq/check-layout.mjs
+  <file> [--anchor x y z]` (row lengths, palette keys, state strings, marks, the arena spawn-ring shelf rule, entity
+  supports, the no-loot rule 4.1, the price table; `--anchor` writes `tools/hq/out/expected-marks.json`). One
+  printable character per cell, `.` and space are empty; palette entries are a state string or an object with `state`,
+  `connect` (shape pass after the bulk pass: fences, bars, walls, stairs, girders), `last` (placed in the finish pass:
+  the Delivery Terminals after their panels), `sign` (four lines plus `color`, composed into the waxed `front_text`
+  NBT), `nbt` (an SNBT string loaded in the same tick as the placement), `states` (one state per facing) or `api:
+  waystone` (`style`, `name`, `visibility` through the Waystones API). Layer `y` is relative to the floor blocks;
+  `marks` (`spawn`, `arena`, `terminal`, `shop`, `waystone`) are local cells, `arena.ring` and `arena.pit` are what
+  `hq spawnpoint arena` writes.
+- **Build**: `/consortium hq build <x> <y> <z> <facing> [<layout>]` rotates the layout around the anchor (south 0,
+  west 1, north 2, east 3 clockwise quarter turns: a state is rotated by its own `rotate()`, then by a generic property
+  walk for mod blocks that do not override it), force-loads the box (rectangle plus a 3-block apron, layers -2 to
+  clear_top), and runs an in-memory tick queue: pass 0 snapshots every position (state plus block entity NBT, runs
+  along x packed as `dx | dy << 8 | dz << 16` from the box corner) into `server.persistentData.consortium_hq.record`
+  and saves the world before the first write; pass 1 lays the foundation (`fill`) and the ground where the layer 0
+  map is empty; pass 2 clears the box to air; pass 3 places the layers bottom to top (`Level.setBlock` flags 18, the
+  NBT at once); pass 4 fixes the `connect` shapes, places the `last` entries, the waystone and the tagged item frames
+  (`Tags:["consortium_hq"]`), runs the survival audit (`canSurvive` on every placed position), releases the ticket and
+  saves. Budget 800 placements or 4,000 scans per tick (fewer for the ground and audit steps), halved after a step over 25 ms and restored after five quiet
+  steps; the finish line prints the placements, ticks, worst tick and the audit.
+- **Clear**: `/consortium hq clear` kills the tagged entities in the box, restores the terminals and the waystone
+  halves first (one formation scan, the waystone's `onRemove` drops its database entry), then the bulk from the
+  record (flags 2, block entity NBT in the same tick), releases the ticket and drops the root key. A build that never
+  left the snapshot is dropped without a write; an unreadable record falls back to a wipe (air above the floor,
+  ground at the floor level, fill below) with a red warning.
+- **Recovery**: the queue is script state and dies with `/reload`; the first tick after every script load releases a
+  force-load ticket left by an interrupted run and warns (`build interrupted: run hq clear, then hq build`).
+- **Site**: Season 1 is `consortium hq build 250 65 0 south` (floor y 65, the plinth centre at 250 0), then the five
+  post-build commands `hq status` prints (party, allowance, `ftbchunks admin claim_as staff 80 250 0
+  minecraft:overworld`, `hq spawnpoint arena <member>`, the interact mode). On the dev world the pad is `fill 265 62
+  -420 335 62 -350 minecraft:smooth_stone` and `consortium hq build 287 63 -385 south`.
 
 ## Consortium Core data (shop and prices)
 

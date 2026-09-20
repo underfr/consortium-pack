@@ -30,6 +30,11 @@
 // once; a switch is refused while the player's effective or personal team holds any licence stage,
 // after CONSORTIUM_SWITCHES_PER_SEASON switches, or within CONSORTIUM_SWITCH_COOLDOWN_DAYS of the last
 // charter change. "none" (staff clearing the record) is always allowed and starts the player over.
+//
+// Badges (BADGES_AND_HQ 1.4): the player's OWN record is published to LuckPerms as the meta key
+// consortium.charter = extraction | energy | logistics (unset without a record) by consortiumCharterPublish
+// at every record write and at every login (the shop's login hook), so Consortium Core 0.5.0 shows the
+// charter badge of the personal record, not the party owner's charter that drives the team's stages.
 
 const CONSORTIUM_CHARTERS = {
   extraction: { label: 'Extraction', licencePhase: 3, bonus: '+15 % on raw materials' },
@@ -295,7 +300,17 @@ function consortiumSetCharter(server, uuid, name, charter) {
     rec.putInt('switches', switches + 1)
     console.info('[Consortium] charter of ' + name + ' (' + uuid + ') switched from ' + current + ' to ' + charter + ' (switch ' + (switches + 1) + ' of ' + CONSORTIUM_SWITCHES_PER_SEASON + ' this season)')
   }
+  consortiumCharterPublish(server, uuid)
   return { ok: true, changes: consortiumApplyPlayerId(server, uuid) }
+}
+
+// Publishes the player's own charter record to LuckPerms as the meta key consortium.charter (BADGES_AND_HQ
+// 1.4): set from the record, unset without one. Called at every record write above, at every login (the
+// shop's login hook) and by /consortium meta resync. Returns the charter id published, or '' when unset.
+function consortiumCharterPublish(server, uuid) {
+  let charter = consortiumCharterOf(server, uuid)
+  consortiumLpMeta(server, uuid, CONSORTIUM_META_CHARTER, charter === null ? '' : charter)
+  return charter === null ? '' : charter
 }
 
 function consortiumSetStaff(server, uuid, name, add) {

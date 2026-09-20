@@ -19,7 +19,9 @@
 //   Consortium.tickets   grant / count / consume / take: Friday Zone tickets (SHOP 5.7; the events engine
 //                        consumes them at the wave start)
 //   Consortium.titles    grant / activate / revoke / resync / held: one LuckPerms suffix at priority 60
-//                        for every player title, shop or quest (SHOP 5.11)
+//                        for every player title, shop or quest (SHOP 5.11), plus the meta key
+//                        consortium.title = <active key> the badges of Consortium Core 0.5.0 read
+//                        (BADGES_AND_HQ 1.4; unset when no title is active)
 //   Consortium.perks     grant / revoke / resync / held: LuckPerms-backed perks run through the server's
 //                        own console source (SHOP 5.10): home slots, the Board warp pass, the nickname
 //   Consortium.gap       status / buy, and Consortium.onCatchUp: the Gap Contract (SHOP 5.8, PROGRESSION 11)
@@ -27,8 +29,9 @@
 //                        a failed effect is never refunded (SHOP 5.4)
 //   quest flags          ShopPurchaseEvent listener: shop:* flags through ConsortiumQuests (SHOP 5.12)
 //   activity stamp       DeliveryEvent listener: activity.<charter>.lastDeliveryAt for the vacancy rule
-//   login hook           re-issues the held perks and the active title (LuckPerms is asynchronous and
-//                        always reports success, so the engine record is the source of truth)
+//   login hook           re-issues the held perks, the active title (suffix and meta key) and the charter meta
+//                        key (LuckPerms is asynchronous and always reports success, so the engine record is
+//                        the source of truth)
 //
 // State (server.persistentData "consortium", SHOP 5.1):
 //   licences.<uuid>.<charter> { grantedAt, tx, by }        activity.<charter> { lastDeliveryAt }
@@ -43,7 +46,7 @@
 //
 // Rhino note: `const` only at file top level or as the first statements of a function; `let` in blocks.
 
-const CONSORTIUM_HAS_LUCKPERMS = Platform.isLoaded('luckperms')
+// CONSORTIUM_HAS_LUCKPERMS and consortiumLp live in consortium_lib.js (priority 100) since the badges batch.
 const CONSORTIUM_SHOP_HAS_FTBCHUNKS = Platform.isLoaded('ftbchunks')
 const CONSORTIUM_SHOP_FTBCHUNKS_API = CONSORTIUM_SHOP_HAS_FTBCHUNKS ? Java.loadClass('dev.ftb.mods.ftbchunks.api.FTBChunksAPI') : null
 
@@ -153,17 +156,6 @@ function consortiumTxPrune(server) {
   }
   for (let i = 0; i < old.length; i++) txs.remove(old[i])
   return old.length
-}
-
-// LuckPerms through the server's own console source (the shop's synthetic source is refused by LuckPerms,
-// SHOP 5.10). LuckPerms runs asynchronously and always reports success: the engine record is the truth.
-function consortiumLp(server, line) {
-  if (!CONSORTIUM_HAS_LUCKPERMS) {
-    console.info('[Consortium] LuckPerms absent, skipped: lp ' + line)
-    return false
-  }
-  server.runCommandSilent('lp ' + line)
-  return true
 }
 
 function consortiumCharterLabel(c) {
@@ -471,7 +463,24 @@ function consortiumTitlesTag(server, uuid) {
   return consortiumSub(consortiumShopState(server, 'titles'), uuid)
 }
 
-// Re-issues the LuckPerms suffix of the active title (absolute set: remove the priority, set it again).
+// The active held title key of a player, or '' (a record whose active key is no longer held counts as none).
+function consortiumTitleActiveKey(server, uuid) {
+  let titles = consortiumShopState(server, 'titles')
+  if (!titles.contains(uuid)) return ''
+  let tag = titles.getCompound(uuid)
+  let active = String(tag.getString('active'))
+  return active && consortiumSub(tag, 'held').contains(active) ? active : ''
+}
+
+// The meta half (BADGES_AND_HQ 1.4): consortium.title = <active key>, unset when no title is active. Runs
+// with or without a title record (a key set by hand on a never-titled player is cleared at the next login).
+function consortiumTitleMetaApply(server, uuid) {
+  consortiumLpMeta(server, uuid, CONSORTIUM_META_TITLE, consortiumTitleActiveKey(server, uuid))
+}
+
+// Re-issues the LuckPerms suffix of the active title (absolute set: remove the priority, set it again) and
+// the consortium.title meta key. The suffix stays exactly as before the badges batch: {suffix} keeps
+// " &7<text>" for servers with badges off; the mod reads the meta key, which the staff suffixes never hide.
 function consortiumTitleApply(server, uuid, name) {
   let tag = consortiumTitlesTag(server, uuid)
   let active = String(tag.getString('active'))
@@ -480,6 +489,7 @@ function consortiumTitleApply(server, uuid, name) {
   if (active && held.contains(active)) {
     consortiumLp(server, 'user ' + uuid + ' meta setsuffix ' + CONSORTIUM_TITLE_PRIORITY + ' " &7' + String(held.getString(active)) + '"')
   }
+  consortiumTitleMetaApply(server, uuid)
 }
 
 Consortium.titles = {
@@ -535,13 +545,71 @@ Consortium.titles = {
     return true
   },
 
-  // Login: the suffix of the active title is re-issued (cheap, self-healing).
+  // Login and staff lever: the suffix of the active title is re-issued when a record exists (cheap,
+  // self-healing); the meta key is re-issued for everyone, record or no record (unset without one, so a
+  // hand-set consortium.title on a never-titled player does not survive the login). Returns true when the
+  // player has a title record.
   resync: (server, uuid, name) => {
     let titles = consortiumShopState(server, 'titles')
-    if (!titles.contains(uuid)) return false
+    if (!titles.contains(uuid)) {
+      consortiumTitleMetaApply(server, uuid)
+      return false
+    }
     consortiumTitleApply(server, uuid, name)
     return true
   },
+
+  // The active title key ('' when none): what the consortium.title meta carries.
+  activeKey: (server, uuid) => consortiumTitleActiveKey(server, uuid),
+}
+
+// Re-issues every LuckPerms value the engine owns for one player: perks, the title suffix and meta key, and
+// the charter meta key (consortium_charters.js). Returns { perks, title, charter } for the caller's line.
+function consortiumMetaResync(server, uuid, name) {
+  let perks = Consortium.perks.resync(server, uuid, name)
+  let title = Consortium.titles.resync(server, uuid, name)
+  let charter = typeof consortiumCharterPublish === 'function' ? consortiumCharterPublish(server, uuid) : ''
+  return { perks: perks, title: title, charter: charter }
+}
+
+// Every player the engine knows: FTB Teams' known players plus every uuid with a title, perk or charter
+// record. { uuid: name } with the name FTB Teams recorded (the uuid itself when unknown).
+function consortiumKnownPlayers(server) {
+  let out = {}
+  let mgr = consortiumTeamManager()
+  if (mgr !== null) {
+    for (let entry of mgr.getKnownPlayerTeams().entrySet()) out[String(entry.getKey()).toLowerCase()] = String(entry.getValue().getPlayerName())
+  }
+  let st = consortiumState(server)
+  let keys = ['titles', 'perks', 'charters']
+  for (let i = 0; i < keys.length; i++) {
+    if (!st.contains(keys[i])) continue
+    let tag = st.getCompound(keys[i])
+    for (let uuid of tag.getAllKeys()) {
+      let id = String(uuid).toLowerCase()
+      if (!out[id]) {
+        let rec = tag.getCompound(uuid)
+        out[id] = rec.contains('name') && String(rec.getString('name')).length ? String(rec.getString('name')) : id
+      }
+    }
+  }
+  return out
+}
+
+// The staff lever behind /consortium meta resync: every known player, or one. Returns the number of players.
+function consortiumMetaResyncAll(server) {
+  let known = consortiumKnownPlayers(server)
+  let n = 0
+  for (let uuid in known) {
+    try {
+      consortiumMetaResync(server, uuid, known[uuid])
+      n++
+    } catch (err) {
+      console.error('[Consortium] meta resync of ' + known[uuid] + ' (' + uuid + ') failed: ' + err)
+    }
+  }
+  console.info('[Consortium] LuckPerms meta re-issued for ' + n + ' known player(s)')
+  return n
 }
 
 // ---- perks (SHOP 5.10) -----------------------------------------------------------------------------------
@@ -871,7 +939,9 @@ ServerEvents.loaded((event) => {
   consortiumShopServer = event.server
 })
 
-// Login: the held perks and the active title are re-issued once FTB Teams and LuckPerms have the player.
+// Login: the held perks, the active title (suffix and meta key) and the charter meta key are re-issued once
+// FTB Teams and LuckPerms have the player (BADGES_AND_HQ 1.4: the meta halves run record or no record, so a
+// record written while LuckPerms was absent self-heals and a hand-set key is overwritten).
 PlayerEvents.loggedIn((event) => {
   let player = event.player
   let server = player.server
@@ -879,9 +949,8 @@ PlayerEvents.loggedIn((event) => {
   let name = String(player.username)
   server.scheduleInTicks(60, () => {
     try {
-      let perks = Consortium.perks.resync(server, uuid, name)
-      let title = Consortium.titles.resync(server, uuid, name)
-      if (perks > 0 || title) console.info('[Consortium] perks resynced for ' + name + ' (' + perks + ' perk(s)' + (title ? ', title' : '') + ')')
+      let r = consortiumMetaResync(server, uuid, name)
+      if (r.perks > 0 || r.title || r.charter) console.info('[Consortium] perks resynced for ' + name + ' (' + r.perks + ' perk(s)' + (r.title ? ', title' : '') + (r.charter ? ', charter ' + r.charter : '') + ')')
     } catch (err) {
       console.error('[Consortium] perk resync for ' + name + ' failed: ' + err)
     }

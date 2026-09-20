@@ -20,6 +20,12 @@
 const CONSORTIUM_HAS_TEAMS = Platform.isLoaded('ftbteams')
 const CONSORTIUM_HAS_CHAPTERS = Platform.isLoaded('chapters')
 const CONSORTIUM_HAS_SDLINK = Platform.isLoaded('sdlink') // server-only mod, absent in singleplayer
+const CONSORTIUM_HAS_LUCKPERMS = Platform.isLoaded('luckperms')
+
+// LuckPerms meta keys the presence module of Consortium Core 0.5.0 reads for the badges (BADGES_AND_HQ 1.4):
+// the active title key (written by consortium_shop.js) and the player's own charter (consortium_charters.js).
+const CONSORTIUM_META_TITLE = 'consortium.title'
+const CONSORTIUM_META_CHARTER = 'consortium.charter'
 
 // FTB Teams classes, loaded once (KubeJS logs every Java.loadClass call).
 const CONSORTIUM_FTB_API = CONSORTIUM_HAS_TEAMS ? Java.loadClass('dev.ftb.mods.ftbteams.api.FTBTeamsAPI') : null
@@ -103,6 +109,27 @@ function consortiumTitle(server, title, subtitle) {
   server.runCommandSilent('title @a times 10 70 20')
   server.runCommandSilent('title @a subtitle ' + JSON.stringify({ text: subtitle, color: 'yellow' }))
   server.runCommandSilent('title @a title ' + JSON.stringify({ text: title, color: 'gold', bold: true }))
+}
+
+// LuckPerms through the server's own console source (a script's synthetic source is refused by LuckPerms,
+// SHOP 5.10). LuckPerms runs asynchronously and always reports success: the engine record is the truth and
+// every value is re-issued at login. Lives here (priority 100) so the charters script (60) and the shop (30)
+// share it. Returns false (with one INFO line) when LuckPerms is absent.
+function consortiumLp(server, line) {
+  if (!CONSORTIUM_HAS_LUCKPERMS) {
+    console.info('[Consortium] LuckPerms absent, skipped: lp ' + line)
+    return false
+  }
+  server.runCommandSilent('lp ' + line)
+  return true
+}
+
+// Sets or unsets one per-user LuckPerms meta key (BADGES_AND_HQ 1.4): `value` null or '' unsets it. A set of
+// an unchanged value is a LuckPerms no-op (ALREADY_HAS_META) and an unset of an absent key removes nothing,
+// so a login resync of an unchanged player costs no recalculation event and no tab packet.
+function consortiumLpMeta(server, uuid, key, value) {
+  if (value === null || value === undefined || String(value).length === 0) return consortiumLp(server, 'user ' + uuid + ' meta unset ' + key)
+  return consortiumLp(server, 'user ' + uuid + ' meta set ' + key + ' ' + String(value))
 }
 
 // ---- FTB Teams access ---------------------------------------------------------------------------

@@ -202,9 +202,10 @@ ServerEvents.commandRegistry((event) => {
 //   /consortium perk grant <player> <perk> [tx]           op 2: 5.10, idempotent
 //   /consortium perk revoke <player> <perk>               op 2
 //   /consortium perk list [player]                        anyone for self, op 2 for others
-//   /consortium perk resync <player>                      op 2: re-issues the LuckPerms lines and the title
+//   /consortium perk resync <player>                      op 2: re-issues the LuckPerms lines, the title (suffix and meta) and the charter meta
+//   /consortium meta resync [player]                      op 2: the same for one player, or for every known player without one (BADGES_AND_HQ 1.4)
 //   /consortium title <key> | none | list [player]        anyone (list of others: op 2): 5.11
-//   /consortium title grant <player> <key> [tx]           op 2: key of CONSORTIUM_TITLES, or any key with [tx]
+//   /consortium title grant <player> <key> [tx]           op 2: key of CONSORTIUM_TITLES (the quests script grants its own keys with their texts)
 //   /consortium title revoke <player> <key>               op 2
 //   /consortium sale open <stage> [hours] | close <stage> | list   op 2: 5.2
 //   /consortium gap                                       anyone: the Gap Contract status
@@ -417,9 +418,20 @@ ServerEvents.commandRegistry((event) => {
       .then(Commands.argument('player', Arguments.WORD.create(event)).executes((ctx) => {
         let who = resolve(ctx)
         if (who === null) return 0
-        let n = Consortium.perks.resync(ctx.source.server, who.id, who.name)
-        let t = Consortium.titles.resync(ctx.source.server, who.id, who.name)
-        return ok(ctx, who.name + ': ' + n + ' perk(s) re-issued' + (t ? ', title re-issued' : '') + '.')
+        let r = consortiumMetaResync(ctx.source.server, who.id, who.name)
+        return ok(ctx, who.name + ': ' + r.perks + ' perk(s) re-issued' + (r.title ? ', title re-issued' : ', no title (meta cleared)') + (r.charter ? ', charter ' + r.charter + ' published' : ', no charter (meta cleared)') + '.')
+      })))
+
+  // ---- meta (BADGES_AND_HQ 1.4: the LuckPerms values the badges read, re-issued by hand) ----
+  let metaNode = Commands.literal('meta').requires(op(2))
+    .then(Commands.literal('resync')
+      .executes((ctx) => ok(ctx, 'LuckPerms meta re-issued for ' + consortiumMetaResyncAll(ctx.source.server) + ' known player(s): perks, title suffix and consortium.title, consortium.charter.'))
+      .then(Commands.argument('player', Arguments.WORD.create(event)).executes((ctx) => {
+        let who = resolve(ctx)
+        if (who === null) return 0
+        let r = consortiumMetaResync(ctx.source.server, who.id, who.name)
+        let key = Consortium.titles.activeKey(ctx.source.server, who.id)
+        return ok(ctx, who.name + ': consortium.title ' + (key ? 'set to ' + key : 'unset') + ', consortium.charter ' + (r.charter ? 'set to ' + r.charter : 'unset') + ', ' + r.perks + ' perk(s) re-issued.')
       })))
 
   // ---- title ----
@@ -594,6 +606,7 @@ ServerEvents.commandRegistry((event) => {
     .then(seasonNode)
     .then(eventNode)
     .then(perkNode)
+    .then(metaNode)
     .then(titleNode)
     .then(saleNode)
     .then(gapNode)
@@ -619,7 +632,9 @@ ServerEvents.commandRegistry((event) => {
 //   /consortium event start <id> [args]                 op 2: forced start (market_crash <family>, bounty [<boss> <rarity>] [arena], supply_drop [meteor])
 //   /consortium event stop                              op 2: end the active event now (stop order of EVENTS 2.3)
 //   /consortium event next [<id> <hour> <minute> [args]] | next clear   op 2: the queue (minus 60 and minus 5 reminders)
-//   /consortium event arena here [<radius>] | set <x> <y> <z> | team <player> | show   op 2: the HQ arena record
+//   /consortium event arena here [<radius>] | set <x> <y> <z> | team <player> | ring <min> <max> [<pit>] | show   op 2: the HQ arena record
+//                                                       ("here" keeps the ring and pit of a record within 16 blocks; "ring" sets the wave
+//                                                       ring in blocks and the pit square, 0 = chunk rule; BADGES_AND_HQ 2.7)
 //   /consortium event pause|resume                      op 2: the random scheduler (paused by default)
 //   /consortium event debug roll [<id>] | muster | stage | paid <player> <cents> | wednesday | clear   op 4
 
@@ -686,7 +701,7 @@ ServerEvents.commandRegistry((event) => {
     let arenaShow = (ctx) => {
       let arena = consortiumArena(ctx.source.server)
       reply(ctx, arena === null ? Text.of('Arena unset: stand at its centre and run /consortium event arena here [<radius>].').gray()
-        : Text.of('Arena: ' + arena.dim + ' ' + arena.x + ' ' + arena.y + ' ' + arena.z + ', team ' + arena.team + ', radius ' + arena.radius + ' chunk(s).').gray())
+        : Text.of('Arena: ' + arena.dim + ' ' + arena.x + ' ' + arena.y + ' ' + arena.z + ', team ' + arena.team + ', radius ' + arena.radius + ' chunk(s), ' + consortiumArenaRingText(arena) + '.').gray())
       return 1
     }
     let arenaHere = (ctx, radius) => {
@@ -702,8 +717,27 @@ ServerEvents.commandRegistry((event) => {
       a.putInt('x', pos.getX()); a.putInt('y', pos.getY()); a.putInt('z', pos.getZ())
       a.putString('team', String(team.getId()).toLowerCase())
       a.putInt('radius', Math.max(1, Math.min(8, radius)))
+      // The ring and pit of a previous record in the same dimension within 16 blocks carry over (a staff
+      // member re-running "arena here" at the HQ pit keeps 6..10 and 12 instead of silently restoring 8..40).
+      let previous = consortiumArena(ctx.source.server)
+      if (previous !== null && previous.dim === String(a.getString('dim')) && Math.max(Math.abs(previous.x - pos.getX()), Math.abs(previous.z - pos.getZ())) <= 16) {
+        a.putInt('ringMin', previous.ringMin); a.putInt('ringMax', previous.ringMax); a.putInt('pit', previous.pit)
+      }
       consortiumEvents(ctx.source.server).put('arena', a)
-      console.info('[Consortium] ' + byName(ctx) + ' set the arena at ' + pos.getX() + ' ' + pos.getY() + ' ' + pos.getZ() + ' radius ' + a.getInt('radius'))
+      console.info('[Consortium] ' + byName(ctx) + ' set the arena at ' + pos.getX() + ' ' + pos.getY() + ' ' + pos.getZ() + ' radius ' + a.getInt('radius') + (a.contains('pit') ? ' (ring and pit carried over)' : ''))
+      return arenaShow(ctx)
+    }
+    let arenaRing = (ctx, hasPit) => {
+      let ev = consortiumEvents(ctx.source.server)
+      if (!ev.contains('arena')) { reply(ctx, Text.of('No arena record yet: run arena here or arena set first.').red()); return 0 }
+      let min = Arguments.INTEGER.getResult(ctx, 'min')
+      let max = Arguments.INTEGER.getResult(ctx, 'max')
+      let pit = hasPit ? Arguments.INTEGER.getResult(ctx, 'pit') : 0
+      if (min < 1 || min > 63 || max <= min || max > 64) { reply(ctx, Text.of('The ring is <min> 1..63 and <max> min + 1..64 blocks.').red()); return 0 }
+      if (pit < 0 || pit > 64) { reply(ctx, Text.of('The pit is 0..64 blocks (0 restores the chunk rule).').red()); return 0 }
+      let a = ev.getCompound('arena')
+      a.putInt('ringMin', min); a.putInt('ringMax', max); a.putInt('pit', pit)
+      console.info('[Consortium] ' + byName(ctx) + ' set the arena ring to ' + min + '..' + max + ' and the pit to ' + pit)
       return arenaShow(ctx)
     }
     let answer = (ctx, ok, text) => { reply(ctx, ok ? Text.of(text).green() : Text.of(text).red()); return ok ? 1 : 0 }
@@ -807,6 +841,10 @@ ServerEvents.commandRegistry((event) => {
           reply(ctx, Text.of('Arena team set to the team of ' + who.name + ' (' + a.getString('team') + ').').green())
           return 1
         })))
+        .then(Commands.literal('ring')
+          .then(Commands.argument('min', Arguments.INTEGER.create(event))
+            .then(Commands.argument('max', Arguments.INTEGER.create(event)).executes((ctx) => arenaRing(ctx, false))
+              .then(Commands.argument('pit', Arguments.INTEGER.create(event)).executes((ctx) => arenaRing(ctx, true))))))
         .then(Commands.literal('show').executes(arenaShow)))
       .then(Commands.literal('pause').requires(op(2)).executes((ctx) => {
         consortiumEvents(ctx.source.server).putBoolean('paused', true)
@@ -1238,3 +1276,98 @@ ServerEvents.commandRegistry((event) => {
     .then(borderNode))
 })
 // ==== END DISCORD BLOCK ====
+
+// ==== HQ BLOCK (owner: engine implementer; BADGES_AND_HQ part 2, sections 2.2 and 2.8) ====
+// A sixth commandRegistry listener over consortium_hq.js (every function looked up at call time). Every verb is
+// op 4 (rule 4.3: creative and generation are owner-only), console or player. `<y>` is the floor block level
+// (players walk at y + 1), `<x> <z>` the anchor: the spawn plinth centre lands there. The layout defaults to
+// `hq` (kubejs/data/consortium/consortium_hq/hq.json). Also answers to `hq info` (= status).
+//
+//   /consortium hq build <x> <y> <z> <south|west|north|east> [<layout>]   snapshot, ground, clear, layers, finish (tick queue)
+//   /consortium hq status | info                                        not built / snapshot / building / built / interrupted, the marks, the arena check, the next commands
+//   /consortium hq clear                                                restores the snapshot (entities, terminals and waystone first, then the bulk) and drops the record
+//   /consortium hq spawnpoint [arena [<player>]]                        setworldspawn on the plinth and spawnRadius 0; with arena, the events arena record from the layout ring and pit (the player's team must be a party)
+//   /consortium hq forget                                               drops the record and the box without touching a block
+
+ServerEvents.commandRegistry((event) => {
+  const { commands: Commands, arguments: Arguments } = event
+  let reply = (ctx, text) => ctx.source.sendSystemMessage(text)
+  let op = (level) => (source) => source.hasPermission(level)
+  let ok = (ctx, text) => { reply(ctx, Text.of(text).green()); return 1 }
+  let fail = (ctx, text) => { reply(ctx, Text.of(text).red()); return 0 }
+  let byName = (ctx) => (ctx.source.isPlayer() ? String(ctx.source.player.username) : 'console')
+  let loaded = () => typeof consortiumHqBuild === 'function'
+  let resolveAny = (ctx) => {
+    let text = Arguments.WORD.getResult(ctx, 'player')
+    let who = consortiumResolvePlayer(ctx.source.server, text)
+    if (who === null) reply(ctx, Text.of('Unknown player "' + text + '": use the name of a player who has joined before, or a UUID.').red())
+    return who
+  }
+
+  let build = (facing, hasLayout) => (ctx) => {
+    if (!loaded()) return fail(ctx, 'The HQ script is not loaded (consortium_hq.js).')
+    let pos = Arguments.BLOCK_POS.getResult(ctx, 'pos')
+    let layout = hasLayout ? String(Arguments.WORD.getResult(ctx, 'layout')) : 'hq'
+    let r = consortiumHqBuild(ctx.source.server, ctx.source.getLevel(), pos.getX(), pos.getY(), pos.getZ(), facing, layout, byName(ctx))
+    if (!r.ok) return fail(ctx, r.reason)
+    console.info('[Consortium] ' + byName(ctx) + ' hq build ' + pos.getX() + ' ' + pos.getY() + ' ' + pos.getZ() + ' ' + facing + ' ' + layout)
+    return ok(ctx, r.text)
+  }
+  let status = (ctx) => {
+    if (!loaded()) return fail(ctx, 'The HQ script is not loaded (consortium_hq.js).')
+    let lines = consortiumHqStatus(ctx.source.server)
+    for (let i = 0; i < lines.length; i++) {
+      let line = String(lines[i])
+      let mismatch = line.indexOf('arena: ') === 0 && line.indexOf('arena: OK') !== 0 && line.indexOf('arena: unset') !== 0
+      reply(ctx, mismatch ? Text.of(line).yellow() : Text.of(line).gray())
+    }
+    return 1
+  }
+  let spawnpoint = (withArena, hasPlayer) => (ctx) => {
+    if (!loaded()) return fail(ctx, 'The HQ script is not loaded (consortium_hq.js).')
+    let member = null
+    if (withArena) {
+      if (hasPlayer) member = resolveAny(ctx)
+      else if (ctx.source.isPlayer()) member = { id: String(ctx.source.player.uuid).toLowerCase(), name: String(ctx.source.player.username) }
+      else return fail(ctx, 'Name the staff party member: consortium hq spawnpoint arena <player>.')
+      if (member === null) return 0
+    }
+    let r = consortiumHqSpawnpoint(ctx.source.server, withArena, member)
+    if (!r.ok) return fail(ctx, r.reason)
+    console.info('[Consortium] ' + byName(ctx) + ' hq spawnpoint' + (withArena ? ' arena ' + member.name : ''))
+    for (let i = 0; i < r.lines.length; i++) reply(ctx, Text.of(r.lines[i]).green())
+    return 1
+  }
+
+  let posNode = Commands.argument('pos', Arguments.BLOCK_POS.create(event))
+  for (let i = 0; i < ['south', 'west', 'north', 'east'].length; i++) {
+    let facing = ['south', 'west', 'north', 'east'][i]
+    posNode = posNode.then(Commands.literal(facing).executes(build(facing, false))
+      .then(Commands.argument('layout', Arguments.WORD.create(event)).executes(build(facing, true))))
+  }
+  let hqNode = Commands.literal('hq').requires(op(4))
+    .executes(status)
+    .then(Commands.literal('build').then(posNode))
+    .then(Commands.literal('status').executes(status))
+    .then(Commands.literal('info').executes(status))
+    .then(Commands.literal('clear').executes((ctx) => {
+      if (!loaded()) return fail(ctx, 'The HQ script is not loaded (consortium_hq.js).')
+      let r = consortiumHqClear(ctx.source.server, byName(ctx))
+      if (!r.ok) return fail(ctx, r.reason)
+      console.info('[Consortium] ' + byName(ctx) + ' hq clear')
+      return ok(ctx, r.text)
+    }))
+    .then(Commands.literal('spawnpoint').executes(spawnpoint(false, false))
+      .then(Commands.literal('arena').executes(spawnpoint(true, false))
+        .then(Commands.argument('player', Arguments.WORD.create(event)).executes(spawnpoint(true, true)))))
+    .then(Commands.literal('forget').executes((ctx) => {
+      if (!loaded()) return fail(ctx, 'The HQ script is not loaded (consortium_hq.js).')
+      let r = consortiumHqForget(ctx.source.server, byName(ctx))
+      if (!r.ok) return fail(ctx, r.reason)
+      console.info('[Consortium] ' + byName(ctx) + ' hq forget')
+      return ok(ctx, r.text)
+    }))
+
+  event.register(Commands.literal('consortium').then(hqNode))
+})
+// ==== END HQ BLOCK ====

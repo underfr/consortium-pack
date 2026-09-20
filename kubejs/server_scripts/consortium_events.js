@@ -52,7 +52,10 @@ const CONSORTIUM_EVENT_BLOODMOON_NIGHT_MS = 12 * 60000
 const CONSORTIUM_EVENT_WAVE_ALIVE_PER_PLAYER = 6 // PLACEHOLDER
 const CONSORTIUM_EVENT_WAVE_ALIVE_CAP = 24       // PLACEHOLDER
 const CONSORTIUM_EVENT_WAVE_PER_STEP = 4         // PLACEHOLDER
-const CONSORTIUM_EVENT_WAVE_RADIUS = 48          // wave mobs beyond this distance from the centre are discarded
+const CONSORTIUM_EVENT_WAVE_RADIUS = 48          // wave mobs beyond this distance from the centre are discarded (arenas without a pit)
+const CONSORTIUM_EVENT_RING_MIN = 8              // wave spawn ring defaults (blocks from the centre); the arena record overrides them
+const CONSORTIUM_EVENT_RING_MAX = 40
+const CONSORTIUM_EVENT_PIT_MARGIN = 4            // with a pit, a wave mob farther than pit + margin (Chebyshev) is discarded
 const CONSORTIUM_EVENT_TICKET_CHANCE = 0.3       // PLACEHOLDER: crate opener ticket bonus
 const CONSORTIUM_EVENT_CRASH_FACTOR = 0.5        // PLACEHOLDER
 const CONSORTIUM_EVENT_CRASH_MIN_RATIO = 0.6     // a crash only hits a line at 60 % or more
@@ -111,14 +114,27 @@ function consortiumActiveId(server) {
   return active === null ? '' : String(active.getString('id'))
 }
 
-// The HQ arena record as a plain object { dim, x, y, z, team, radius }, or null until staff set it.
+// The HQ arena record as a plain object { dim, x, y, z, team, radius, ringMin, ringMax, pit }, or null until
+// staff set it. ringMin..ringMax (blocks) is the wave spawn ring (defaults 8..40, the pre-HQ constants);
+// pit (blocks, 0 = off) switches every "inside the arena" test from the chunk rule to the block square
+// |dx| <= pit and |dz| <= pit around the centre (BADGES_AND_HQ 2.7; /consortium hq spawnpoint arena writes
+// 6, 10 and 12 for the generated HQ, /consortium event arena ring sets them by hand).
 function consortiumArena(server) {
   let ev = consortiumEvents(server)
   if (!ev.contains('arena')) return null
   let a = ev.getCompound('arena')
   if (!a.contains('team') || String(a.getString('team')).length === 0) return null
+  let ringMin = a.contains('ringMin') ? Math.max(1, a.getInt('ringMin')) : CONSORTIUM_EVENT_RING_MIN
+  let ringMax = a.contains('ringMax') ? Math.max(ringMin + 1, a.getInt('ringMax')) : CONSORTIUM_EVENT_RING_MAX
   return { dim: String(a.getString('dim')), x: a.getInt('x'), y: a.getInt('y'), z: a.getInt('z'),
-    team: String(a.getString('team')).toLowerCase(), radius: Math.max(1, a.getInt('radius')) }
+    team: String(a.getString('team')).toLowerCase(), radius: Math.max(1, a.getInt('radius')),
+    ringMin: ringMin, ringMax: ringMax, pit: a.contains('pit') ? Math.max(0, a.getInt('pit')) : 0 }
+}
+
+// The ring and pit line of /consortium event arena show.
+function consortiumArenaRingText(arena) {
+  return 'ring ' + arena.ringMin + '..' + arena.ringMax + ' blocks' + (arena.ringMin === CONSORTIUM_EVENT_RING_MIN && arena.ringMax === CONSORTIUM_EVENT_RING_MAX ? ' (default)' : '')
+    + ', pit ' + (arena.pit > 0 ? arena.pit + ' blocks' : 'none (chunk rule)')
 }
 
 function consortiumLevelOf(server, dim) {
@@ -813,7 +829,7 @@ function consortiumSpawnWave(server, arena, count) {
   let healthFactor = 1 + 0.25 * Math.max(0, n - 2) // PLACEHOLDER
   let spawned = 0
   for (let i = 0; i < count; i++) {
-    let pos = consortiumEventSpot(level, centre, 8, 40, 0, arena.team, arena)
+    let pos = consortiumEventSpot(level, centre, arena.ringMin, arena.ringMax, 0, arena.team, arena)
     if (pos === null) continue
     let id = consortiumWavePick(server)
     let hp = Math.round((CONSORTIUM_EVENT_WAVE_BASE_HEALTH[id] || 20) * healthFactor)
@@ -858,8 +874,13 @@ function consortiumWaveStep(server, active, arena, participant) {
   let alive = 0
   for (let i = 0; i < mobs.length; i++) {
     let e = mobs[i]
-    let far = e.blockPosition().distSqr(centre) > CONSORTIUM_EVENT_WAVE_RADIUS * CONSORTIUM_EVENT_WAVE_RADIUS
-    if (far || consortiumHostileClaim(e.level, e.blockPosition(), arena)) { e.discard(); continue }
+    let bp = e.blockPosition()
+    // With a pit: Chebyshev past pit + margin (the floor corner of a square pit is pit x sqrt(2) from the
+    // centre and must stay inside, BADGES_AND_HQ 2.7); without one, the 48-block Euclidean test as before.
+    let far = arena.pit > 0
+      ? Math.max(Math.abs(bp.getX() - arena.x), Math.abs(bp.getZ() - arena.z)) > arena.pit + CONSORTIUM_EVENT_PIT_MARGIN
+      : bp.distSqr(centre) > CONSORTIUM_EVENT_WAVE_RADIUS * CONSORTIUM_EVENT_WAVE_RADIUS
+    if (far || consortiumHostileClaim(e.level, bp, arena)) { e.discard(); continue }
     alive++
   }
   if (participants > 0) {

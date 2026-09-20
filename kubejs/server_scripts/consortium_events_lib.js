@@ -88,11 +88,17 @@ function consortiumClaimTeamId(claim) {
   try { return String(claim.getTeamData().getTeam().getId()).toLowerCase() } catch (err) { return '' }
 }
 
-// True when the chunk at `pos` lies inside the arena record (same dimension, within `radius` chunks of the centre).
-// `level.dimension` is KubeJS's ResourceLocation property (it shadows the vanilla dimension() method).
+// True when `pos` lies inside the arena record (same dimension). With a pit (arena.pit > 0, the generated HQ
+// of BADGES_AND_HQ 2.7) it is the block square |dx| <= pit and |dz| <= pit around the centre: the hall, the
+// yard and the plinth are then outside (a bystander at the shop gets no warning, a wave mob that leaves the
+// pit is discarded by the hostile-claim sweep); without one, the chunk rule: within `radius` chunks of the
+// centre chunk (Chebyshev). `level.dimension` is KubeJS's ResourceLocation property (it shadows the vanilla
+// dimension() method).
 function consortiumInArena(level, pos, arena) {
   if (arena === null) return false
   if (String(level.dimension) !== arena.dim) return false
+  let pit = arena.pit || 0
+  if (pit > 0) return Math.abs(pos.getX() - arena.x) <= pit && Math.abs(pos.getZ() - arena.z) <= pit
   let dx = Math.abs((pos.getX() >> 4) - (arena.x >> 4))
   let dz = Math.abs((pos.getZ() >> 4) - (arena.z >> 4))
   return dx <= arena.radius && dz <= arena.radius
