@@ -215,6 +215,16 @@ const CONSORTIUM_QUEST_REWARDS = {
   '5C08000000000064': { kind: 'title', check: { c: 'founder' }, title: 'founder', text: 'Founder' }, // Founder
   '5C08000000000084': { kind: 'title', check: { c: 'count', key: 'referral', min: 3 }, title: 'talent_scout', text: 'Talent Scout' }, // Talent Scout
   '5C08000000000094': { kind: 'cosmetic', check: { c: 'flag', key: 'season:closed' }, cosmetic: 'season_share' }, // Season 1 Closed
+  '5C01000000000124': { kind: 'cc', check: { c: 'item', item: 'ironfurnaces:iron_furnace' }, cents: 500, reason: 'cert:ironfurnaces_iron_furnace' }, // Iron Furnace (batch 5)
+  '5C01000000000134': { kind: 'cc', check: { c: 'item', item: 'silentgear:alloy_forge' }, cents: 500, reason: 'cert:silentgear_alloy_forge' }, // Alloy Forge (batch 5)
+  '5C02000000000134': { kind: 'cc', check: { c: 'item', item: 'productivemetalworks:black_foundry_controller' }, cents: 1500, reason: 'cert:productivemetalworks_black_foundry_controller' }, // Foundry Controller (batch 5)
+  '5C02000000000144': { kind: 'cc', check: { c: 'item', item: 'createaddition:alternator' }, cents: 1500, reason: 'cert:createaddition_alternator' }, // Alternator (batch 5)
+  '5C02000000000154': { kind: 'cc', check: { c: 'item', item: 'create_enchantment_industry:blaze_enchanter' }, cents: 1500, reason: 'cert:create_enchantment_industry_blaze_enchanter' }, // Blaze Enchanter (batch 5)
+  '5C03000000000144': { kind: 'cc', check: { c: 'item', item: 'immersivepetroleum:crudeoil_bucket' }, cents: 2000, reason: 'cert:immersivepetroleum_crudeoil_bucket' }, // Crude Oil (batch 5)
+  '5C03000000000154': { kind: 'cc', check: { c: 'item', item: 'extendedae:ex_drive' }, cents: 2000, reason: 'cert:extendedae_ex_drive' }, // Extended Drive (batch 5)
+  '5C04000000000144': { kind: 'cc', check: { c: 'item', item: 'merequester:requester' }, cents: 2500, reason: 'cert:merequester_requester' }, // ME Requester (batch 5)
+  '5C04000000000154': { kind: 'cc', check: { c: 'item', item: 'megacells:cell_component_1m' }, cents: 2500, reason: 'cert:megacells_cell_component_1m' }, // 1M Cell Component (batch 5)
+  '5C05000000000144': { kind: 'cc', check: { c: 'item', item: 'ironfurnaces:million_furnace' }, cents: 4000, reason: 'cert:ironfurnaces_million_furnace' }, // Million Furnace (batch 5)
 }
 
 // ---- server handle ----------------------------------------------------------------------------------

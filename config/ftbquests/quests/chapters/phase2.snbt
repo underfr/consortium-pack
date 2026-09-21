@@ -479,5 +479,101 @@
 			x: 17.5d
 			y: 0.0d
 		}
+		{
+			dependencies: ["5C02000000000010"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "productivemetalworks:black_foundry_controller"
+			}
+			id: "5C02000000000130"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C02000000000134"
+					type: "custom"
+				}
+				{
+					id: "5C02000000000135"
+					type: "xp"
+					xp: 75
+				}
+			]
+			tasks: [{
+				id: "5C02000000000131"
+				item: {
+					count: 1
+					id: "productivemetalworks:black_foundry_controller"
+				}
+				type: "item"
+			}]
+			x: 20.0d
+			y: -2.5d
+		}
+		{
+			dependencies: ["5C02000000000010"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "createaddition:alternator"
+			}
+			id: "5C02000000000140"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C02000000000144"
+					type: "custom"
+				}
+				{
+					id: "5C02000000000145"
+					type: "xp"
+					xp: 75
+				}
+			]
+			tasks: [{
+				id: "5C02000000000141"
+				item: {
+					count: 1
+					id: "createaddition:alternator"
+				}
+				type: "item"
+			}]
+			x: 20.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C02000000000010"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "create_enchantment_industry:blaze_enchanter"
+			}
+			id: "5C02000000000150"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C02000000000154"
+					type: "custom"
+				}
+				{
+					id: "5C02000000000155"
+					type: "xp"
+					xp: 75
+				}
+			]
+			tasks: [{
+				id: "5C02000000000151"
+				item: {
+					count: 1
+					id: "create_enchantment_industry:blaze_enchanter"
+				}
+				type: "item"
+			}]
+			x: 20.0d
+			y: 2.5d
+		}
 	]
 }

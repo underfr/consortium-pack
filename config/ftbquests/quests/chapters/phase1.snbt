@@ -409,5 +409,88 @@
 			x: 17.5d
 			y: 0.0d
 		}
+		{
+			dependencies: ["5C01000000000010"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "minecraft:book"
+			}
+			id: "5C01000000000110"
+			rewards: [{
+				id: "5C01000000000114"
+				type: "xp"
+				xp: 25
+			}]
+			tasks: [{
+				id: "5C01000000000111"
+				type: "checkmark"
+			}]
+			x: 20.0d
+			y: -2.5d
+		}
+		{
+			dependencies: ["5C01000000000010"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "ironfurnaces:iron_furnace"
+			}
+			id: "5C01000000000120"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C01000000000124"
+					type: "custom"
+				}
+				{
+					id: "5C01000000000125"
+					type: "xp"
+					xp: 50
+				}
+			]
+			tasks: [{
+				id: "5C01000000000121"
+				item: {
+					count: 1
+					id: "ironfurnaces:iron_furnace"
+				}
+				type: "item"
+			}]
+			x: 20.0d
+			y: 0.0d
+		}
+		{
+			dependencies: ["5C01000000000010"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "silentgear:alloy_forge"
+			}
+			id: "5C01000000000130"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C01000000000134"
+					type: "custom"
+				}
+				{
+					id: "5C01000000000135"
+					type: "xp"
+					xp: 50
+				}
+			]
+			tasks: [{
+				id: "5C01000000000131"
+				item: {
+					count: 1
+					id: "silentgear:alloy_forge"
+				}
+				type: "item"
+			}]
+			x: 20.0d
+			y: 2.5d
+		}
 	]
 }

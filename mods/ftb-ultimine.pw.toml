@@ -1,0 +1,8 @@
+name = "FTB Ultimine"
+filename = "ftb-ultimine-neoforge-2101.1.15.jar"
+side = "both"
+
+[download]
+url = "https://maven.ftb.dev/releases/dev/ftb/mods/ftb-ultimine-neoforge/2101.1.15/ftb-ultimine-neoforge-2101.1.15.jar"
+hash-format = "sha256"
+hash = "1393a85ceb6e4794450d5f06043e3a033278e31b86de8e03950d8b87604b2213"

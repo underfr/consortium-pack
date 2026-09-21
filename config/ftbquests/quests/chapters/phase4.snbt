@@ -517,5 +517,69 @@
 			x: 17.5d
 			y: 0.0d
 		}
+		{
+			dependencies: ["5C04000000000010"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "merequester:requester"
+			}
+			id: "5C04000000000140"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C04000000000144"
+					type: "custom"
+				}
+				{
+					id: "5C04000000000145"
+					type: "xp"
+					xp: 125
+				}
+			]
+			tasks: [{
+				id: "5C04000000000141"
+				item: {
+					count: 1
+					id: "merequester:requester"
+				}
+				type: "item"
+			}]
+			x: 20.0d
+			y: -1.3d
+		}
+		{
+			dependencies: ["5C04000000000010"]
+			hide_until_deps_complete: true
+			icon: {
+				id: "megacells:cell_component_1m"
+			}
+			id: "5C04000000000150"
+			rewards: [
+				{
+					icon: {
+						id: "minecraft:gold_nugget"
+					}
+					id: "5C04000000000154"
+					type: "custom"
+				}
+				{
+					id: "5C04000000000155"
+					type: "xp"
+					xp: 125
+				}
+			]
+			tasks: [{
+				id: "5C04000000000151"
+				item: {
+					count: 1
+					id: "megacells:cell_component_1m"
+				}
+				type: "item"
+			}]
+			x: 20.0d
+			y: 1.3d
+		}
 	]
 }

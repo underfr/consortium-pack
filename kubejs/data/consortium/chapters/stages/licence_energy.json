@@ -1,5 +1,6 @@
 {
   "items": [
+    "megacells:radioactive_chemical_cell",
     "mekanismgenerators:control_rod_assembly",
     "mekanismgenerators:fission_fuel_assembly",
     "mekanismgenerators:fission_reactor_casing",

@@ -5,7 +5,7 @@
     "name": "The Consortium",
     "address": "consortium.undernetworks.fr:31483"
   },
-  "motd": "Season 1 is in preparation. Pack 0.10.1: the full HQ site (delivery hall, clock tower, plaza, arena with traps) is live for testing; the season server address is set.",
+  "motd": "Season 1 is in preparation. Pack 0.11.0: 69 new mods (Silent Gear, the foundry, Create and AE2 addons, Immersive Petroleum, Chisel, Macaw's, FTB Ultimine, Lootr and more), 11 new quests, /spawn.",
   "lowPresetDisables": [
     "mods/iris.pw.toml"
   ],
@@ -14,6 +14,11 @@
     "shaderpacks/makeup-ultra-fast-shaders.pw.toml": "mods/iris.pw.toml"
   },
   "news": [
+    {
+      "date": "2026-09-21",
+      "title": "Pack 0.11.0: 69 new mods",
+      "text": "Silent Gear tools and armour built from parts, the Productive Metalworks foundry (phase 2), Create addons (Crafts & Additions, Enchantment Industry, Slice & Dice, Connected, Copycats+, Deco, Bells & Whistles, Jetpack), AE2 addons (Extended AE, MEGA Cells, wireless terminals, ME Requester, import and export cards, Create Stock Bridge), Mekanism Additions and More Mekanism Processing, Immersive Petroleum, Iron Furnaces, Ender Storage, Dark Utilities, Lootr (every structure chest is yours to open once), FTB Ultimine (16 blocks, a real tool), the whole YUNG's and Macaw's suites, Chisel, FramedBlocks, Handcrafted, Crystalix, elevators, cosmetic armour, Polymorph, Crafting Tweaks, TrashSlot, Inventory Essentials and Ok Zoomer. Every new machine is placed in its phase, prices cover the new metals and fuels, 11 new quests explain the additions, and /spawn takes you back to HQ (15 minute cooldown). Client RAM: 6 GB recommended, the 8 GB preset still boots."
+    },
     {
       "date": "2026-09-20",
       "title": "Pack 0.10.0: the HQ site, revision 2",

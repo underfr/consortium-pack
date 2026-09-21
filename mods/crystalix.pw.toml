@@ -1,0 +1,13 @@
+name = "Crystalix"
+filename = "crystalix-3.0.0.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/tnxhDX6A/versions/yY0NLBUp/crystalix-3.0.0.jar"
+hash-format = "sha512"
+hash = "67753f5eaa347ec3a0498e18da663e11e93647a3047e1d185ecffe8e85ab438c211fd26cdf14e41cb132bfddd8814c44a2b02c23d691a6632cb162252865250a"
+
+[update]
+[update.modrinth]
+mod-id = "tnxhDX6A"
+version = "yY0NLBUp"

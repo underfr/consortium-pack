@@ -3,6 +3,7 @@
     "ae2:quantum_entangled_singularity",
     "ae2:quantum_link",
     "ae2:quantum_ring",
+    "ae2wtlib:quantum_bridge_card",
     "mekanism:portable_qio_dashboard",
     "mekanism:portable_teleporter",
     "mekanism:qio_dashboard",

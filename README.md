@@ -11,17 +11,27 @@ official distribution on Modrinth or the FTB Maven), our own configuration files
 and `launcher.json` (server address, message of the day, news, minimum launcher version). It
 contains no Mojang code or assets and no altered vanilla files. Nothing is re-hosted.
 
-## What is in the pack (0.6.0)
+## What is in the pack (0.11.0)
 
-93 metafiles: 84 mods that every player receives or that only the server runs, plus 9 optional
-client-side entries (see below). The full list with versions, sides and reasons is in the main
+163 metafiles: 154 mods that every player receives or that only the server runs, plus 9 optional
+client-side entries (see below). Content batch 5 (2026-09-21) added 69 mods: Silent Gear, the Productive
+Metalworks foundry, Create addons (Crafts & Additions, Enchantment Industry, Slice & Dice, Connected, Copycats+,
+Deco, Bells & Whistles, Jetpack, Ultimine, Stock Bridge), AE2 addons (Extended AE, MEGA Cells, wireless terminals,
+ME Requester, Import Export Card), Mekanism Additions, More Mekanism Processing, Mekanism Curios and Ponders, Immersive
+Petroleum, Iron Furnaces, Ender Storage, Dark Utilities, Lootr, FTB Ultimine, Leaves Be Gone, ElevatorMod, Chisel
+Reborn, FramedBlocks, Crystalix, Handcrafted, the twelve Macaw's mods, the eight remaining YUNG's mods, Polymorph,
+Crafting Tweaks, Inventory Essentials, TrashSlot, Cosmetic Armor Reworked Forked and Ok Zoomer. The full list with versions, sides and reasons is in the main
 repository's `docs/MODLIST.md`.
 
 World generation (fresh world for Season 1): Terralith, Tectonic and Lithostitched (overworld),
 Amplified Nether, Nullscape (End), YUNG's Better Mineshafts, Better Strongholds and Better Nether
 Fortresses on YUNG's API, and Structory. Server-only admin tools: GriefLogger, Vanishmod, WorldEdit
-with WorldEdit Hang Fix, FTB Essentials (moderation commands only; every teleport, kit, virtual
-workstation, `/enderchest` and `/nick` is disabled in the server config).
+with WorldEdit Hang Fix, FTB Essentials (moderation commands and `/spawn`; every other teleport, kit,
+virtual workstation, `/enderchest` and `/nick` is disabled in the server config).
+
+Sourcing: every mod comes from the Modrinth CDN or the FTB Maven except Productive Metalworks, fetched
+from its author's CurseForge file link (no API key). Client RAM: 6 GB recommended since 0.11.0; the
+8 GB preset (3 GB heap) still boots.
 
 ## Optional mods (player toggle in the launcher)
 

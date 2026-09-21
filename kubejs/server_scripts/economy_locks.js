@@ -56,3 +56,31 @@ ServerEvents.recipes((event) => {
   event.remove({ id: 'ad_astra:cryo_freezing/cryo_fuel_from_cryo_freezing_packed_ice' })
   event.remove({ id: 'ad_astra:cryo_freezing/cryo_fuel_from_cryo_freezing_blue_ice' })
 })
+
+// Productive Metalworks (pack 0.11.0, DECISIONS 2026-09-21): the foundry is a phase 2 machine (Chapters stage) and
+// its yield must not beat the phase 2 cap of Mekanism basic (2x). Raw ores already melt to 180 mB (2 ingots) and
+// Create crushed ores to 90 mB; silk-touched ore blocks melt to 270 mB (3 ingots) and gem or coal ores to 300 mB
+// (3 gems), the 3x of phase 3. Every item_melting recipe whose ingredient is a c:ores/<x> tag is re-registered at
+// two thirds of its amount (270 -> 180, 300 -> 200); lapis and redstone ores (500 mB, below the vanilla drop) are
+// left alone. The foundry's fluid ids and the 1.15.1 recipe ids come from the live dump (tools/stages/inv).
+ServerEvents.recipes((event) => {
+  const nerfed = []
+  event.forEachRecipe({ type: 'productivemetalworks:item_melting' }, (recipe) => {
+    let json
+    try { json = JSON.parse(String(recipe.json)) } catch (err) { return }
+    const tag = json.ingredient && json.ingredient.tag
+    if (!tag || tag.indexOf('c:ores/') !== 0 || !Array.isArray(json.result)) return
+    let changed = false
+    for (const out of json.result) {
+      if (out.amount === 270 || out.amount === 300) { out.amount = Math.round(out.amount * 2 / 3); changed = true }
+    }
+    if (!changed) return
+    delete json['neoforge:conditions']
+    nerfed.push({ id: String(recipe.getId()), json: json })
+  })
+  for (const entry of nerfed) {
+    event.remove({ id: entry.id })
+    event.custom(entry.json).id(entry.id)
+  }
+  console.info('[Consortium] foundry ore-block melting cut to 2x on ' + nerfed.length + ' recipes')
+})

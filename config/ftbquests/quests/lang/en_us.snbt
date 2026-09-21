@@ -1647,4 +1647,154 @@
 	reward.5C08000000000094.title: "Season 1 Share"
 	reward.5C08000000000095.title: "Closing bonus: 500 XP"
 
+	// ---- batch 5 (pack 0.11.0): the mods of 2026-09-21, one column per phase chapter ----
+
+	quest.5C01000000000110.title: "Field Manual"
+	quest.5C01000000000110.quest_subtitle: "Read the tools of the trade"
+	quest.5C01000000000110.quest_desc: [
+		"A few tools the Board hands every Recruit, no clearance needed."
+		""
+		"&eUltimine&r: hold the Ultimine key (default the tilde key, rebind it in Controls) while mining and up to 16 connected blocks of the same kind fall at once. It needs the right tool, drains hunger per block and stops before the tool breaks."
+		"&eLoot chests&r: every chest in a ruin, dungeon, temple or mineshaft is yours to open once. Another crew opening it first takes nothing from you, so leave them in place."
+		"&e/spawn&r: one way back to HQ, 15 minutes of cooldown, 5 seconds standing still. There is no way back: set a waystone."
+		"&eRecipe arrows&r: when two mods make the same thing, the arrows on the crafting output pick which one you get."
+		"&eTrash slot&r and &eshift-drag&r: the bin in your inventory deletes junk; shift-drag moves whole rows of stacks."
+	]
+	task.5C01000000000111.title: "Read the field manual"
+	reward.5C01000000000114.title: "Reading bonus: 25 XP"
+
+	quest.5C01000000000120.title: "Iron Furnace"
+	quest.5C01000000000120.quest_subtitle: "Show one iron furnace"
+	quest.5C01000000000120.quest_desc: [
+		"The stone furnace is what the Board issues; an iron furnace smelts faster for eight ingots, and every upgrade after it (gold, diamond, emerald, obsidian) is a plate you slot onto the previous one. Augments add speed, fuel efficiency or a second slot row."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 5.00 CC and 50 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C01000000000121.title: "Iron furnace"
+	reward.5C01000000000124.title: "Certification bonus: 5.00 CC"
+	reward.5C01000000000125.title: "Certification bonus: 50 XP"
+
+	quest.5C01000000000130.title: "Alloy Forge"
+	quest.5C01000000000130.quest_subtitle: "Show one alloy forge"
+	quest.5C01000000000130.quest_desc: [
+		"Gear is built from parts here: a blueprint, a main material, a rod, a tip. The alloy forge turns gold and blaze powder into blaze gold, and later crimson iron from the Nether and azure silver from the End into the alloys the best tools are made of. None of it needs a clearance."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 5.00 CC and 50 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C01000000000131.title: "Alloy forge"
+	reward.5C01000000000134.title: "Certification bonus: 5.00 CC"
+	reward.5C01000000000135.title: "Certification bonus: 50 XP"
+
+	quest.5C02000000000130.title: "Foundry Controller"
+	quest.5C02000000000130.quest_subtitle: "Show one foundry controller"
+	quest.5C02000000000130.quest_desc: [
+		"Fire bricks around a blast furnace make the controller; more bricks, a tank, a drain and a window make the Foundry: a lava-heated vat that melts raw ore two to one, casts ingots, plates, gears and rods, and alloys steel from molten iron and carbon."
+		""
+		"The Board rates it a phase 2 machine: its yield is the yield of Mekanism basic. Silk-touched ore blocks melt two to one as well, no more."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed. Any dyed colour counts for the crew, the certification reads the black one."
+		""
+		"&7Certification bonus: 15.00 CC and 75 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C02000000000131.title: "Foundry controller (black, straight from the blast furnace recipe)"
+	reward.5C02000000000134.title: "Certification bonus: 15.00 CC"
+	reward.5C02000000000135.title: "Certification bonus: 75 XP"
+
+	quest.5C02000000000140.title: "Alternator"
+	quest.5C02000000000140.quest_subtitle: "Show one alternator"
+	quest.5C02000000000140.quest_desc: [
+		"Rotation in, Flux out. An alternator on a shaft feeds the LV grid, the electric motor does the reverse, and the accumulator stores what the water wheels make at night. Connectors and spools carry it across the yard."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 15.00 CC and 75 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C02000000000141.title: "Alternator"
+	reward.5C02000000000144.title: "Certification bonus: 15.00 CC"
+	reward.5C02000000000145.title: "Certification bonus: 75 XP"
+
+	quest.5C02000000000150.title: "Blaze Enchanter"
+	quest.5C02000000000150.quest_subtitle: "Show one blaze enchanter"
+	quest.5C02000000000150.quest_desc: [
+		"Experience is a fluid here. Drains pull it out of tools on a grindstone, the printer copies enchanted books, and a blaze burner fed with liquid experience enchants without a table. The Board pays nothing for experience: mobs killed by deployers or crushing wheels drop none."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 15.00 CC and 75 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C02000000000151.title: "Blaze enchanter"
+	reward.5C02000000000154.title: "Certification bonus: 15.00 CC"
+	reward.5C02000000000155.title: "Certification bonus: 75 XP"
+
+	quest.5C03000000000140.title: "Crude Oil"
+	quest.5C03000000000140.quest_subtitle: "Show one bucket of crude oil"
+	quest.5C03000000000140.quest_desc: [
+		"Under the ground lie reservoirs of thousands of buckets. A seismic survey finds them, a derrick opens them, a pumpjack lifts the crude, and the distillation tower splits it into naphtha, kerosene, diesel and lubricant. The rockets of phase 4 burn the diesel as well as refined oil."
+		""
+		"The Board buys crude at the crude oil price, whichever well it came from."
+		""
+		"Hold one bucket in your inventory after this assignment opens."
+		""
+		"&7Certification bonus: 20.00 CC and 100 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C03000000000141.title: "Bucket of crude oil"
+	reward.5C03000000000144.title: "Certification bonus: 20.00 CC"
+	reward.5C03000000000145.title: "Certification bonus: 100 XP"
+
+	quest.5C03000000000150.title: "Extended Drive"
+	quest.5C03000000000150.quest_subtitle: "Show one extended ME drive"
+	quest.5C03000000000150.quest_desc: [
+		"Twenty cells in one block, buses that filter by tag or by mod, a level emitter with a threshold, an infinity cell of water: the extended network parts of phase 3. The pattern side of them waits for the phase 4 autocrafting clearance."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 20.00 CC and 100 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C03000000000151.title: "Extended ME drive"
+	reward.5C03000000000154.title: "Certification bonus: 20.00 CC"
+	reward.5C03000000000155.title: "Certification bonus: 100 XP"
+
+	quest.5C04000000000140.title: "ME Requester"
+	quest.5C04000000000140.quest_subtitle: "Show one ME requester"
+	quest.5C04000000000140.quest_desc: [
+		"Keep 64 of anything in stock: the requester asks the autocrafting network for more whenever the count drops, and its terminal lists every request in one screen. Wireless terminals, a magnet card and an extended pattern provider come with the same clearance."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 25.00 CC and 125 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C04000000000141.title: "ME requester"
+	reward.5C04000000000144.title: "Certification bonus: 25.00 CC"
+	reward.5C04000000000145.title: "Certification bonus: 125 XP"
+
+	quest.5C04000000000150.title: "1M Cell Component"
+	quest.5C04000000000150.quest_subtitle: "Show one 1M cell component"
+	quest.5C04000000000150.quest_desc: [
+		"A 256k component and an accumulation processor make the first MEGA component: a million items in one cell, and the ladder goes on to 256M. The Board also opens the ender chests and tanks of Ender Storage to everyone in this phase."
+		""
+		"Hold one in your inventory after this assignment opens."
+		""
+		"&7Certification bonus: 25.00 CC and 125 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C04000000000151.title: "1M cell component"
+	reward.5C04000000000154.title: "Certification bonus: 25.00 CC"
+	reward.5C04000000000155.title: "Certification bonus: 125 XP"
+
+	quest.5C05000000000140.title: "Million Furnace"
+	quest.5C05000000000140.quest_subtitle: "Show one million furnace"
+	quest.5C05000000000140.quest_desc: [
+		"Every furnace upgrade the Board ever certified, fused into one rainbow core: the last furnace, and the last generator, of the season."
+		""
+		"Hold one in your inventory after this assignment opens; pick it up again if it is already placed."
+		""
+		"&7Certification bonus: 40.00 CC and 150 XP, paid to the crew member holding the item.&r"
+	]
+	task.5C05000000000141.title: "Million furnace"
+	reward.5C05000000000144.title: "Certification bonus: 40.00 CC"
+	reward.5C05000000000145.title: "Certification bonus: 150 XP"
+
 }

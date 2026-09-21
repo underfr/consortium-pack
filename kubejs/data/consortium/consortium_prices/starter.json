@@ -414,6 +414,40 @@
         "create:crushed_raw_silver": 1
       }
     },
+    "silentgear:crimson_iron_ingot": {
+      "name": "Crimson Iron",
+      "base": 1.6,
+      "phase": 1,
+      "charter_family": "raw",
+      "half_volume": 210,
+      "daily_cap": 60,
+      "members": {
+        "#c:ingots/crimson_iron": 1,
+        "#c:storage_blocks/crimson_iron": 9,
+        "#c:nuggets/crimson_iron": 0.1111,
+        "#c:raw_materials/crimson_iron": 1,
+        "#c:storage_blocks/raw_crimson_iron": 9,
+        "#c:dusts/crimson_iron": 1,
+        "#c:plates/crimson_iron": 1
+      }
+    },
+    "silentgear:azure_silver_ingot": {
+      "name": "Azure Silver",
+      "base": 2.6,
+      "phase": 1,
+      "charter_family": "raw",
+      "half_volume": 110,
+      "daily_cap": 30,
+      "members": {
+        "#c:ingots/azure_silver": 1,
+        "#c:storage_blocks/azure_silver": 9,
+        "#c:nuggets/azure_silver": 0.1111,
+        "#c:raw_materials/azure_silver": 1,
+        "#c:storage_blocks/raw_azure_silver": 9,
+        "#c:dusts/azure_silver": 1,
+        "#c:plates/azure_silver": 1
+      }
+    },
     "powah:uraninite": {
       "name": "Uraninite",
       "base": 0.9,
@@ -552,13 +586,14 @@
     },
     "ad_astra:oil_bucket": {
       "name": "Crude Oil",
-      "base": 4.3,
+      "base": 2.1,
       "phase": 4,
       "charter_family": "power",
-      "half_volume": 42,
-      "daily_cap": 12,
+      "half_volume": 84,
+      "daily_cap": 24,
       "members": {
-        "ad_astra:oil_bucket": 1
+        "ad_astra:oil_bucket": 1,
+        "immersivepetroleum:crudeoil_bucket": 1
       }
     },
     "create:andesite_alloy": {
@@ -784,6 +819,62 @@
         "#c:plates/electrum": 1
       }
     },
+    "silentgear:blaze_gold_ingot": {
+      "name": "Blaze Gold",
+      "base": 7.4,
+      "phase": 1,
+      "charter_family": "neutral",
+      "half_volume": 70,
+      "daily_cap": 20,
+      "members": {
+        "#c:ingots/blaze_gold": 1,
+        "#c:storage_blocks/blaze_gold": 9,
+        "#c:nuggets/blaze_gold": 0.1111,
+        "#c:dusts/blaze_gold": 1
+      }
+    },
+    "silentgear:crimson_steel_ingot": {
+      "name": "Crimson Steel",
+      "base": 8.4,
+      "phase": 1,
+      "charter_family": "neutral",
+      "half_volume": 35,
+      "daily_cap": 10,
+      "members": {
+        "#c:ingots/crimson_steel": 1,
+        "#c:storage_blocks/crimson_steel": 9,
+        "#c:nuggets/crimson_steel": 0.1111,
+        "#c:dusts/crimson_steel": 1
+      }
+    },
+    "silentgear:azure_electrum_ingot": {
+      "name": "Azure Electrum",
+      "base": 10.5,
+      "phase": 1,
+      "charter_family": "neutral",
+      "half_volume": 35,
+      "daily_cap": 10,
+      "members": {
+        "#c:ingots/azure_electrum": 1,
+        "#c:storage_blocks/azure_electrum": 9,
+        "#c:nuggets/azure_electrum": 0.1111,
+        "#c:dusts/azure_electrum": 1
+      }
+    },
+    "silentgear:tyrian_steel_ingot": {
+      "name": "Tyrian Steel",
+      "base": 24.5,
+      "phase": 1,
+      "charter_family": "neutral",
+      "half_volume": 14,
+      "daily_cap": 4,
+      "members": {
+        "#c:ingots/tyrian_steel": 1,
+        "#c:storage_blocks/tyrian_steel": 9,
+        "#c:nuggets/tyrian_steel": 0.1111,
+        "#c:dusts/tyrian_steel": 1
+      }
+    },
     "mekanism:ingot_refined_obsidian": {
       "name": "Refined Obsidian",
       "base": 3.1,
@@ -975,7 +1066,7 @@
     },
     "consortium:fuel_buckets": {
       "name": "Rocket Fuel (bucket)",
-      "base": 4.5,
+      "base": 2.3,
       "phase": 4,
       "charter_family": "power",
       "half_volume": 21,
@@ -983,7 +1074,9 @@
       "members": {
         "ad_astra:fuel_bucket": 1,
         "immersiveengineering:biodiesel_bucket": 1,
-        "ad_astra:cryo_fuel_bucket": 1
+        "ad_astra:cryo_fuel_bucket": 1,
+        "immersivepetroleum:diesel_bucket": 1,
+        "immersivepetroleum:diesel_sulfur_bucket": 1
       }
     },
     "powah:crystal_spirited": {

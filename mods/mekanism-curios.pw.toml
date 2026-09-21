@@ -1,0 +1,13 @@
+name = "Mekanism Curios"
+filename = "mekanismcurios-1.21.1-1.2.1.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/uKJX4EfN/versions/SCc0MUEv/mekanismcurios-1.21.1-1.2.1.jar"
+hash-format = "sha512"
+hash = "af917277e4dc8a7ccb8765b38eb7f8abbee4527181c6dec837e3e96751c5eb6257e7294ee25c2aefc134154b2eb6da497695553735823e9ea77329a9d8ae7a0a"
+
+[update]
+[update.modrinth]
+mod-id = "uKJX4EfN"
+version = "SCc0MUEv"
