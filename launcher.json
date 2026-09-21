@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "minLauncherVersion": "0.3.0",
+  "minLauncherVersion": "0.3.2",
   "server": {
     "name": "The Consortium",
     "address": "consortium.undernetworks.fr:31483"
