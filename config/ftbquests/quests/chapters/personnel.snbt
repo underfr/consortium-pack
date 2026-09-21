@@ -1,7 +1,7 @@
 // The Consortium - Personnel File (community and cosmetics, no stage gate). Design: docs/QUESTS.md 4.9.
 // Ids: 5C08 + nine zeros + QQ + X. Rank thresholds come from CONSORTIUM_RANK_THRESHOLDS (ranks step) through consortium_quests.js.
 {
-	default_hide_dependency_lines: false
+	default_hide_dependency_lines: true
 	default_quest_shape: ""
 	filename: "personnel"
 	group: "5C0F000000000002"
@@ -14,6 +14,7 @@
 	quest_links: [ ]
 	quests: [
 		{
+			hide_dependency_lines: true
 			icon: {
 				id: "minecraft:name_tag"
 			}
@@ -34,6 +35,7 @@
 		}
 		{
 			dependencies: ["5C08000000000010"]
+			hide_dependency_lines: false
 			icon: {
 				id: "minecraft:copper_ingot"
 			}
@@ -47,11 +49,12 @@
 				id: "5C08000000000021"
 				type: "custom"
 			}]
-			x: 2.5d
-			y: 0.0d
+			x: 3.0d
+			y: -1.25d
 		}
 		{
 			dependencies: ["5C08000000000020"]
+			hide_dependency_lines: false
 			hide_until_deps_complete: true
 			icon: {
 				id: "minecraft:iron_ingot"
@@ -66,11 +69,12 @@
 				id: "5C08000000000031"
 				type: "custom"
 			}]
-			x: 5.0d
-			y: 0.0d
+			x: 6.0d
+			y: -1.25d
 		}
 		{
 			dependencies: ["5C08000000000030"]
+			hide_dependency_lines: false
 			hide_until_deps_complete: true
 			icon: {
 				id: "minecraft:gold_ingot"
@@ -85,11 +89,12 @@
 				id: "5C08000000000041"
 				type: "custom"
 			}]
-			x: 7.5d
+			x: 9.0d
 			y: 0.0d
 		}
 		{
 			dependencies: ["5C08000000000040"]
+			hide_dependency_lines: false
 			hide_until_deps_complete: true
 			icon: {
 				id: "minecraft:diamond"
@@ -113,11 +118,12 @@
 				id: "5C08000000000051"
 				type: "custom"
 			}]
-			x: 10.0d
+			x: 12.0d
 			y: 0.0d
 		}
 		{
 			dependencies: ["5C08000000000010"]
+			hide_dependency_lines: false
 			icon: {
 				id: "minecraft:lantern"
 			}
@@ -135,11 +141,12 @@
 				id: "5C08000000000061"
 				type: "custom"
 			}]
-			x: 2.5d
-			y: -2.5d
+			x: 3.0d
+			y: -3.75d
 		}
 		{
 			dependencies: ["5C08000000000010"]
+			hide_dependency_lines: false
 			icon: {
 				id: "minecraft:writable_book"
 			}
@@ -153,11 +160,12 @@
 				id: "5C08000000000071"
 				type: "custom"
 			}]
-			x: 2.5d
-			y: 2.5d
+			x: 3.0d
+			y: 3.75d
 		}
 		{
 			dependencies: ["5C08000000000070"]
+			hide_dependency_lines: false
 			hide_until_deps_complete: true
 			icon: {
 				id: "minecraft:spyglass"
@@ -175,11 +183,12 @@
 				id: "5C08000000000081"
 				type: "custom"
 			}]
-			x: 5.0d
-			y: 2.5d
+			x: 6.0d
+			y: 1.25d
 		}
 		{
 			dependencies: ["5C08000000000010"]
+			hide_dependency_lines: false
 			hide_until_deps_complete: true
 			icon: {
 				id: "minecraft:paper"
@@ -203,8 +212,8 @@
 				id: "5C08000000000091"
 				type: "custom"
 			}]
-			x: 12.5d
-			y: 0.0d
+			x: 3.0d
+			y: 1.25d
 		}
 	]
 }

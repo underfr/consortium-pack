@@ -3,6 +3,8 @@
 // (docs/PROGRESSION.md sections 4 to 8). Data only, read by consortium_phases.js. The economy step
 // edits the `r` rates here (Q = D x 10 x r x 0.7 for 10 active players) without touching the engine.
 //
+// Since pack 0.12.0 every phase also carries its Board Orders lines (consortium:<product>, tools/products/products.mjs,
+// docs/BOARD_ORDERS.md): manufactured products whose amount is quotaOf(phase, r) there, checked by build-products.mjs.
 // Fields: number, name, stage (Chapters stage id, kubejs/data/consortium/chapters/stages/<id>.json),
 // quest (FTB Quests chapter hex id opened by the [open quests] link), headline (what the phase opens,
 // read out at the unlock), moment (the collective moment of section 1), quota: [{ id, label, amount,
@@ -31,6 +33,8 @@ const CONSORTIUM_PHASES = [
       { id: 'create:andesite_alloy', label: 'andesite alloy', amount: 1000 },
       { id: 'create:andesite_funnel', label: 'andesite funnels', amount: 500 },
       { id: 'consortium:cooked_meals', label: 'cooked meals', amount: 1000, items: CONSORTIUM_MEALS, icon: 'farmersdelight:beef_stew' },
+      { id: 'consortium:kinetic_assembly', label: 'kinetic assemblies', amount: 40 },
+      { id: 'consortium:provisions_crate', label: 'provisions crates', amount: 50 },
     ],
   },
   {
@@ -46,6 +50,9 @@ const CONSORTIUM_PHASES = [
       { id: 'mekanism:basic_control_circuit', label: 'basic control circuits', amount: 1500 },
       { id: 'create:precision_mechanism', label: 'precision mechanisms', amount: 600 },
       { id: 'create:brass_funnel', label: 'brass funnels', amount: 600 },
+      { id: 'consortium:steel_manifold', label: 'steel manifolds', amount: 80 },
+      { id: 'consortium:capacitor_bank', label: 'capacitor banks', amount: 70 },
+      { id: 'consortium:steam_regulator', label: 'steam regulators', amount: 50 },
     ],
   },
   {
@@ -61,6 +68,9 @@ const CONSORTIUM_PHASES = [
       { id: 'mekanism:alloy_reinforced', label: 'reinforced alloy', amount: 1500 },
       { id: 'mekanism:hydrogen_chloride_bucket', label: 'hydrogen chloride buckets', amount: 100 },
       { id: 'ae2:item_storage_cell_1k', label: '1k storage cells', amount: 300 },
+      { id: 'consortium:refinery_control_unit', label: 'refinery control units', amount: 80 },
+      { id: 'consortium:fuel_cartridge', label: 'fuel cartridges', amount: 70 },
+      { id: 'consortium:data_crystal', label: 'data crystals', amount: 70 },
     ],
   },
   {
@@ -76,6 +86,9 @@ const CONSORTIUM_PHASES = [
       { id: 'ae2:engineering_processor', label: 'engineering processors', amount: 750 },
       { id: 'powah:crystal_niotic', label: 'niotic crystals', amount: 400 },
       { id: 'consortium:fuel_buckets', label: 'fuel buckets', amount: 300, items: ['ad_astra:fuel_bucket', 'immersiveengineering:biodiesel_bucket', 'ad_astra:cryo_fuel_bucket'] },
+      { id: 'consortium:guidance_module', label: 'orbital guidance modules', amount: 60 },
+      { id: 'consortium:reforged_plate', label: 'reforged alloy plates', amount: 70 },
+      { id: 'consortium:pattern_matrix', label: 'pattern matrices', amount: 60 },
     ],
   },
   {
@@ -92,6 +105,9 @@ const CONSORTIUM_PHASES = [
       { id: 'powah:crystal_nitro', label: 'nitro crystals', amount: 80 },
       { id: 'ae2:singularity', label: 'singularities', amount: 32 },
       { id: 'mekanism:pellet_antimatter', label: 'antimatter pellet', amount: 1 },
+      { id: 'consortium:fusion_injector', label: 'fusion injectors', amount: 25 },
+      { id: 'consortium:cryo_core', label: 'cryo cores', amount: 30 },
+      { id: 'consortium:singularity_housing', label: 'singularity housings', amount: 25 },
     ],
   },
 ]

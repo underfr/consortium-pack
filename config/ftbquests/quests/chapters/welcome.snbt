@@ -2,7 +2,7 @@
 // Ids: 5C00 + nine zeros + QQ + X (QQ = quest number in hex, X = 0 quest, 1..3 tasks, 4..7 rewards).
 // Player-facing text lives in ../lang/en_us.snbt; custom tasks and rewards are driven by kubejs/server_scripts/consortium_quests.js.
 {
-	default_hide_dependency_lines: false
+	default_hide_dependency_lines: true
 	default_quest_shape: ""
 	filename: "welcome"
 	group: ""
@@ -15,6 +15,7 @@
 	quest_links: [ ]
 	quests: [
 		{
+			hide_dependency_lines: true
 			icon: {
 				id: "minecraft:writable_book"
 			}
@@ -35,6 +36,7 @@
 		}
 		{
 			dependencies: ["5C00000000000010"]
+			hide_dependency_lines: false
 			icon: {
 				id: "create:hand_crank"
 			}
@@ -64,11 +66,12 @@
 					type: "item"
 				}
 			]
-			x: 2.5d
+			x: 3.0d
 			y: 0.0d
 		}
 		{
 			dependencies: ["5C00000000000020"]
+			hide_dependency_lines: false
 			icon: {
 				id: "consortium:delivery_terminal"
 			}
@@ -85,11 +88,12 @@
 				to_observe: "consortium:delivery_terminal"
 				type: "observation"
 			}]
-			x: 5.0d
+			x: 6.0d
 			y: 0.0d
 		}
 		{
 			dependencies: ["5C00000000000030"]
+			hide_dependency_lines: false
 			icon: {
 				id: "minecraft:cobblestone"
 			}
@@ -103,11 +107,12 @@
 				id: "5C00000000000041"
 				type: "custom"
 			}]
-			x: 7.5d
+			x: 9.0d
 			y: 0.0d
 		}
 		{
 			dependencies: ["5C00000000000040"]
+			hide_dependency_lines: false
 			icon: {
 				id: "minecraft:gold_nugget"
 			}
@@ -123,11 +128,12 @@
 				id: "5C00000000000051"
 				type: "custom"
 			}]
-			x: 10.0d
+			x: 12.0d
 			y: 0.0d
 		}
 		{
 			dependencies: ["5C00000000000050"]
+			hide_dependency_lines: false
 			icon: {
 				id: "minecraft:oak_sign"
 			}
@@ -143,11 +149,12 @@
 				id: "5C00000000000061"
 				type: "custom"
 			}]
-			x: 12.5d
+			x: 15.0d
 			y: -1.25d
 		}
 		{
 			dependencies: ["5C00000000000050"]
+			hide_dependency_lines: false
 			icon: {
 				id: "consortium:display_panel"
 			}
@@ -164,11 +171,12 @@
 				to_observe: "consortium:display_panel"
 				type: "observation"
 			}]
-			x: 12.5d
+			x: 15.0d
 			y: 1.25d
 		}
 		{
 			dependencies: ["5C00000000000060"]
+			hide_dependency_lines: false
 			icon: {
 				id: "waystones:waystone"
 			}
@@ -192,11 +200,12 @@
 					type: "item"
 				}
 			]
-			x: 15.0d
+			x: 18.0d
 			y: -1.25d
 		}
 		{
 			dependencies: ["5C00000000000070"]
+			hide_dependency_lines: false
 			icon: {
 				id: "minecraft:paper"
 			}
@@ -210,7 +219,7 @@
 				id: "5C00000000000091"
 				type: "checkmark"
 			}]
-			x: 15.0d
+			x: 18.0d
 			y: 1.25d
 		}
 	]

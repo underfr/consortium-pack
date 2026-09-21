@@ -1,7 +1,7 @@
 // The Consortium - Phase 3: The Refinery (gated by consortium:phase_3, same pattern as phase 2). Design: docs/QUESTS.md 4.4.
 // Ids: 5C03 + nine zeros + QQ + X. Quota amounts in the briefing come from consortium_quotas.js.
 {
-	default_hide_dependency_lines: false
+	default_hide_dependency_lines: true
 	default_quest_shape: ""
 	filename: "phase3"
 	group: "5C0F000000000001"
@@ -14,6 +14,7 @@
 	quest_links: [ ]
 	quests: [
 		{
+			hide_dependency_lines: true
 			icon: {
 				id: "mekanism:purification_chamber"
 			}
@@ -32,6 +33,7 @@
 		}
 		{
 			dependencies: ["5C03000000000010"]
+			hide_dependency_lines: false
 			hide_until_deps_complete: true
 			icon: {
 				id: "minecraft:map"
@@ -46,11 +48,12 @@
 				id: "5C03000000000021"
 				type: "checkmark"
 			}]
-			x: 2.5d
+			x: 3.0d
 			y: 0.0d
 		}
 		{
 			dependencies: ["5C03000000000020"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "minecraft:gold_ingot"
@@ -67,11 +70,12 @@
 				id: "5C03000000000031"
 				type: "custom"
 			}]
-			x: 5.0d
+			x: 18.0d
 			y: -3.75d
 		}
 		{
 			dependencies: ["5C03000000000020"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "ae2:fluix_crystal"
@@ -88,11 +92,12 @@
 				id: "5C03000000000041"
 				type: "custom"
 			}]
-			x: 5.0d
+			x: 18.0d
 			y: -1.25d
 		}
 		{
 			dependencies: ["5C03000000000020"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "powah:steel_energized"
@@ -109,11 +114,12 @@
 				id: "5C03000000000051"
 				type: "custom"
 			}]
-			x: 5.0d
+			x: 18.0d
 			y: 1.25d
 		}
 		{
 			dependencies: ["5C03000000000020"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "mekanism:advanced_control_circuit"
@@ -130,11 +136,12 @@
 				id: "5C03000000000061"
 				type: "custom"
 			}]
-			x: 5.0d
+			x: 18.0d
 			y: 3.75d
 		}
 		{
 			dependencies: ["5C03000000000010"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "mekanism:purification_chamber"
@@ -162,11 +169,12 @@
 				}
 				type: "item"
 			}]
-			x: 7.5d
-			y: -2.5d
+			x: 6.0d
+			y: -3.75d
 		}
 		{
 			dependencies: ["5C03000000000010"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "mekanism:elite_enriching_factory"
@@ -194,11 +202,12 @@
 				}
 				type: "item"
 			}]
-			x: 7.5d
-			y: 0.0d
+			x: 6.0d
+			y: -1.25d
 		}
 		{
 			dependencies: ["5C03000000000010"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "ae2:drive"
@@ -226,11 +235,12 @@
 				}
 				type: "item"
 			}]
-			x: 7.5d
-			y: 2.5d
+			x: 6.0d
+			y: 1.25d
 		}
 		{
 			dependencies: ["5C03000000000010"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "immersiveengineering:capacitor_mv"
@@ -258,11 +268,12 @@
 				}
 				type: "item"
 			}]
-			x: 10.0d
-			y: -2.5d
+			x: 6.0d
+			y: 3.75d
 		}
 		{
 			dependencies: ["5C03000000000010"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "powah:reactor_blazing"
@@ -290,11 +301,12 @@
 				}
 				type: "item"
 			}]
-			x: 10.0d
-			y: 0.0d
+			x: 9.0d
+			y: -3.75d
 		}
 		{
 			dependencies: ["5C03000000000010"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "create:track_station"
@@ -322,11 +334,12 @@
 				}
 				type: "item"
 			}]
-			x: 10.0d
-			y: 2.5d
+			x: 9.0d
+			y: -1.25d
 		}
 		{
 			dependencies: ["5C03000000000010"]
+			hide_dependency_lines: true
 			icon: {
 				id: "mekanism:chemical_dissolution_chamber"
 			}
@@ -344,11 +357,12 @@
 				team_stage: false
 				type: "gamestage"
 			}]
-			x: 12.5d
+			x: 12.0d
 			y: -3.75d
 		}
 		{
 			dependencies: ["5C030000000000D0"]
+			hide_dependency_lines: true
 			icon: {
 				id: "mekanism:chemical_crystallizer"
 			}
@@ -376,11 +390,12 @@
 				team_stage: false
 				type: "gamestage"
 			}]
-			x: 12.5d
+			x: 12.0d
 			y: -1.25d
 		}
 		{
 			dependencies: ["5C03000000000010"]
+			hide_dependency_lines: true
 			icon: {
 				id: "mekanism:pressurized_reaction_chamber"
 			}
@@ -398,11 +413,12 @@
 				team_stage: false
 				type: "gamestage"
 			}]
-			x: 12.5d
+			x: 12.0d
 			y: 1.25d
 		}
 		{
 			dependencies: ["5C03000000000010"]
+			hide_dependency_lines: true
 			icon: {
 				id: "ae2:pattern_provider"
 			}
@@ -420,11 +436,12 @@
 				team_stage: false
 				type: "gamestage"
 			}]
-			x: 12.5d
+			x: 12.0d
 			y: 3.75d
 		}
 		{
 			dependencies: ["5C03000000000020"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "minecraft:iron_sword"
@@ -447,6 +464,7 @@
 		}
 		{
 			dependencies: ["5C03000000000020"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "ad_astra:tier_1_rocket"
@@ -469,6 +487,7 @@
 		}
 		{
 			dependencies: ["5C03000000000030", "5C03000000000040", "5C03000000000050", "5C03000000000060"]
+			hide_dependency_lines: false
 			icon: {
 				id: "ad_astra:tier_1_rocket"
 			}
@@ -496,11 +515,12 @@
 				team_stage: false
 				type: "gamestage"
 			}]
-			x: 17.5d
+			x: 21.0d
 			y: 0.0d
 		}
 		{
 			dependencies: ["5C03000000000010"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "immersivepetroleum:crudeoil_bucket"
@@ -528,11 +548,12 @@
 				}
 				type: "item"
 			}]
-			x: 20.0d
-			y: -1.3d
+			x: 9.0d
+			y: 1.25d
 		}
 		{
 			dependencies: ["5C03000000000010"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "extendedae:ex_drive"
@@ -560,8 +581,8 @@
 				}
 				type: "item"
 			}]
-			x: 20.0d
-			y: 1.3d
+			x: 9.0d
+			y: 3.75d
 		}
 	]
 }

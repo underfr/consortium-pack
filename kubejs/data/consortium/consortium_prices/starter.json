@@ -1135,6 +1135,160 @@
         "powah:crystal_nitro": 1,
         "powah:nitro_crystal_block": 9
       }
+    },
+    "consortium:kinetic_assembly": {
+      "name": "Kinetic Assembly",
+      "base": 4.7,
+      "phase": 1,
+      "charter_family": "neutral",
+      "half_volume": 8.4,
+      "daily_cap": 3,
+      "members": {
+        "consortium:kinetic_assembly": 1
+      }
+    },
+    "consortium:provisions_crate": {
+      "name": "Provisions Crate",
+      "base": 4.8,
+      "phase": 1,
+      "charter_family": "neutral",
+      "half_volume": 9.8,
+      "daily_cap": 3,
+      "members": {
+        "consortium:provisions_crate": 1
+      }
+    },
+    "consortium:steel_manifold": {
+      "name": "Steel Manifold",
+      "base": 13.5,
+      "phase": 2,
+      "charter_family": "neutral",
+      "half_volume": 7,
+      "daily_cap": 2,
+      "members": {
+        "consortium:steel_manifold": 1
+      }
+    },
+    "consortium:capacitor_bank": {
+      "name": "Capacitor Bank",
+      "base": 17,
+      "phase": 2,
+      "charter_family": "neutral",
+      "half_volume": 5.6,
+      "daily_cap": 2,
+      "members": {
+        "consortium:capacitor_bank": 1
+      }
+    },
+    "consortium:steam_regulator": {
+      "name": "Steam Regulator",
+      "base": 34,
+      "phase": 2,
+      "charter_family": "neutral",
+      "half_volume": 4.2,
+      "daily_cap": 2,
+      "members": {
+        "consortium:steam_regulator": 1
+      }
+    },
+    "consortium:refinery_control_unit": {
+      "name": "Refinery Control Unit",
+      "base": 13.5,
+      "phase": 3,
+      "charter_family": "neutral",
+      "half_volume": 5.6,
+      "daily_cap": 2,
+      "members": {
+        "consortium:refinery_control_unit": 1
+      }
+    },
+    "consortium:fuel_cartridge": {
+      "name": "Fuel Cartridge",
+      "base": 22,
+      "phase": 3,
+      "charter_family": "neutral",
+      "half_volume": 4.9,
+      "daily_cap": 2,
+      "members": {
+        "consortium:fuel_cartridge": 1
+      }
+    },
+    "consortium:data_crystal": {
+      "name": "Data Crystal",
+      "base": 22,
+      "phase": 3,
+      "charter_family": "neutral",
+      "half_volume": 4.9,
+      "daily_cap": 2,
+      "members": {
+        "consortium:data_crystal": 1
+      }
+    },
+    "consortium:guidance_module": {
+      "name": "Orbital Guidance Module",
+      "base": 84,
+      "phase": 4,
+      "charter_family": "neutral",
+      "half_volume": 3.5,
+      "daily_cap": 1,
+      "members": {
+        "consortium:guidance_module": 1
+      }
+    },
+    "consortium:reforged_plate": {
+      "name": "Reforged Alloy Plate",
+      "base": 11,
+      "phase": 4,
+      "charter_family": "neutral",
+      "half_volume": 4.2,
+      "daily_cap": 2,
+      "members": {
+        "consortium:reforged_plate": 1
+      }
+    },
+    "consortium:pattern_matrix": {
+      "name": "Pattern Matrix",
+      "base": 124,
+      "phase": 4,
+      "charter_family": "neutral",
+      "half_volume": 3.5,
+      "daily_cap": 1,
+      "members": {
+        "consortium:pattern_matrix": 1
+      }
+    },
+    "consortium:fusion_injector": {
+      "name": "Fusion Injector",
+      "base": 199,
+      "phase": 5,
+      "charter_family": "neutral",
+      "half_volume": 1.3,
+      "daily_cap": 1,
+      "members": {
+        "consortium:fusion_injector": 1
+      }
+    },
+    "consortium:cryo_core": {
+      "name": "Cryo Core",
+      "base": 34,
+      "phase": 5,
+      "charter_family": "neutral",
+      "half_volume": 1.5,
+      "daily_cap": 1,
+      "members": {
+        "consortium:cryo_core": 1
+      }
+    },
+    "consortium:singularity_housing": {
+      "name": "Singularity Housing",
+      "base": 65.5,
+      "phase": 5,
+      "charter_family": "neutral",
+      "half_volume": 1.3,
+      "daily_cap": 1,
+      "members": {
+        "consortium:singularity_housing": 1
+      }
     }
   }
 }

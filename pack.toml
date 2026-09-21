@@ -1,12 +1,12 @@
 name = "The Consortium"
 author = "underfr"
-version = "0.11.0"
+version = "0.12.0"
 pack-format = "packwiz:1.1.0"
 
 [index]
 file = "index.toml"
 hash-format = "sha256"
-hash = "69ec283a50c8275ffee79993bae8cd79f1bf53ab2d9609c4f15e8e17fbfb7242"
+hash = "a5814e500bc6cbe7de5bda272de2ee21f0b691a8c12526e7804b3010999c6bdb"
 
 [versions]
 minecraft = "1.21.1"

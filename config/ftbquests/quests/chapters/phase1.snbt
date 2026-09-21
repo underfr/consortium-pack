@@ -2,7 +2,7 @@
 // Ids: 5C01 + nine zeros + QQ + X. Layout: intro x 0, briefing x 2.5, runs x 5, certifications x 7.5 and 10,
 // clearances x 12.5, the ceremony x 15, the closing hexagon x 17.5. Quota amounts in the briefing come from consortium_quotas.js.
 {
-	default_hide_dependency_lines: false
+	default_hide_dependency_lines: true
 	default_quest_shape: ""
 	filename: "phase1"
 	group: "5C0F000000000001"
@@ -15,6 +15,7 @@
 	quest_links: [ ]
 	quests: [
 		{
+			hide_dependency_lines: true
 			icon: {
 				id: "create:water_wheel"
 			}
@@ -35,6 +36,7 @@
 		}
 		{
 			dependencies: ["5C01000000000010"]
+			hide_dependency_lines: false
 			icon: {
 				id: "minecraft:map"
 			}
@@ -48,11 +50,12 @@
 				id: "5C01000000000021"
 				type: "checkmark"
 			}]
-			x: 2.5d
+			x: 3.0d
 			y: 0.0d
 		}
 		{
 			dependencies: ["5C01000000000020"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "minecraft:iron_ingot"
@@ -69,11 +72,12 @@
 				id: "5C01000000000031"
 				type: "custom"
 			}]
-			x: 5.0d
+			x: 18.0d
 			y: -3.75d
 		}
 		{
 			dependencies: ["5C01000000000020"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "minecraft:coal"
@@ -90,11 +94,12 @@
 				id: "5C01000000000041"
 				type: "custom"
 			}]
-			x: 5.0d
+			x: 18.0d
 			y: -1.25d
 		}
 		{
 			dependencies: ["5C01000000000020"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "create:andesite_alloy"
@@ -111,11 +116,12 @@
 				id: "5C01000000000051"
 				type: "custom"
 			}]
-			x: 5.0d
+			x: 18.0d
 			y: 1.25d
 		}
 		{
 			dependencies: ["5C01000000000020"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "farmersdelight:beef_stew"
@@ -132,11 +138,12 @@
 				id: "5C01000000000061"
 				type: "custom"
 			}]
-			x: 5.0d
+			x: 18.0d
 			y: 3.75d
 		}
 		{
 			dependencies: ["5C01000000000010"]
+			hide_dependency_lines: true
 			icon: {
 				id: "create:water_wheel"
 			}
@@ -163,11 +170,12 @@
 				}
 				type: "item"
 			}]
-			x: 7.5d
-			y: -2.5d
+			x: 6.0d
+			y: -3.75d
 		}
 		{
 			dependencies: ["5C01000000000010"]
+			hide_dependency_lines: true
 			icon: {
 				id: "create:millstone"
 			}
@@ -194,11 +202,12 @@
 				}
 				type: "item"
 			}]
-			x: 7.5d
-			y: 0.0d
+			x: 6.0d
+			y: -1.25d
 		}
 		{
 			dependencies: ["5C01000000000010"]
+			hide_dependency_lines: true
 			icon: {
 				id: "create:mechanical_press"
 			}
@@ -225,11 +234,12 @@
 				}
 				type: "item"
 			}]
-			x: 7.5d
-			y: 2.5d
+			x: 6.0d
+			y: 1.25d
 		}
 		{
 			dependencies: ["5C01000000000010"]
+			hide_dependency_lines: true
 			icon: {
 				id: "farmersdelight:cooking_pot"
 			}
@@ -256,11 +266,12 @@
 				}
 				type: "item"
 			}]
-			x: 10.0d
-			y: -1.25d
+			x: 6.0d
+			y: 3.75d
 		}
 		{
 			dependencies: ["5C01000000000010"]
+			hide_dependency_lines: true
 			icon: {
 				id: "create:mechanical_mixer"
 			}
@@ -287,11 +298,12 @@
 				}
 				type: "item"
 			}]
-			x: 10.0d
-			y: 1.25d
+			x: 9.0d
+			y: -3.75d
 		}
 		{
 			dependencies: ["5C01000000000010"]
+			hide_dependency_lines: true
 			icon: {
 				id: "immersiveengineering:blast_furnace"
 			}
@@ -309,11 +321,12 @@
 				team_stage: false
 				type: "gamestage"
 			}]
-			x: 12.5d
+			x: 12.0d
 			y: -2.5d
 		}
 		{
 			dependencies: ["5C01000000000010"]
+			hide_dependency_lines: true
 			icon: {
 				id: "create:steam_engine"
 			}
@@ -331,11 +344,12 @@
 				team_stage: false
 				type: "gamestage"
 			}]
-			x: 12.5d
+			x: 12.0d
 			y: 0.0d
 		}
 		{
 			dependencies: ["5C01000000000010"]
+			hide_dependency_lines: true
 			icon: {
 				id: "waystones:warp_plate"
 			}
@@ -353,11 +367,12 @@
 				team_stage: false
 				type: "gamestage"
 			}]
-			x: 12.5d
+			x: 12.0d
 			y: 2.5d
 		}
 		{
 			dependencies: ["5C01000000000020"]
+			hide_dependency_lines: true
 			icon: {
 				id: "minecraft:lantern"
 			}
@@ -379,6 +394,7 @@
 		}
 		{
 			dependencies: ["5C01000000000030", "5C01000000000040", "5C01000000000050", "5C01000000000060"]
+			hide_dependency_lines: false
 			icon: {
 				id: "immersiveengineering:ingot_steel"
 			}
@@ -406,11 +422,12 @@
 				team_stage: false
 				type: "gamestage"
 			}]
-			x: 17.5d
+			x: 21.0d
 			y: 0.0d
 		}
 		{
 			dependencies: ["5C01000000000010"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "minecraft:book"
@@ -425,11 +442,12 @@
 				id: "5C01000000000111"
 				type: "checkmark"
 			}]
-			x: 20.0d
-			y: -2.5d
+			x: 9.0d
+			y: -1.25d
 		}
 		{
 			dependencies: ["5C01000000000010"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "ironfurnaces:iron_furnace"
@@ -457,11 +475,12 @@
 				}
 				type: "item"
 			}]
-			x: 20.0d
-			y: 0.0d
+			x: 9.0d
+			y: 1.25d
 		}
 		{
 			dependencies: ["5C01000000000010"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "silentgear:alloy_forge"
@@ -489,8 +508,8 @@
 				}
 				type: "item"
 			}]
-			x: 20.0d
-			y: 2.5d
+			x: 9.0d
+			y: 3.75d
 		}
 	]
 }

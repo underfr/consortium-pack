@@ -2,7 +2,7 @@
 // Ids: 5C07 + nine zeros + QQ + X. The three repeatable quests (contract, Friday, Saturday) cycle once per validated
 // crew member: every reward is a team reward re-checked per claimer by consortium_quests.js (week and contract stamps).
 {
-	default_hide_dependency_lines: false
+	default_hide_dependency_lines: true
 	default_quest_shape: ""
 	filename: "board_events"
 	group: "5C0F000000000002"
@@ -15,6 +15,7 @@
 	quest_links: [ ]
 	quests: [
 		{
+			hide_dependency_lines: true
 			icon: {
 				id: "minecraft:clock"
 			}
@@ -31,11 +32,12 @@
 				type: "checkmark"
 			}]
 			x: 0.0d
-			y: 0.0d
+			y: -1.25d
 		}
 		{
 			can_repeat: true
 			dependencies: ["5C07000000000010"]
+			hide_dependency_lines: false
 			icon: {
 				id: "minecraft:paper"
 			}
@@ -53,12 +55,13 @@
 				id: "5C07000000000021"
 				type: "custom"
 			}]
-			x: 2.5d
-			y: -2.5d
+			x: 3.0d
+			y: -5.0d
 		}
 		{
 			can_repeat: true
 			dependencies: ["5C07000000000010"]
+			hide_dependency_lines: false
 			icon: {
 				id: "minecraft:iron_sword"
 			}
@@ -76,12 +79,13 @@
 				id: "5C07000000000031"
 				type: "custom"
 			}]
-			x: 2.5d
+			x: 3.0d
 			y: 0.0d
 		}
 		{
 			can_repeat: true
 			dependencies: ["5C07000000000010"]
+			hide_dependency_lines: false
 			icon: {
 				id: "minecraft:bell"
 			}
@@ -99,11 +103,12 @@
 				id: "5C07000000000041"
 				type: "custom"
 			}]
-			x: 2.5d
-			y: 2.5d
+			x: 3.0d
+			y: 5.0d
 		}
 		{
 			dependencies: ["5C07000000000010"]
+			hide_dependency_lines: false
 			hide_until_deps_complete: true
 			icon: {
 				id: "minecraft:chest"
@@ -129,11 +134,12 @@
 				id: "5C07000000000051"
 				type: "custom"
 			}]
-			x: 5.0d
-			y: -3.75d
+			x: 3.0d
+			y: -7.5d
 		}
 		{
 			dependencies: ["5C07000000000010"]
+			hide_dependency_lines: false
 			hide_until_deps_complete: true
 			icon: {
 				id: "minecraft:bow"
@@ -150,11 +156,12 @@
 				id: "5C07000000000061"
 				type: "custom"
 			}]
-			x: 5.0d
-			y: -1.25d
+			x: 3.0d
+			y: -2.5d
 		}
 		{
 			dependencies: ["5C07000000000010"]
+			hide_dependency_lines: false
 			hide_until_deps_complete: true
 			icon: {
 				id: "minecraft:shield"
@@ -171,11 +178,12 @@
 				id: "5C07000000000071"
 				type: "custom"
 			}]
-			x: 5.0d
-			y: 1.25d
+			x: 3.0d
+			y: 2.5d
 		}
 		{
 			dependencies: ["5C07000000000010"]
+			hide_dependency_lines: false
 			hide_until_deps_complete: true
 			icon: {
 				id: "minecraft:soul_lantern"
@@ -190,11 +198,12 @@
 				id: "5C07000000000081"
 				type: "custom"
 			}]
-			x: 5.0d
-			y: 3.75d
+			x: 3.0d
+			y: 7.5d
 		}
 		{
 			dependencies: ["5C06000000000020"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "minecraft:emerald"
@@ -211,8 +220,8 @@
 				id: "5C07000000000091"
 				type: "custom"
 			}]
-			x: 7.5d
-			y: 0.0d
+			x: 0.0d
+			y: 1.25d
 		}
 	]
 }

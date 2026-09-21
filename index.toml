@@ -30,43 +30,111 @@ hash = "45bc75ee64b7ee401ba50790954a34b5e6ab887799434fa4a69a88cdce350e73"
 
 [[files]]
 file = "config/ftbquests/quests/chapter_groups.snbt"
-hash = "811f53a5775e4ecfe8116445e2dc9899b0ebb0ba1b1b9f5396ef2a87e6a1cf9d"
+hash = "e1437727bf776d89929511484ca98dcecd42ddb8cb8f0049f705d38c6dc564c8"
 
 [[files]]
 file = "config/ftbquests/quests/chapters/board_events.snbt"
-hash = "220193bf44a015d75413a45fd434e920e705fa2900930942ce5190602e59a50b"
+hash = "b9afabc8b76362ed1600f461b2d7e53ba6492bb1f9a186669cfb99797ecd4998"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/dept_adastra.snbt"
+hash = "ab8f5dd5fa1f7c5b4ee3ce50f804b202a9351e6fdde50da0a5c52c4e27dacc77"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/dept_ae2.snbt"
+hash = "d17c07882f14bc5676a49c1b9f440bcd57f9422bf93813dd624369553f1c29b0"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/dept_building.snbt"
+hash = "e63ab06244f88cfabd7f86e4ada052666115034a8ac4e5ac52610969bb362ca8"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/dept_combat.snbt"
+hash = "d0050475b9acf88686e389ec65956f370e761988073a7fd79e1db37f5214ab72"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/dept_create.snbt"
+hash = "2bf2e8ac13ea28be88e47dfdf07ad2f2902217fd2e69aa9de3eb1171df9ab9dd"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/dept_ie.snbt"
+hash = "af93bfba5fa0b68be9581a817f3e431146fe73d42d3914433d5fe2b79a5445f3"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/dept_kitchen.snbt"
+hash = "9f6a6fbf168c1ae16dcd451d49b41e9b618cb939dfd6989f8afdb413ea3da945"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/dept_mekanism.snbt"
+hash = "d877e568a7e299d9a6f4ed074fd131cb5a1f2f53bb22008f1a7daea84d102ce7"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/dept_metalworks.snbt"
+hash = "d6bb8b6905d79b904833f88d0e68570db54172ae0c0a56b5a87e083c5ed83782"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/dept_powah.snbt"
+hash = "919a9d0f18037ac377a70b87276bcbf8ef75ca2a6b2a86fa90a6a5cb2e298391"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/dept_storage.snbt"
+hash = "24c843881837a2292a9eafbc917d6225189bbcd6b51deb4a1202ff6eb13465b0"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/dept_workshop.snbt"
+hash = "f3f7562fb4a2f5a56ce58bcce1b2e96fd2aeea15c7293ba73b79d26d75c837ac"
 
 [[files]]
 file = "config/ftbquests/quests/chapters/field_office.snbt"
-hash = "1740b4127e78bbc9d7ba05cbcb544773504d2c397115b7364ca7cb6a3dee7bbb"
+hash = "194bbf14b328862eb5ef9d4db4b264e7d2fdddf8e7d33f6d3ac15cdbeaa70d19"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/orders1.snbt"
+hash = "e1b702edb0888c0769b21b9ec5c59c933f0936aaa83a962b8b4a7a0ca514b37a"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/orders2.snbt"
+hash = "c9a5ce5cd0ae002fd8a1fb5b2b88a51d6d71b06b1ef6dfe8b4c47fd875e6d42d"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/orders3.snbt"
+hash = "02a8e1f7adadd2a74321c3326a1054a39dd08e3e19aee4b5c24cd3f0b04f418e"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/orders4.snbt"
+hash = "8e30f0dba0f621c4c775a33a45f872917489fcf13bcb36a226b28ad1ae3ed9e3"
+
+[[files]]
+file = "config/ftbquests/quests/chapters/orders5.snbt"
+hash = "cdff4ed9410fb5fccc423bbca8373103d7370c905eb284d01de3f6f83aac89ea"
 
 [[files]]
 file = "config/ftbquests/quests/chapters/personnel.snbt"
-hash = "87ddb61802604dc0f2498662f7ef2a1c57bb3c1db0ea9dea579ffdecc507a11c"
+hash = "3d4fa676bddd366922e120af8620f872db4a4bea16627f5844f2ad619990afa6"
 
 [[files]]
 file = "config/ftbquests/quests/chapters/phase1.snbt"
-hash = "d645439fbf9af01305619c669bcbec9b79168d6998e04921c7cc9fd129cf94ad"
+hash = "584b02cfd0e64e7e6a916c22916c78d136239202370170b5320cef99a6c1341b"
 
 [[files]]
 file = "config/ftbquests/quests/chapters/phase2.snbt"
-hash = "ebee5f3ac87def105172d80dfcb3b3d9d8462e398f768409c152bdf6f130c3e2"
+hash = "b85579cd704b18751a04e9f33298aab11604ff7dce6e986dea8feac3999ef1a7"
 
 [[files]]
 file = "config/ftbquests/quests/chapters/phase3.snbt"
-hash = "8cd1a5fc6c3c742f609dbec66a6dfc0f92f702e9d200fefb92bdf18d3c40786c"
+hash = "4febff94dce5ca8c9c48aba992da94a9e4987d276a81b9c006e388516b571f71"
 
 [[files]]
 file = "config/ftbquests/quests/chapters/phase4.snbt"
-hash = "2c3f309a05afb08b8dd81083ad9593d7ce0362c90fb4690317c85687c7ada9c5"
+hash = "1fa80c1022037ad2258a089eb2e621a35ec82828f4406a60e3657c1c9722b480"
 
 [[files]]
 file = "config/ftbquests/quests/chapters/phase5.snbt"
-hash = "0d114815e99231cb012f92a6ba653e70399337602ee6a7e5e8a9cbfa15bbbf13"
+hash = "ffa610046f0cf7eddebaf1de1fd38d68b32dff7d0df9d83080381f1e7f347517"
 
 [[files]]
 file = "config/ftbquests/quests/chapters/welcome.snbt"
-hash = "39839eee14c085cf75cd81bd093449f5c5d1c59e79dbfdc40f924164cb76d07a"
+hash = "2d91759fee9cb5b4666ea4ebfa40d93c9546be8a10c32b676dda326574772001"
 
 [[files]]
 file = "config/ftbquests/quests/data.snbt"
@@ -74,7 +142,7 @@ hash = "e8155a4b5cec798b503dad78189bd9659b8efe80b523dfd8b20c17f08b54d3bf"
 
 [[files]]
 file = "config/ftbquests/quests/lang/en_us.snbt"
-hash = "efa6c4f6340006c3f437eeab780ec1c865fc003df1d72e1b8d62cf50b147340b"
+hash = "a3d70cb90177e83b30341389141609e7c46670416c96234e20fecc6b79364ed3"
 
 [[files]]
 file = "config/ftbteams-server.snbt"
@@ -132,6 +200,130 @@ hash = "234ba5dd9486e54869da5f46ea2782c3182f1272ee37b32ac08e69adf1a4ad43"
 [[files]]
 file = "config/waystones-common.toml"
 hash = "31df56b3a3cbb30ade53228eba1dae4b621b41ccafd1d4f55b83d3b41363544e"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/atomic_plate.png"
+hash = "ae256196e3e9395b6044a5dd8e1ce26a47e3f24f6fbbcc6bcaf50b0adccf18e4"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/capacitor_bank.png"
+hash = "a32b1376eda403e0e757d0ae42da30a047d3e8a634b8e1da4c3f8df0c7cb9a40"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/cartridge_shell.png"
+hash = "65c92fcb06ea38a4d83acb68c34b7ab3b7f7608e555bcd6143c7697858e3cde5"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/charged_cell.png"
+hash = "b65e52d4ed180940232672d076d6cb05aa94f8fab06c540baaff53e764e3fdc8"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/control_frame.png"
+hash = "b227e6538a2cbfef78842cc1f556a28489a8a870f76baeda7db3f52ef24a6b53"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/cryo_core.png"
+hash = "50e1dc5e1871548ee60d543c68bb9df638bbbab4dd6312d51718363e03062390"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/cryo_lattice.png"
+hash = "3a83ccc0717a5b1b5961c1308641c70663ddddb3e38642dc980acc88d88d9b20"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/crystal_lattice.png"
+hash = "ce9863a5f9e1db78961e12960ef18b33b30f8c27852a0f8600354e080c6de495"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/data_crystal.png"
+hash = "284e96a4c2ef6c04efbc0e64ccecc9b10b87692f923c4b2c379366dd64b393e9"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/field_ration.png"
+hash = "2545116973ec4dbbf6fe441ce9e2c7fd2de12eafbfd8e599f7778d2ec3bc275a"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/fuel_cartridge.png"
+hash = "a7eedf6269a2b55b13d63400aa00a5f22cf8dc94e480b8a45c9cc87577b1b88e"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/fusion_injector.png"
+hash = "6284893a5ba25fe801256432f788ec26bef283d390a3fa3b0dacac05c6af19a6"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/guidance_module.png"
+hash = "5d0e28694fad25ca885e5a9765cbfda0e97707689cb648393020307f13385818"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/gyro_frame.png"
+hash = "ee8dc6589e57b79c70bc20cee0636a541b04f86da3e181c86260be054665b5de"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/hearty_stew.png"
+hash = "fef484ec69f0528e18476bc493c2af5af31a330b8c32bcb83899a2309a5545f9"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/incomplete_pressed_casing.png"
+hash = "9b7007b32b3deed973f92e251e36b326582e06ebf7d56973663b4575849291ff"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/injector_frame.png"
+hash = "78d0c2bf6c886df7f7df63368b0292dd16f31a3e2095637478be7d7f3a3ec88e"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/kinetic_assembly.png"
+hash = "e093443c6145256f6aef9be05adb18f519eee02a4edae0804848fa95de262dee"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/machine_grease.png"
+hash = "9620e2de3dace113ef9ae3af5a951a626cc72dd64d8370ad22e4c88649c157c8"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/manifold_blank.png"
+hash = "47d273469eff0ff592d9c24e9d4fe200a9d64be30127fdfd60d4e3a521bad922"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/matrix_wafer.png"
+hash = "b76d442380dfae2b13d9c4ee59a1783dec36327af284d1add1e14f69723be5e1"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/pattern_matrix.png"
+hash = "d2244d80e871f23a8ce5cc78e8456e9f81229efa93c1b008af6fe8e9666ecd86"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/pressed_casing.png"
+hash = "ce1cdfd5fc38f4110ee93a1b33782373719c0eccd04c79b2d430905c07356e7e"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/provisions_crate.png"
+hash = "0cfb3b800ec226089bbda6651ce8cf28a6417e56429659dceea310540b39a216"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/refinery_control_unit.png"
+hash = "0a4e749f0cf9bcca5fe6f325a7f60f36c77a2eb6d1994a145e2f9c24ec2843d9"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/reforged_plate.png"
+hash = "be1d6274e5060cba05d77145fccc34dadd53bfc3087f905e2af9d217e4e8219d"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/regulator_frame.png"
+hash = "79b2f15c21aa6b717c6db7b48b7b7d0a4cae8b3e5b6934b8a04ee26300cf99ae"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/singularity_housing.png"
+hash = "b936fc3722784676554a8d5cbe7a94eab68ceef1c562c896be75e95b8e15999c"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/singularity_shell.png"
+hash = "37fce23d6a81ac88ecc877f20aeeb81b0b393fe6818407fd9f39d6effc3c4458"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/steam_regulator.png"
+hash = "e340da307e73f08ddd0fda5cb918a2e1b1183cd586e5336d5161bf3f94b7f823"
+
+[[files]]
+file = "kubejs/assets/consortium/textures/item/steel_manifold.png"
+hash = "6a6dc8ccc309477cc42063c9875fc1ac46a6c7cf7ff0eafedf0df44aed00d7d5"
 
 [[files]]
 file = "kubejs/client_scripts/00_placeholder.js"
@@ -215,19 +407,19 @@ hash = "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
 
 [[files]]
 file = "kubejs/data/consortium/chapters/stages/phase_2.json"
-hash = "53da2adcb1538d34b80d9bfeeb84f977b3b7162fa20e24d8a4d9e3eb42732ad9"
+hash = "ab9558a14fc2b18cd5d0a1fb9551d35d3a01f3ff8022db828276b958affdd361"
 
 [[files]]
 file = "kubejs/data/consortium/chapters/stages/phase_3.json"
-hash = "8a1a911845fc422c0d200146ecb67f5a57484bf1c6aadde28b9c594b8ab70f14"
+hash = "0a31284c2a9ee4922e9f0b412f184f7ce5c73d212e6dc9b9612ff460d7fadb75"
 
 [[files]]
 file = "kubejs/data/consortium/chapters/stages/phase_4.json"
-hash = "dc7fac8a810893b126f2fe44bb5ec6bde321aeff1abcc7c9b2334d83ca364881"
+hash = "46e4e9cac5003215e7c9c456cedbed5bdc8faa4967e128d78afd7fca87789081"
 
 [[files]]
 file = "kubejs/data/consortium/chapters/stages/phase_5.json"
-hash = "1201b0819fdac607221cb0293174b8b15d9256f09715d10d2754740bc8a7d28c"
+hash = "5c605598654d4bc0705e81d7563884aae2b5cbbb0c3c204cd4e3846a8c9759d6"
 
 [[files]]
 file = "kubejs/data/consortium/chapters/stages/staff.json"
@@ -255,7 +447,7 @@ hash = "339da6e386a9d335f55cc21b0129039b15c19f5d68ca530d123dd808e4e679c8"
 
 [[files]]
 file = "kubejs/data/consortium/consortium_prices/starter.json"
-hash = "6c0890ec11710b7ddea3bc53a58c86c3604496f17f50cecee615f4a63c873eaa"
+hash = "c7b75a6a956fb7e4f59e3537361ff78cc5978a3e35f5e42abdde2f07fa3c07f5"
 
 [[files]]
 file = "kubejs/data/consortium/consortium_rules/rulebook.json"
@@ -334,12 +526,16 @@ file = "kubejs/server_scripts/consortium_phases.js"
 hash = "e31e3e29fbf895ed0219499dda47a63249f791cb1617f22ddf83a2039e2d6078"
 
 [[files]]
+file = "kubejs/server_scripts/consortium_products.js"
+hash = "f7a303918596434dfee3f7de569fe57b6929668ee7b6ab638c6c0f100b2515eb"
+
+[[files]]
 file = "kubejs/server_scripts/consortium_quests.js"
-hash = "c8910510b578b7e0ee9e8639a83b0e10e162e7b125c5702e133c46c99ffd41cb"
+hash = "aa7a7a973419f20d381ff96e5a3f20c3bda05c0ce967cf8251c83a5a3311539e"
 
 [[files]]
 file = "kubejs/server_scripts/consortium_quotas.js"
-hash = "b10a63319af8baafe9c1d674403135a62525ed781d4a78cef9fa96d34f7b0c86"
+hash = "1c04aecbcbe4ddae44d4a3d45a6237f3d3e2d886ef2ee9e9da9810b4d920c673"
 
 [[files]]
 file = "kubejs/server_scripts/consortium_ranks.js"
@@ -372,6 +568,10 @@ hash = "7cebfa77c150f4d7382d290cda959e339b4659b07030e4b2d656a0a56d91f18b"
 [[files]]
 file = "kubejs/startup_scripts/00_placeholder.js"
 hash = "c4ae752192d479db38da1b68d62a47aa8ffcef330046fabbe24c449504ceea62"
+
+[[files]]
+file = "kubejs/startup_scripts/consortium_products.js"
+hash = "775e01babfba4451f93a8f710cf212c4bbe0cff3fe3d856aff22f4e14e962bf7"
 
 [[files]]
 file = "mods/3dskinlayers.pw.toml"

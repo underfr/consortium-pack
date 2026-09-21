@@ -5,7 +5,7 @@
     "name": "The Consortium",
     "address": "consortium.undernetworks.fr:31483"
   },
-  "motd": "Season 1 is in preparation. Pack 0.11.0: 69 new mods (Silent Gear, the foundry, Create and AE2 addons, Immersive Petroleum, Chisel, Macaw's, FTB Ultimine, Lootr and more), 11 new quests, /spawn.",
+  "motd": "Season 1 is in preparation. Pack 0.12.0: the Board Orders (14 manufactured products, one roadmap chapter per phase), 12 Department chapters and a quest book laid out again.",
   "lowPresetDisables": [
     "mods/iris.pw.toml"
   ],
@@ -14,6 +14,11 @@
     "shaderpacks/makeup-ultra-fast-shaders.pw.toml": "mods/iris.pw.toml"
   },
   "news": [
+    {
+      "date": "2026-09-22",
+      "title": "Pack 0.12.0: Board Orders and the Departments",
+      "text": "Every phase now orders manufactured products from the crews: fourteen items built across three to five mods (the Kinetic Assembly and the Provisions Crate in phase 1, the Steel Manifold, Capacitor Bank and Steam Regulator in phase 2, up to the Fusion Injector, Cryo Core and Singularity Housing in phase 5), each a quota line with its own roadmap chapter, a certification bonus on the first unit and the Master Fabricator title for whoever delivers them all. Twelve Department chapters cover every pillar of the pack with objectives and a diploma, and the whole quest book was laid out again: no more crossing lines. Client sync adds 31 small textures."
+    },
     {
       "date": "2026-09-21",
       "title": "Pack 0.11.0: 69 new mods",

@@ -3,7 +3,7 @@
 // dependencies complete, so the whole chapter appears only once the team holds the stage (Chapter.isVisible).
 // Ids: 5C02 + nine zeros + QQ + X. Quota amounts in the briefing come from consortium_quotas.js.
 {
-	default_hide_dependency_lines: false
+	default_hide_dependency_lines: true
 	default_quest_shape: ""
 	filename: "phase2"
 	group: "5C0F000000000001"
@@ -16,6 +16,7 @@
 	quest_links: [ ]
 	quests: [
 		{
+			hide_dependency_lines: true
 			icon: {
 				id: "immersiveengineering:blastbrick"
 			}
@@ -34,6 +35,7 @@
 		}
 		{
 			dependencies: ["5C02000000000010"]
+			hide_dependency_lines: false
 			hide_until_deps_complete: true
 			icon: {
 				id: "minecraft:map"
@@ -48,11 +50,12 @@
 				id: "5C02000000000021"
 				type: "checkmark"
 			}]
-			x: 2.5d
+			x: 3.0d
 			y: 0.0d
 		}
 		{
 			dependencies: ["5C02000000000020"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "mekanism:ingot_steel"
@@ -69,11 +72,12 @@
 				id: "5C02000000000031"
 				type: "custom"
 			}]
-			x: 5.0d
+			x: 18.0d
 			y: -3.75d
 		}
 		{
 			dependencies: ["5C02000000000020"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "create:brass_ingot"
@@ -90,11 +94,12 @@
 				id: "5C02000000000041"
 				type: "custom"
 			}]
-			x: 5.0d
+			x: 18.0d
 			y: -1.25d
 		}
 		{
 			dependencies: ["5C02000000000020"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "immersiveengineering:coal_coke"
@@ -111,11 +116,12 @@
 				id: "5C02000000000051"
 				type: "custom"
 			}]
-			x: 5.0d
+			x: 18.0d
 			y: 1.25d
 		}
 		{
 			dependencies: ["5C02000000000020"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "mekanism:basic_control_circuit"
@@ -132,11 +138,12 @@
 				id: "5C02000000000061"
 				type: "custom"
 			}]
-			x: 5.0d
+			x: 18.0d
 			y: 3.75d
 		}
 		{
 			dependencies: ["5C02000000000010"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "immersiveengineering:blastbrick"
@@ -164,11 +171,12 @@
 				}
 				type: "item"
 			}]
-			x: 7.5d
-			y: -3.75d
+			x: 6.0d
+			y: -5.0d
 		}
 		{
 			dependencies: ["5C02000000000010"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "create:steam_engine"
@@ -196,11 +204,12 @@
 				}
 				type: "item"
 			}]
-			x: 7.5d
-			y: -1.25d
+			x: 6.0d
+			y: -2.5d
 		}
 		{
 			dependencies: ["5C02000000000010"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "mekanism:metallurgic_infuser"
@@ -228,11 +237,12 @@
 				}
 				type: "item"
 			}]
-			x: 7.5d
-			y: 1.25d
+			x: 6.0d
+			y: 0.0d
 		}
 		{
 			dependencies: ["5C02000000000010"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "mekanism:basic_energy_cube"
@@ -260,11 +270,12 @@
 				}
 				type: "item"
 			}]
-			x: 7.5d
-			y: 3.75d
+			x: 6.0d
+			y: 2.5d
 		}
 		{
 			dependencies: ["5C02000000000010"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "immersiveengineering:capacitor_lv"
@@ -292,11 +303,12 @@
 				}
 				type: "item"
 			}]
-			x: 10.0d
-			y: -2.5d
+			x: 6.0d
+			y: 5.0d
 		}
 		{
 			dependencies: ["5C02000000000010"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "powah:reactor_starter"
@@ -324,11 +336,12 @@
 				}
 				type: "item"
 			}]
-			x: 10.0d
-			y: 0.0d
+			x: 9.0d
+			y: -5.0d
 		}
 		{
 			dependencies: ["5C02000000000010"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "create:precision_mechanism"
@@ -356,11 +369,12 @@
 				}
 				type: "item"
 			}]
-			x: 10.0d
-			y: 2.5d
+			x: 9.0d
+			y: -2.5d
 		}
 		{
 			dependencies: ["5C02000000000010"]
+			hide_dependency_lines: true
 			icon: {
 				id: "mekanism:purification_chamber"
 			}
@@ -378,11 +392,12 @@
 				team_stage: false
 				type: "gamestage"
 			}]
-			x: 12.5d
+			x: 12.0d
 			y: -2.5d
 		}
 		{
 			dependencies: ["5C02000000000010"]
+			hide_dependency_lines: true
 			icon: {
 				id: "powah:steel_energized"
 			}
@@ -400,11 +415,12 @@
 				team_stage: false
 				type: "gamestage"
 			}]
-			x: 12.5d
+			x: 12.0d
 			y: 0.0d
 		}
 		{
 			dependencies: ["5C02000000000010"]
+			hide_dependency_lines: true
 			icon: {
 				id: "ae2:drive"
 			}
@@ -422,11 +438,12 @@
 				team_stage: false
 				type: "gamestage"
 			}]
-			x: 12.5d
+			x: 12.0d
 			y: 2.5d
 		}
 		{
 			dependencies: ["5C02000000000020"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "minecraft:beacon"
@@ -449,6 +466,7 @@
 		}
 		{
 			dependencies: ["5C02000000000030", "5C02000000000040", "5C02000000000050", "5C02000000000060"]
+			hide_dependency_lines: false
 			icon: {
 				id: "mekanism:purification_chamber"
 			}
@@ -476,11 +494,12 @@
 				team_stage: false
 				type: "gamestage"
 			}]
-			x: 17.5d
+			x: 21.0d
 			y: 0.0d
 		}
 		{
 			dependencies: ["5C02000000000010"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "productivemetalworks:black_foundry_controller"
@@ -508,11 +527,12 @@
 				}
 				type: "item"
 			}]
-			x: 20.0d
-			y: -2.5d
+			x: 9.0d
+			y: 0.0d
 		}
 		{
 			dependencies: ["5C02000000000010"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "createaddition:alternator"
@@ -540,11 +560,12 @@
 				}
 				type: "item"
 			}]
-			x: 20.0d
-			y: 0.0d
+			x: 9.0d
+			y: 2.5d
 		}
 		{
 			dependencies: ["5C02000000000010"]
+			hide_dependency_lines: true
 			hide_until_deps_complete: true
 			icon: {
 				id: "create_enchantment_industry:blaze_enchanter"
@@ -572,8 +593,8 @@
 				}
 				type: "item"
 			}]
-			x: 20.0d
-			y: 2.5d
+			x: 9.0d
+			y: 5.0d
 		}
 	]
 }
