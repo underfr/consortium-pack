@@ -3,9 +3,9 @@
   "minLauncherVersion": "0.3.0",
   "server": {
     "name": "The Consortium",
-    "address": ""
+    "address": "consortium.undernetworks.fr:31483"
   },
-  "motd": "Season 1 is in preparation. Pack 0.9.0: pixel badges in chat and tab, a lean player list and the industrial HQ generator are live for testing.",
+  "motd": "Season 1 is in preparation. Pack 0.10.1: the full HQ site (delivery hall, clock tower, plaza, arena with traps) is live for testing; the season server address is set.",
   "lowPresetDisables": [
     "mods/iris.pw.toml"
   ],
